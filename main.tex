@@ -1,0 +1,255 @@
+\documentclass[french]{report}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{babel}
+
+\title{La fonction zêta de Riemann}
+\author{Amaury Martiny}
+\date{\today}
+
+\newtheorem{theorem}{Théorème}[section]
+\newtheorem{definition}[theorem]{Définition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollaire}
+\newtheorem{lemma}[theorem]{Lemme}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  This is the paper's abstract \ldots
+  \end{abstract}
+
+\tableofcontents{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Un peu d'histoire}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Notations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+somme de p = somme sur nombres premiers
+
+\section{Tchebychev et ses fonctions}
+
+Nous introduisons ici la fonction $\zeta$ de Riemann, ainsi que les fonctions de Tchebychev, car elles vont nous suivre dans toute la suite de ce rapport.
+
+\begin{definition}[Fonctions de Tchebychev] Pour $x\in \mathbb{R}$,
+  \[ \theta(x) = \sum_{p \le x}\log p \]
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Prérequis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Méthodes d'analyse réelle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Formule d'Euler-Maclaurin}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}\label{eq:euler-maclaurin}
+  Pour tout entier $k\geq0$ et toute fonction $f$ de classe $C^r$ sur $[a,b]$, $a,b\in\mathbb{Z}$, on a
+  \begin{align*}
+    \sum_{n=a}^b f(n) = \int_a^b f(t)\mathrm{d}t \quad + \quad \frac{f(a) + f(b)}{2} \quad &+ \quad \sum_{k=2}^r\frac{b_{k}}{k!}(f^{(k-1)}(b) - f^{(k-1)(a)}) \\
+    &+ \quad \frac{(-1)^{r+1}}{r!}\int_a^b B_r(t)f^{(r)}(t)\mathrm{d}t
+  \end{align*}
+
+  Les $b_n$ sont les nombres de Bernoulli, et les $B_n$ sont les polynômes de Bernoulli, définis sur $[0,1]$ par la récurrence classique, et ensuite prolongés par 1-périodicité.
+\end{theorem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Méthodes d'analyse complexe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{La fonction $\Gamma$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{La fonction $\zeta$ de Riemann}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Lien avec les nombres premiers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+La fonction que nous appelons aujourd'hui fonction $\zeta$ de Riemann a en réalité été introduite par Euler au XVIIIème siècle. Il a défini, pour tout $x\in\mathbb{R}, x>1$, la fonction
+
+\[ \zeta(x) = \sum_{n=1}^{\infty}\frac{1}{n^x} \]
+
+La somme de droite est clairement convergente, donc $\zeta(x)$ est bien défini. Euler démontra par la suite le résultat suivant, qui définit un lien entre les nombres premiers et l'analyse.
+
+\begin{theorem}[Produit eulérien]\label{eq:produit-eulerien-reel}
+  \[ \zeta(x) = \prod_p\frac{1}{1-p^{-x}}\quad(\sigma>1)\]
+\end{theorem}
+
+\begin{proof}
+  
+\end{proof}
+
+A ce stade, nous commençons à nous convaincre du rôle important de la fonction $\zeta$ dans l'étude des nombres premiers. Une analyse plus approfondie de cette fonction va nous aider grandement, c'est ce que nous allons faire tout de suite.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Quelques propriétés de $\zeta$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Avant d'étudier ses propriétés, commençons par définir officiellement $\zeta$. L'idée de Riemann, dans son TODO, a été de partir de la définition d'Euler, et de considérer $\zeta$ comme fonction d'une variable complexe :
+
+\begin{definition}[Fonction $\zeta$ de Riemann]
+  On définit, pour tout $s$ complexe tel que $\sigma > 1$,
+  \[ \zeta(s) = \sum_{n=1}^{\infty}\frac{1}{n^s} \]
+\end{definition}
+
+\begin{proposition}
+  Pour $\sigma > 1$, la série $\zeta(s)$ est absolument convergente.
+\end{proposition}
+
+\begin{proof}
+  C'est évident car $|\frac{1}{n^s}| = \frac{1}{n^{\sigma}}$, qui est le terme général d'une série convergente.
+\end{proof}
+
+Cette proposition montre que la fonction $\zeta$ est bien définie sur le demi-plan $\sigma > 1$.
+\\
+
+Cela va sans dire, mais cela ira encore mieux en le disant :
+
+\begin{theorem}[Produit eulérien, variable complexe]\label{eq:produit-eulerien-complexe}
+  \[ \zeta(s) = \prod_p\frac{1}{1-p^{-s}}\quad(\sigma>1)\]
+\end{theorem}
+
+\begin{proof}
+  La démonstration est exactement la même que dans le cas réel : voir la proposition \ref{eq:produit-eulerien-reel}.
+\end{proof}
+
+Il en découle immédiatement cette 1ère propriété intéressante :
+
+\begin{proposition}
+  \[ \zeta(s) \neq 0 \quad(\sigma > 1)\]
+\end{proposition}
+
+\begin{proof}
+  Soit $p$ premier fixé. L'inégalité triangulaire donne $|1-p^{-s}|\leq1+p^{-\sigma}$. Par conséquent,
+  \[\log(|1-p^{-s}|)\leq\log(1+p^{-\sigma})\leq p^{-\sigma} \]
+  où les inégalités sont données respectivement par la croissance et par la concavité du logarithme.
+
+  Ceci entraîne la convergence de la série $\sum_p\log(|1-p^{-s}|)$, pour tout $s$ avec $\sigma>1$. Notons $L_s$ sa limite:
+  \[ \log\left(\prod_p|1-p^{-s}|\right) = L_s, \]
+  et ainsi
+  \[ \left|\prod_p\frac{1}{1-p^{-s}}\right| = \mathrm{e}^{-L_s} > 0, \]
+  Le terme de gauche est exactement $|\zeta(s)|$ par le produit eulérien du théorème \ref{eq:produit-eulerien-complexe}.
+
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dérivées de la fonction $\zeta$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proposition}
+  $\zeta$ est holomorphe sur le demi-plan $\sigma > 1$.
+\end{proposition}
+
+\begin{proof}
+  Soit $K$ un compact du demi-plan $\sigma > 1$, alors $K$ est inclus dans un $\{ s\in\mathbb{C} \mid \sigma \geq a \}$ pour un certain réel $a > 1$. Mais alors en définissant $f_n: s \mapsto 1 / n^s$, la fonction $f_n$ est holomorphe sur $\sigma > 1$, et $\Vert{f_n}\Vert_\infty \leq 1 / n^a$ sur $K$, qui est le terme général d'une série convergente.
+  
+  La série de fonctions $\sum f_n$ converge vers $\zeta$, normalement (donc uniformément) sur $K$. Par suite $\zeta$ est holomorphe sur le demi-plan $\sigma > 1$.
+\end{proof}
+
+\begin{proposition}
+  \[ \zeta^{(k)}(s) = (-1)^k\sum_{n=2}^\infty\frac{(\log n)^k}{n^s} \]
+\end{proposition}
+
+\begin{proof}
+  TODO
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Expression intégrale}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proposition}
+  Pour tout complexe $\sigma > 1$,
+  \[ \Gamma(s)\zeta(s) = \int_0^\infty\frac{t^{s-1}}{\mathrm{e}^t-1}\mathrm{d}t \]
+\end{proposition}
+
+\begin{proof}
+  On part de la formule TODO
+  \[ \Gamma(s)n^{-s} = \int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t\quad (\sigma > 0) \]
+
+  En sommant pour $n\geq1$, il vient pour $\sigma>1$
+  \[ \Gamma(s)\zeta(s) = \sum_{n=1}^\infty\int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t = \int_0^\infty \frac{t^{s-1}}{\mathrm{e}^t - 1}\mathrm{d}t \]
+  Or la série numérique $\sum\int_0^\infty |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^\infty t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prolongement à $\mathbb{C}\backslash\{1\}$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}
+  La fonction $\zeta$ admet un unique prolongement en une fonction méromorphe sur $\mathbb{C}$ ayant un unique pôle en $s=1$ de résidu 1.
+\end{theorem}
+
+Une fois ce théorème démontré, nous allons noter $\zeta$ cet unique prolongement.
+
+Nous allons donner plusieurs démonstrations de ce théorème.
+
+\subsection{Par la formule d'Euler-Maclaurin}
+
+\begin{proof}
+Fixons $s$ tel que $\sigma>1$, et appliquons la formule d'Euler-Maclaurin \ref{eq:euler-maclaurin} à l'ordre $r\geq1$ sur l'intervalle $[1,N]$ à la fonction $f:t\mapsto t^{-s}$, de classe $C^\infty$ sur $[1,N]$ :
+
+\begin{align*}
+  \sum_{n=1}^N n^{-s} = \frac{1-N^{1-s}}{s-1} + \frac{1+N^{-s}}{2} &+ \sum_{k=2}^r B_k\frac{s(s+1)...(s+k-2)}{k!}(1-N^{-s-k+1}) \\
+  &- R_{r,N}(s)
+\end{align*}
+où l'on a défini le reste $ R_{r,N}(s)$ par
+
+\[  R_{r,N}(s) = \frac{s(s+1)...(s+r-1)}{r!}\int_1^N B_r(t)t^{-s-r}\mathrm{d}t \]
+
+Comme les $B_r$ sont périodiques et polynomiaux sur $[0,1[$, ils sont bornés. Le terme à l'intérieur de l'intégrale de $R_{r,N}(s)$ est donc $O(t^{-s-r})$, qui intégrable sur $[1, +\infty]$. En faisant tender $N$ vers l'infini, on obtient alors
+
+\[ \zeta(s) = \frac{1}{s-1} + F_r(s) \]
+
+où l'on a noté
+
+\[ F_r(s) = \frac{1}{2} + \sum_{k=2}^r B_k\frac{s(s+1)...(s+k-2)}{k!} - \frac{s(s+1)...(s+r-1)}{r!}\int_1^\infty B_r(t)t^{-s-r}\mathrm{d}t. \]
+
+Montrons que $F_r$ est holomorphe sur $\Omega_r=\{ s\in\mathbb{C}\,|\,\sigma > 1-r\}$. Il suffit que montrer que $G_r$ l'est, où
+
+\[ G_r(s) = \int_1^\infty B_r(t)t^{-s-r}\mathrm{d}t.\]
+
+On remarque que, à $t$ fixé, la fonction à l'intérieur $s\mapsto B_r(t)t^{-s-r}$ l'est. Soit $K$ un compact de $\Omega_r$, on peut fixer un $\delta>0$ tel que $K\subset\{ s\in\mathbb{C}\,|\,\sigma > 1-r+\delta\}$. Sur ce compact,
+
+\[ \sup_{s\in K}\left|\frac{B_r(t)}{t^{s+r}}\right| = O\left(\frac{1}{t^{1+\delta}}\right) \]
+
+ce qui assure, par régularité des intégrales à paramètre, que $G_r$, et par suite $F_r$ est holomorphe sur $\Omega_r$.
+
+On peut ainsi définir une fonction entière $F$ par
+
+\[ F(s) = F_r(s) \quad\text{si}\,s\in\Omega_r. \]
+
+$F$ est bien définie car si $1\leq q\leq r$, $F_q(s)=F_r(s)=\zeta(s)-\frac{1}{s-1}$, donc $F_q$ et $F_r$ sont holomorphes et coincident sur $\Omega_q$ connexe.
+
+On obtient finalement que $s\mapsto\frac{1}{s-1}+F(s)$ est une fonction méromorphe avec un unique pôle simple en 1 de résidu 1 qui prolonge la fonction $\zeta$ de Riemann.
+
+L'unicité est triviale par prolongement analytique.
+\end{proof}
+
+\subsection{Par le contour de Hankel}
+
+
+\chapter{Le théorème des nombres premiers}
+
+\bibliographystyle{abbrv}
+\bibliography{main}
+
+\end{document}
+This is never printed
