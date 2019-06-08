@@ -16,6 +16,7 @@
 *.dvi
 *.xdv
 *-converted-to.*
+__latexindent_temp.tex
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl

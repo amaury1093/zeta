@@ -24,38 +24,101 @@
 
 \tableofcontents{}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Introduction}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Les nombres premiers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Un peu d'histoire}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Notations}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Quelques premiers résultats}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-somme de p = somme sur nombres premiers
+Mertens, $\sum_p\frac{\ln p}{p}$
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Tchebychev et ses fonctions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Nous introduisons ici la fonction $\zeta$ de Riemann, ainsi que les fonctions de Tchebychev, car elles vont nous suivre dans toute la suite de ce rapport.
+Nous introduisons ici les fonctions de Tchebychev, car elles vont nous suivre dans toute la suite de ce rapport.
 
 \begin{definition}[Fonctions de Tchebychev] Pour $x\in \mathbb{R}$,
   \[ \theta(x) = \sum_{p \le x}\log p \]
 \end{definition}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Prérequis}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Les méthodes du crible}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Méthodes d'analyse réelle}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Notre boîte à outils pour l'analyse}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Formule d'Euler-Maclaurin}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+TODO Série de Dirichlet
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outils d'analyse réelle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{La sommation d'Abel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une comparaison assez précise entre somme et intégrale.
+
+\begin{lemma}\label{lem:formule-abel}
+  Soit $(a_n)_{n\in\mathbb{N}}$ une suite numérique réelle, et $A(x):=\sum_{n\leq x}a_n$. On se donne également une fonction $f$ de classe $C^1$. Alors :
+  \[ \forall y>x\geq0,\quad
+  \sum_{x<n\leq y} a_n f(n)
+  = A(y)f(y) - A(x)f(x)
+  - \int_x^yA(t)f'(t)\mathrm{d}t
+  \]
+\end{lemma}
+
+\begin{proof}
+  On remarque que $A$ est en escalier, donc pour tout $n\geq0$,
+  \[ \int_n^{n+1}A(t)f'(t)\mathrm{d}t
+  = A(n)\int_n^{n+1}f'(t)\mathrm{d}t
+  = A(n)(f(n+1)-f(n)).
+  \]
+
+  Posons TODO $M=|x|$ et $N=|y|$, alors
+  \begin{align*}
+    \int_x^yA(t)f'(t)\mathrm{d}t
+    &= \sum_{n=M}^{N-1}\int_n^{n+1}A(t)f'(t)\mathrm{d}t \\
+    &= \sum_{n=M}^{N-1}A(n)(f(n+1)-f(n)) \\
+    &= \sum_{n=M+1}^Nf(n)(A(n)-A(n-1))-A(N)f(N)+A(M)f(M) \\
+    &= \sum_{n=M+1}^Nf(n)a_n-A(N)f(N)+A(M)f(M)
+  \end{align*}
+
+  D'où la formule quand $x$ et $y$ sont entiers. Pour la formule générale on observe que :
+  \[ -\int_{|x|}^xA(t)f'(t)\mathrm{d}t = A(|x|)(f(x)-f(|x|)) = A(x)(f(x)-f(|x|)). \]
+  
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Formule d'Euler-Maclaurin}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{theorem}\label{eq:euler-maclaurin}
   Pour tout entier $k\geq0$ et toute fonction $f$ de classe $C^r$ sur $[a,b]$, $a,b\in\mathbb{Z}$, on a
@@ -66,21 +129,107 @@ Nous introduisons ici la fonction $\zeta$ de Riemann, ainsi que les fonctions de
 
   Les $b_n$ sont les nombres de Bernoulli, et les $B_n$ sont les polynômes de Bernoulli, définis sur $[0,1]$ par la récurrence classique, et ensuite prolongés par 1-périodicité.
 \end{theorem}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Méthodes d'analyse complexe}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{La fonction $\Gamma$}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outils d'analyse complexe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{La fonction $\Gamma$ d'Euler}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Séries de Dirichlet}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Formule de Perron}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Nous établissons dans cette section la formule de Perron, reliant une série de Dirichlet à sa fonction sommatoire normalisée.
+
+Dans toute cette section, nous allons noter
+
+\[ F(s) =\sum_{n\geq1}\frac{a_n}{n^s}\]
+
+une série de Dirichlet. On note :
+\begin{itemize}
+  \item $\sigma_c$ son abscisse de convergence simple,
+  \item $\sigma_a$ son abscisse de convergence absolue.
+\end{itemize}
+
+Prolongeons la suite $(a_n)_n$ en une fonction sur $\mathbb{R}$ en posant
+\[
+  a_x=
+  \begin{cases}
+    a_n & \text{si}\,n\in\mathbb{N} \\
+    0  & \text{sinon}
+  \end{cases}
+\]
+\begin{definition}[Fonction sommatoire normalisée]
+  Nous introduisons :
+  \[ A^*(x) = \sum_{n<x}a_n + \frac{1}{2}a_x \]
+\end{definition}
+
+\begin{theorem}[Formule de Perron]
+  Soit $\kappa>\max(0,\sigma_c)$. On a :
+  \[ A^*(x) = \frac{1}{2\pi i}\int_{\kappa-i\infty}^{\kappa+i\infty}F(s)\frac{x^s}{s}\mathrm{d}s \]
+\end{theorem}
+
+où l'intégrale est
+\begin{itemize}
+  \item convergeante en valeur principale lorsque $x\in\mathbb{N}$
+  \item semi-convergeante lors $x\in\mathbb{R}\backslash\mathbb{N}$.
+\end{itemize}
+
+\begin{proof}
+  TODO
+\end{proof}
+
+
+Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais sous une forme "effective".
+
+\begin{theorem}[Première formule de Perron effective]
+  Pour $\kappa>\max(0,\sigma_c)$, $T\geq1$, $x\geq1$,
+  \[ A(x) = \frac{1}{2\pi i}\int_{\kappa-i\infty}^{\kappa+i\infty}F(s)\frac{x^s}{s}\mathrm{d}s + O\left(x^k\sum_{n\geq1}\frac{|a_n|}{n^\kappa(1+T|\ln\frac{x}{n}|)}\right) \]
+\end{theorem}
+
+\begin{proof}
+  TODO
+\end{proof}
+
+\begin{theorem}[Seconde formule de Perron effective]\label{eq:perron-2-effective}
+  On suppose que :
+  \begin{itemize}
+    \item l'abscisse de convergence absolue de $F(s)$ $\sigma_a$ est finie,
+    \item il existe un nombre réel $\alpha\geq0$ tel que
+    \[ \forall\sigma\in]\sigma_a,\sigma_a+1],\quad\sum_{n\geq1}\frac{|a_n|}{n^{-\sigma}}=O((\sigma-\sigma_a)^{-\alpha}) \]
+    \item il existe une fonction B positive et croissante telle que
+    \[ \forall n\geq1,\quad|a_n|\leq B(n) \]
+  \end{itemize}
+  Alors, pour $x\geq2$, $T\geq2$, $\sigma\leq\sigma_a$, $\kappa:=\sigma_a-\sigma+1/\ln x$,
+  \[ \sum_{n\leq x}\frac{a_n}{n^s}=\frac{1}{2\pi i}\int_{\kappa-iT}^{\kappa+iT}F(s+\omega)\frac{x^\omega}{\omega}\mathrm{d}\omega + O\left(x^{\sigma_a-\sigma}\frac{\ln^\alpha x}{T}+\frac{B(2x)}{x^\sigma}\left(1+x\frac{\ln T}{T}\right)\right) \]
+\end{theorem}
+
+\begin{proof}
+  TODO
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{La fonction $\zeta$ de Riemann}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Lien avec les nombres premiers}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 La fonction que nous appelons aujourd'hui fonction $\zeta$ de Riemann a en réalité été introduite par Euler au XVIIIème siècle. Il a défini, pour tout $x\in\mathbb{R}, x>1$, la fonction
 
@@ -88,23 +237,51 @@ La fonction que nous appelons aujourd'hui fonction $\zeta$ de Riemann a en réal
 
 La somme de droite est clairement convergente, donc $\zeta(x)$ est bien défini. Euler démontra par la suite le résultat suivant, qui définit un lien entre les nombres premiers et l'analyse.
 
-\begin{theorem}[Produit eulérien]\label{eq:produit-eulerien-reel}
-  \[ \zeta(x) = \prod_p\frac{1}{1-p^{-x}}\quad(\sigma>1)\]
+\begin{theorem}[Produit eulérien]\label{thm:produit-eulerien-reel}
+  \[ \zeta(x) = \prod_p\frac{1}{1-p^{-x}}\quad(\sigma>1) \]
+  Plus précisément, le produit infini signifie :
+  \[ \lim_{P\to+\infty}\prod_{p\,\mathrm{premier}\\p\leq P}\frac{1}{1-p^{-x}}=\zeta(x)\quad(\sigma>1) \]
 \end{theorem}
 
 \begin{proof}
+  Pour tout nombre premier $p$, comme $1/p<1$, on peut écrire la somme d'une suite géométrique :
+  \[ \frac{1}{1-p^{-x}}=\sum_{k=0}^{+\infty}\frac{1}{p^{kx}}. \]
+
+  En faisant le produit de cette égalité pour tous les nombres premiers $p_1, ..., p_r$ inférieurs à un certain $T$, on a :
   
+  \begin{align}
+    \prod_{p\leq T}\frac{1}{1-p^{-x}}
+    &= \prod_{p\leq T}\sum_{k=0}^{+\infty}\frac{1}{p^{kx}}  \\
+    &= \sum_{m_1,...,m_r\geq1}\frac{1}{(p_1^{m_1}...p_r^{m_r})^x} \label{eq:produit-euler-part1} \\
+    &= \sum_{n\in\mathbb{N}_T}n^{-x} \label{eq:produit-euler-part2}
+  \end{align}
+
+  où l'on a noté $\mathbb{N}_T$ l'ensemble des entiers naturels dont tous les facteurs premiers sont inférieurs ou égaux à $T$.
+
+  (\ref{eq:produit-euler-part1}) est jusitifiée par le fait que tous les termes sont positifs, donc on peut intervertir les sommes. (\ref{eq:produit-euler-part2}) vient de la décomposition unique en facteurs premiers.
+  \\
+
+  Ainsi,
+  \[ \left|\sum_{n=1}^{\infty}\frac{1}{n^x}-\prod_{p\leq T}\frac{1}{1-p^{-x}}\right|
+  = \left|\sum_{n\notin\mathbb{N}_T}\frac{1}{n^x}\right|
+  \leq \sum_{n\notin\mathbb{N}_T}\frac{1}{n^x}
+  \leq \sum_{n>T}\frac{1}{n^x}
+  \]
+
+  La dernière somme est le reste d'une série convergente, donc tend vers 0, ce qui prouve à la fois la convergence du produit et la formule d'Euler.
 \end{proof}
 
 A ce stade, nous commençons à nous convaincre du rôle important de la fonction $\zeta$ dans l'étude des nombres premiers. Une analyse plus approfondie de cette fonction va nous aider grandement, c'est ce que nous allons faire tout de suite.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Quelques propriétés de $\zeta$}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Avant d'étudier ses propriétés, commençons par définir officiellement $\zeta$. L'idée de Riemann, dans son TODO, a été de partir de la définition d'Euler, et de considérer $\zeta$ comme fonction d'une variable complexe :
 
-\begin{definition}[Fonction $\zeta$ de Riemann]
+\begin{definition}[Fonction $\zeta$ de Riemann]\label{def:zeta-definition}
   On définit, pour tout $s$ complexe tel que $\sigma > 1$,
   \[ \zeta(s) = \sum_{n=1}^{\infty}\frac{1}{n^s} \]
 \end{definition}
@@ -122,17 +299,17 @@ Cette proposition montre que la fonction $\zeta$ est bien définie sur le demi-p
 
 Cela va sans dire, mais cela ira encore mieux en le disant :
 
-\begin{theorem}[Produit eulérien, variable complexe]\label{eq:produit-eulerien-complexe}
+\begin{theorem}[Produit eulérien, variable complexe]\label{thm:produit-eulerien-complexe}
   \[ \zeta(s) = \prod_p\frac{1}{1-p^{-s}}\quad(\sigma>1)\]
 \end{theorem}
 
 \begin{proof}
-  La démonstration est exactement la même que dans le cas réel : voir la proposition \ref{eq:produit-eulerien-reel}.
+  La démonstration est exactement la même que dans le cas réel : voir la proposition \ref{thm:produit-eulerien-reel}. Il suffit de notre que $|\frac{1}{n^s}|=\frac{1}{n^\sigma}$.
 \end{proof}
 
 Il en découle immédiatement cette 1ère propriété intéressante :
 
-\begin{proposition}
+\begin{proposition}\label{eq:zeta-non-nul-produit-eulerien}
   \[ \zeta(s) \neq 0 \quad(\sigma > 1)\]
 \end{proposition}
 
@@ -145,35 +322,82 @@ Il en découle immédiatement cette 1ère propriété intéressante :
   \[ \log\left(\prod_p|1-p^{-s}|\right) = L_s, \]
   et ainsi
   \[ \left|\prod_p\frac{1}{1-p^{-s}}\right| = \mathrm{e}^{-L_s} > 0, \]
-  Le terme de gauche est exactement $|\zeta(s)|$ par le produit eulérien du théorème \ref{eq:produit-eulerien-complexe}.
+  Le terme de gauche est exactement $|\zeta(s)|$ par le produit eulérien du théorème \ref{thm:produit-eulerien-complexe}.
 
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Dérivées de la fonction $\zeta$}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proposition}\label{eq:zeta-majoration-facile}
+  \[ |\zeta(s)|\leq\frac{\sigma}{\sigma-1}\quad(\sigma>1) \]
+\end{proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dérivées successives}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{proposition}
   $\zeta$ est holomorphe sur le demi-plan $\sigma > 1$.
 \end{proposition}
 
 \begin{proof}
-  Soit $K$ un compact du demi-plan $\sigma > 1$, alors $K$ est inclus dans un $\{ s\in\mathbb{C} \mid \sigma \geq a \}$ pour un certain réel $a > 1$. Mais alors en définissant $f_n: s \mapsto 1 / n^s$, la fonction $f_n$ est holomorphe sur $\sigma > 1$, et $\Vert{f_n}\Vert_\infty \leq 1 / n^a$ sur $K$, qui est le terme général d'une série convergente.
+  Soit $K$ un compact du demi-plan $\sigma > 1$, alors $K$ est inclus dans un $\{ s\in\mathbb{C} \mid \sigma \geq a \}$ pour un certain réel $a > 1$. Mais alors en définissant $f_n: s \mapsto 1 / n^s$, la fonction $f_n$ est holomorphe sur $\sigma > 1$, et sur $K$, $\Vert{f_n}\Vert_\infty \leq 1 / n^a$, qui est le terme général d'une série convergente.
   
   La série de fonctions $\sum f_n$ converge vers $\zeta$, normalement (donc uniformément) sur $K$. Par suite $\zeta$ est holomorphe sur le demi-plan $\sigma > 1$.
 \end{proof}
 
 \begin{proposition}
   \[ \zeta^{(k)}(s) = (-1)^k\sum_{n=2}^\infty\frac{(\log n)^k}{n^s} \]
+  Cette convergence est normale sur tout demi-plan $\{s\in\mathbb{C}\,|\,\sigma\geq a\}$ avec $a>1$.
 \end{proposition}
 
 \begin{proof}
-  TODO
+  %http://abdellah.bechata.free.fr/telechargement/zeta/proprietes/pdf/fonction_zeta.pdf
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Expression de $\ln\zeta$ et fonction de van Mangoldt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+$\zeta(s)$ est réel pour $s$ réel, et est strictement positif. Le logarithme de ce nombre existe et est réel. Il est donc naturel de choisir, parmi toutes les fonctions du logarithme complexe définies à la constante $2k\pi$ près, celle qui prolonge le logarithme réel sur $]0,+\infty[$.
+
+\begin{definition}[Fonction de van Mangoldt]
+\[
+  \Lambda(n)=
+  \begin{cases}
+    \ln p & \text{s'il existe $m\geq1$ et $p$ tels que $n=p^m$} \\
+    0 & \text{sinon}
+  \end{cases}
+\]
+\end{definition}
+
+\begin{proposition}\label{eq:ln-zeta}
+  On peut construuire une détermination holomorphe de $\ln\zeta$ pour $\sigma>1$ en posant
+  \[ \ln\zeta(s) = \sum_p\sum_{m\geq1}\frac{p^{-ms}}{m}  = \sum_{n\geq2}\frac{\Lambda(n)}{n^s\ln n}\quad(\sigma>1) \]
+\end{proposition}
+
+\begin{proof}
+  On va se limiter pour l'instant à $s=\sigma$ réel. En partant du produit eulérien \ref{thm:produit-eulerien-complexe}, on a
+  \[ \ln\zeta(\sigma) = -\sum_p\ln\left(1-\frac{1}{p^\sigma}\right). \]
+  D'autre part, on développe le logarithme en série entière, ce qui est possible puisque $p\geq2$ et $\sigma>1$, et on peut donc définir
+  \[ D(s) = \sum_p \]
+  TODO à finir
+\end{proof}
+
+\begin{proposition}\label{prop:zeta-van-mangoldt}
+  On a l'égalité
+  \[ \frac{\zeta'(s)}{\zeta(s)} = -\sum_{n\geq1}\frac{\Lambda(n)}{n^s}\quad(\sigma>1) \]
+\end{proposition}
+
+\begin{proof}
+  
+\end{proof}
+
+\begin{proposition}\label{prop:zeta-sur-zeta-prime-o}
+  \[ \left|\frac{\zeta'(s)}{\zeta(s)}\right| = O_{\sigma\to1^+}\left(\frac{1}{\sigma-1}\right) \]
+\end{proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Expression intégrale}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{proposition}
   Pour tout complexe $\sigma > 1$,
@@ -186,20 +410,136 @@ Il en découle immédiatement cette 1ère propriété intéressante :
 
   En sommant pour $n\geq1$, il vient pour $\sigma>1$
   \[ \Gamma(s)\zeta(s) = \sum_{n=1}^\infty\int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t = \int_0^\infty \frac{t^{s-1}}{\mathrm{e}^t - 1}\mathrm{d}t \]
-  Or la série numérique $\sum\int_0^\infty |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^\infty t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
+  Remarquons que la série numérique $\sum\int_0^\infty |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^\infty t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
 \end{proof}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Equation fonctionnelle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[Equation fonctionnelle, Riemann]\label{thm:equation-fonctionnelle}
+  \[ \zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)\quad (s\in\mathbb{C}\backslash\{0,1\})\]
+\end{theorem}
+
+\begin{proof}
+  TODO
+  % https://www.uni-ulm.de/fileadmin/website_uni_ulm/mawi.inst.020/abschlussarbeiten/BA_wiesel.pdf
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prolongement et propriétés sur la bande critique}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+La définition de $\zeta$ que nous avons donnée en \ref{def:zeta-definition} est valable pour $\sigma>1$. Nous allons essayer, dans cette section et dans la suivante, d'essayer de prolonger $\zeta$ sur d'autres parties du plan complexe. \\
+
+Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la région prolongée, $0\leq\sigma\leq1$, s'appelle la $bande\,critique$. Au fait, de nombreux résultats arithmétiques reliant $\zeta$ et les nombres premiers font appel aux propriétés de $\zeta$ sur cette bande critique.
+
+\begin{proposition} On a, pour $s\neq0$ et $\sigma>0$,
+  \[ \zeta(s) = \frac{s}{s-1}-s\int_1^\infty\frac{\{u\}}{u^{1+s}}\mathrm{d}u \]
+\end{proposition}
+
+\begin{proof}
+  Sommation d'abel, TODO faire proprement
+\end{proof}
+
+
+\begin{lemma}\label{lem:zeta-somme-partielle}
+  On a, pour $N\geq0$ et $\sigma>0$,
+  \[ \zeta(s) = \sum_{n=1}^N\frac{1}{n^s} + \frac{N^{1-s}}{s-1}-s\int_N^{\infty}\frac{\{u\}}{u^{1+s}}\mathrm{d}u \]
+\end{lemma}
+
+\begin{proposition}\label{prop:majoration-zeta-et-zeta-prime}
+  Pour tout réel $A>0$, sur la région du plan définie par $\{s\in\mathrm{C}\,|\,t\geq2,\,\sigma>1-\frac{A}{\ln t}\}$, on a :
+  \[ \zeta(s) = O(\ln t) \]
+  \[ \zeta'(s) = O(\ln^2 t) \]
+  où la constante dans le $O$ dépend de $A$.
+\end{proposition}
+
+\begin{proof}
+  Les égalités $|\zeta(2)|\leq\zeta(2)$ et $|\zeta'(2)|\leq\zeta'(2)$ sont triviales, donc les deux majorations sont vérifiées pour $\sigma\geq2$.
+
+  On peut donc supposer maintenant que $\sigma<2$ et $t\geq2$, que l'on fixe tous les deux. On a alors (la première inégalité vient de l'inégalité triangulaire) :
+  \[ |s|\leq\sigma+t<2+t\leq 2t \]
+  et
+  \[ |s-1|\geq t. \]
+  En reportant tout cela dans le lemme \ref{lem:zeta-somme-partielle}, on obtient, pour tout $N\geq1$ :
+  \begin{equation}\label{eq:zeta-abs-majoree}
+    |\zeta(s)|\leq\sum_{n=1}^N\frac{1}{n^\sigma}
+    + \frac{N^{1-\sigma}}{t}
+    + 2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
+  \end{equation}
+ 
+  En prenant TODO $N=|t|$, on a
+  \begin{itemize}
+    \item $N\leq t<N+1,$
+    \item $\forall n\leq N,\,\ln n\leq\ln t.$
+  \end{itemize}
+
+  Par ailleurs, l'hypothèse $1-\sigma<A/\ln t$ entraîne
+  \[ \frac{1}{n^\sigma}
+  = \frac{1}{n}n^{1-\sigma}
+  = \frac{1}{n}\mathrm{e}^{(1-\sigma)\ln n}
+  < \frac{1}{n}\mathrm{e}^{A\frac{\ln n}{\ln t}}
+  \leq \frac{1}{n}\mathrm{e}^A
+  = O\left(\frac{1}{n}\right)
+  \]
+
+  On peut donc maintenant évaluer terme à terme l'équation \ref{eq:zeta-abs-majoree}.
+
+  \[ \sum_{n=1}^N\frac{1}{n^\sigma}
+  = O\left(\sum_{n=1}^N\frac{1}{n}\right)
+  = O(\ln N)
+  = O(\ln t)
+  \]
+
+  \[ \frac{N^{1-\sigma}}{t}
+  = \frac{N}{t}\frac{1}{N^\sigma}
+  = O\left(\frac{1}{N}\right)
+  = O(1)
+  \]
+
+  \[ 2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
+  = \frac{2t}{\sigma N^\sigma}
+  = O\left(\frac{2t}{N}\right)
+  = O(1)
+  \]
+
+  En remplaçant dans \ref{eq:zeta-abs-majoree},
+  \[ |\zeta(s)|=O(\ln t) \]
+\end{proof}
+
+Par symétrie par rapport à l'axe $t=0$, on a également :
+
+\begin{corollary}\label{cor:majoration-zeta-et-zeta-prime}
+  Pour tout réel $A>0$, sur la région du plan définie par $\{s\in\mathrm{C}\,|\,\,\sigma>1-\frac{A}{\ln (2+|t|)}\}$, on a :
+  \[ \zeta(s) = O(\ln (2+|t|)) \]
+  \[ \zeta'(s) = O(\ln^2 (2+|t|)) \]
+  où la constante dans le $O$ dépend de $A$.
+\end{corollary}
+
+\begin{proposition}
+  \[ \left|\frac{\zeta'(s)}{\zeta(s)}\right| \]
+\end{proposition}
+
+\begin{proof}
+  
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Prolongement à $\mathbb{C}\backslash\{1\}$}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{theorem}
   La fonction $\zeta$ admet un unique prolongement en une fonction méromorphe sur $\mathbb{C}$ ayant un unique pôle en $s=1$ de résidu 1.
 \end{theorem}
 
-Une fois ce théorème démontré, nous allons noter $\zeta$ cet unique prolongement.
-
-Nous allons donner plusieurs démonstrations de ce théorème.
+Une fois ce théorème démontré, nous allons encore noter $\zeta$ cet unique prolongement. Nous allons donner plusieurs démonstrations de ce théorème.
 
 \subsection{Par la formule d'Euler-Maclaurin}
 
@@ -243,13 +583,402 @@ On obtient finalement que $s\mapsto\frac{1}{s-1}+F(s)$ est une fonction méromor
 L'unicité est triviale par prolongement analytique.
 \end{proof}
 
-\subsection{Par le contour de Hankel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Par un contour de Hankel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% https://papyrus.bib.umontreal.ca/xmlui/bitstream/handle/1866/14610/Samson_Jean-Philippe_2003_memoire.pdf?sequence=1&isAllowed=y page39
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Par l'équation fonctionnelle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Prolongement sur $[0,1]$ par la sommation d'abel, sur $\sigma<0$ par l'équation fonctionnelle.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Localisation des zéros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Nous avons vu à la proposition \ref{eq:zeta-non-nul-produit-eulerien} que $\zeta$ ne s'annule pas pour $\sigma>1$. Nous allons montrer que cette propriété est vraie sur le demi-plan fermé $\sigma\geq1$.
+
+\begin{theorem}[Mertens]
+  Soit $F(s) =\sum_{n\geq1}\frac{a_n}{n^s}$ une série de Dirichlet à coefficients positits ou nuls. Notions $\sigma_c$ sont abscisse de convergence. Alors:
+  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))\geq0 \quad(\sigma>\sigma_c) \]
+\end{theorem}
+
+\begin{proof}
+  Posons $\forall\theta\in\mathbb{R}, V(\theta) = 3+4\cos(\theta)+\cos(2\theta)$.
+  \begin{align*}
+    V(\theta) &= 3+4\cos(\theta)+(2\cos^2(\theta)-1) \\
+              &= 2(1+2\cos(\theta)+\cos^2(\theta)) \\
+              &= 2(1+\cos(\theta))^2 \\
+              &\geq0
+  \end{align*}
+  Or
+  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it)) = \sum_{n\geq1}\frac{a_n V(t\ln n)}{n^\sigma}, \]
+  et comme les $a_n$ sont positifs ou nuls, cela implique bien que
+  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))\geq0 \]
+\end{proof}
+
+\begin{corollary}\label{cor:zeta-inegalite-1}
+  \[ \zeta^3(\sigma)|\zeta(\sigma+it)|^4|\zeta(\sigma+2it)|\geq1\quad(\sigma>1) \]  
+\end{corollary}
+
+\begin{proof}
+  On applique le théorème à la fonction
+  \[ F(s) = \ln\zeta(s) = \sum_{n\geq2}\frac{\Lambda(n)}{n^s\ln n}\quad(\sigma>1) \]
+  où la 2ème égalité vient de la proposition \ref{eq:ln-zeta}. La série de droite est bien une série de Dirichlet à coefficient positifs ou nuls, d'abscisse de convergence 1.
+\end{proof}
+
+Nous sommes maintenant en mesure de prouver le résultat suivant, qui va s'avérer très important pour le théorème des nombres premiers.
+
+\begin{theorem}\label{eq:zeta-non-nul-demi-plan-ferme}
+  $\zeta$ ne s'annule pas sur le demi-plan fermé $\sigma\geq1$.
+\end{theorem}
+
+\begin{proof}
+  Supposons par l'absurde qu'il existe $t_0$ tel que $\zeta(1+it_0)=0$, on le fixe. On sait que $\zeta$ est dérivable en $1+it_0$. En particulier, en dérivant suivant l'axe des réels,
+  \[ \lim_{\sigma\to1^+}\frac{\zeta(\sigma+it_0)-\zeta(1+it_0)}{\sigma-1}\in\mathbb{C}\]
+  donc on peut écrire, en appliquant l'hypothèse,
+  \[ \zeta(\sigma+it_0)=O_{\sigma\to1^+}(\sigma-1). \]
+  De plus, comme $|\zeta(s)|\leq\frac{\sigma}{\sigma-1}$ par la proposition \ref{eq:zeta-majoration-facile}, on peut écrire
+  \[ \zeta(\sigma) = O_{\sigma\to1^+}\left(\frac{1}{\sigma-1}\right). \]
+  Enfin, par continuité de $\zeta$,
+  \[ \zeta(\sigma+2it_0) = O_{\sigma\to1^+}(1) \]
+  En regroupant ces trois comportements asymptotiques, il vient :
+  \[ \zeta^3(\sigma)|\zeta(\sigma+it)|^4|\zeta(\sigma+2it)| = O_{\sigma\to1^+}(\sigma-1), \]
+  en particulier le membre de gauche peut être rendu arbitrairement petit lorsque $\sigma\to1^+$, ce qui contredit l'inégalité \ref{cor:zeta-inegalite-1}.
+\end{proof}
+
+\begin{corollary}
+  Dans le demi-plan $\sigma\leq0$, la fonction $\zeta$ admet pour seuls zéros les points $-2n, n\geq1$ entier. Ce sont des zéros simples.
+\end{corollary}
+
+\begin{proof}
+  Analyse. Soit $s$ tel que $\sigma\leq0$. Réécrivons l'équation fonctionelle \ref{thm:equation-fonctionnelle} :
+  \[ \zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)\quad (s\in\mathbb{C}\backslash\{0,1\}) \]
+  Ainsi, si $s\neq0$, $\sigma\leq0$ et $\zeta(s)=0$, on a forcément $\sin(\frac{\pi s}{2})=0$, et donc $s=-2,-4,...$. Mais il reste à voir si $\zeta(0)$ est nul ou non.
+
+  En multipliant l'équation fonctionnelle par $(1-s)$ et en utilisant $s\Gamma(s)=\Gamma(s+1)$ TODO, on obtient
+  \[ (1-s)\zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(2-s)\zeta(1-s). \]
+  On peut passer à la limite $s\to1$, en remarquant que d'une part $\Gamma(1)=1$, et d'autre part $\zeta(s)\sim\frac{1}{s-1}$ :
+  \[ -1 = 2\zeta(0). \]
+  Ceci montre que les seuls zéros possibles de $\zeta$ sont les $-2, -4...$.
+
+  Synthèse. On a bien $\zeta(-2)=\zeta(-4)=...=0$
+\end{proof}
+
+Les zéros aux entiers négatifs pairs sont appelés les zéros triviaux de la fonction $\zeta$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Répartition globale des zéros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Développement en produit de Hadamard.
+
+Régions sans zéros qui seront explorées plus en détails dans le chapitre sur le théorème des nombres premiers.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Le théorème des nombres premiers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibliographystyle{abbrv}
-\bibliography{main}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Région affaiblie sans zéros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[Théorème des nombres premiers, avec terme d'erreur, version affaiblie]\label{eq:tnp-erreur-1}
+  Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
+  \begin{equation}
+    \psi(x)=x+O(x\mathrm{e}^{-c\ln^{1/10} x})
+  \end{equation}
+\end{theorem}
+
+L'ingrédient principal pour prouver le théorème des nombres premiers est le fait que $\zeta$ ne s'annule pas sur la droite $\sigma=1$. L'idée intuitive est la suivante : si $\zeta$ a un zéro en $\rho$, alors $\frac{\zeta'}{\zeta}$ a un pôle en $\rho$. Or le produit eulérien nous donne de bonnes informations sur le comportement de $\frac{\zeta'}{\zeta}$ dans le demi-plan $\sigma>1$. En particulier, elle y est bornée. Par conséquent, si $\frac{\zeta'}{\zeta}$  (qui est négative) avait un pôle près de la droite $\sigma=1$, elle devrait y décroître très rapidement.
+
+\begin{theorem}[Région sans zéros, version affaiblie]\label{eq:region-faible-sans-zero}
+  Il existe un réel $c>0$ tel que sur la région du plan complexe définie par $\sigma\geq1-\frac{c}{\ln^9(2+|t|)}$, on ait
+  \[ \left|\frac{1}{\zeta(s)}\right| = O(\ln^7(2+|t|)) \]
+  En particuler, $\zeta$ ne s'annule pas sur cette région du plan.
+\end{theorem}
+
+\begin{proof}
+  Prenons un $s$ dans la région $\sigma > 1-\frac{c}{\ln(2+|t|)}$, c'est-à-dire dans celle requise par les hypothèses du corollaire \ref{cor:majoration-zeta-et-zeta-prime} (sans la frontière). On peut alors trouver $\eta$ vérifiant
+  \begin{itemize}
+    \item $0<\eta<\frac{c}{\ln(2 + |t|)}$,
+    \item $\sigma > 1-\eta$.
+  \end{itemize}
+
+  On fixe un tel $\eta$, et on pose $s_0=1+\eta+it$. Par ce corollaire \ref{cor:majoration-zeta-et-zeta-prime},
+  TODO Figure
+
+  \[ |\zeta(s)-\zeta(s_0)|
+  = \left|\int_{s_0}^s\zeta'(\omega)\mathrm{d}\omega\right|
+  \leq C_0\eta\ln^2(2+|t|),
+  \]
+  où l'intégrale est bien définie TODO
+
+  On utilise maintenant l'inégalité fondamentale \ref{cor:zeta-inegalite-1} due à Mertens:
+  \begin{align*}
+    \zeta(s_0)
+    &\geq \frac{1}{\zeta(1+\eta)^3|\zeta(1+\eta+2it)|} \\
+    &\geq \frac{C_1\eta^3}{\ln(2+|t|)}
+  \end{align*}
+
+  où l'on a utilisé dans la deuxième inégalité le corollaire \ref{cor:zeta-inegalite-1} et TODO.
+  \\
+
+  D'où :
+  \begin{align*}
+    \zeta(s)
+    &\geq |\zeta(s_0)| - |\zeta(s)-\zeta(s_0)| \\
+    &\geq \frac{C_1^{1/4}\eta^{3/4}}{\ln^{1/4}(2+|t|)} - C_0\eta\ln^2(2+|t|)
+  \end{align*}
+
+  Choisissons alors $\eta$ pour que les deux termes se compensent, c'est-à-dire $\eta$ de l'ordre de $\ln^{-9}(2+|t|)$. Plus précisément, si l'on avait choisi :
+  \[ \eta:=\frac{c}{\ln^9(2+|t|)} \]
+\end{proof}
+
+Nous sommes maintenant en mesure de prouver le théorème des nombres premiers sous sa forme \ref{eq:tnp-erreur-1}. L'astuce est d'utiliser la formule de Perron, de briser le segment sur lequel s'effectue l'intégration, et de le remplacer par un contour qui contient le pôle $s=1$ (donc forcément débordant en partie sur le demi-plan $\sigma<1$). Le terme d'erreur vient alors de la valeur de l'intégrale sur les autres parties du contour. Formalisons cela.
+
+\begin{proof}[Démonstration du théorème \ref{eq:tnp-erreur-1}]
+  Nous avons vu à la proposition \ref{prop:zeta-sur-zeta-prime-o} 
+  \[ \left|\frac{\zeta'(s)}{\zeta(s)}\right| = O_{\sigma\to1^+}\left(\frac{1}{\sigma-1}\right) \]
+  Ainsi nous pouvons appliquer la seconde formule de Perron effective \ref{eq:perron-2-effective} avec :
+  \begin{itemize}
+    \item la série de Dirichlet $F(s)=\sum_{n\geq1}\frac{\Lambda(n)}{n^s}$
+    \item $\alpha=1$, $\sigma_a=1$, et on a
+      \[ \sum_{n\geq1}\frac{\Lambda(n)}{n^{-\sigma}}=O((\sigma-1)^{-1}) \]
+    \item la fonction $B=\ln$ vérifie
+    \[ \forall n\geq1,\quad\Lambda(n)\leq n \]
+  \end{itemize}
+  On obtient, dans ce cas-là, pour $x\geq2$ et $T\geq2$, et $\sigma_1=1+\frac{1}{\ln x}$ TODO POURQUOI?
+  \[ \psi(x) = \sum_{n\geq1}\Lambda(n) = \frac{1}{2\pi i}\int_{\sigma_1-iT}^{\sigma_1+iT}\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\mathrm{d}s\,+\,O\left(\frac{x\ln^2 x}{T}\right). \]
+  Nous allons utiliser le théorème des résidus pour estimer l'intégrale, et choisir $T$ à la fin convenablement pour compenser les termes d'erreur.
+
+  En fixant $c$ donné par le théorème \ref{eq:region-faible-sans-zero}, posons $\delta=\frac{c}{\ln^9(T+2)}$, $\sigma_0=1-\delta$, et rappelons que nous venons de poser $\sigma_1=1+\ln x$. Alors le rectangle de sommets $(\sigma_0,\pm iT)$ et $(\sigma_1,\pm iT)$ est contenu dans cette région sans zéros. En notant $f(s)=\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}$ l'intégrande, on a alors que $s=1$ est l'unique pôle de $f$ dans ce rectangle. Le théorème des résidus nous fournit alors (le terme à l'intérieur de l'intégrale, $f(s)\mathrm{d}s$, est omis pour clarté) :
+  \[ \psi(x) = \mathrm{Res}(f,1) + \frac{1}{2\pi i}\left(
+    \int_{\sigma_0-iT}^{\sigma_0+iT}
+    +\int_{\sigma_0+iT}^{\sigma_1+iT}
+    -\int_{\sigma_0-iT}^{\sigma_1-iT}
+    \right)
+    +O\left(\frac{x\ln^2x}{T}\right). \]
+
+  TODO IMAGE
+
+  Nous pouvons facilement vérifier que $\mathrm{Res}(f,1)=x$, car $\zeta$ a un pôle simple en $s=1$, donc
+  \begin{equation}\label{eq:tnp-faible-3-integrales}
+    \psi(x) = x +\frac{1}{2\pi i}\left(
+      \int_{\sigma_0-iT}^{\sigma_0+iT}
+      +\int_{\sigma_0+iT}^{\sigma_1+iT}
+      -\int_{\sigma_0-iT}^{\sigma_1-iT}
+    \right)
+    +O\left(\frac{x\ln^2x}{T}\right)
+  \end{equation}
+
+  On voit déjà le terme $x$ de l'énoncé apparaître, essayons donc d'estimer les trois intégrales. Commençons par celle du milieu, qui a lieu sur le petit segment horizontal du haut. Notons $I_h$ ce segment, et on a la majoration grossière :
+  \begin{align*}
+    |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_1}}{T}\max_{I_h}|\zeta'|\max_{I_h}\left|\frac{1}{\zeta}\right| \\
+    & \leq\frac{x}{T}\max_{I_h}|\zeta'|\max_{I_h}\left|\frac{1}{\zeta}\right|.
+  \end{align*}
+  (Astuce : l'inégalité $|s|\geq T$ se voit mieux géométriquement.)
+
+  Mais on a déjà vu :
+  \begin{itemize}
+    \item $\max|\zeta'| = O(\ln^2 T)$ dans la proposition \ref{prop:majoration-zeta-et-zeta-prime},
+    \item $\max|\frac{1}{\zeta}| = O(\ln^7 T)$ dans le théorème juste au-dessus \ref{eq:region-faible-sans-zero}.
+  \end{itemize}
+
+  Et donc
+  \[ |f(s)| = O\left(\frac{x}{T}\ln^9T\right) \]
+
+  Comme la longueur du segement est $\sigma_1-\sigma_0=1/\ln x+\delta=O(1)$, on a que
+  \begin{equation}\label{eq:tnp-faible-3-integrales-part1}
+    \int_{\sigma_0+iT}^{\sigma_1+iT}f(s)\mathrm{d}s = O\left(\frac{x}{T}\ln^9T\right)
+  \end{equation}
+
+  Par symétrie par rapport à l'axe des abscisses, la troisième intégrale sur le segment de bas $I_b$ dans \ref{eq:tnp-faible-3-integrales} est également $O\left(\frac{x}{T}\ln^9T\right)$.
+
+  Reste à évaluer la première intégrale sur le segment vertical de gauche $I_g$. Pareil, majorons grossièrement :
+  \begin{align*}
+    |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_0}}{|s|}\max_{I_g}|\zeta'|\max_{I_g}\left|\frac{1}{\zeta}\right| \\
+    & = O\left(\frac{x^{\sigma_0}}{|s|}\max_{I_g}|\zeta'|\ln^7 T\right)
+  \end{align*}
+
+  Ici, il faut faire attention car ce segment est assez proche du pôle $s=1$, donc $\max_{I_g}|\zeta'|$ peut devenir assez importante. Nous utilisons la proposition TODO pour avoir la majoration
+  \begin{equation}\label{eq:tnp-faible-3-integrales-part2}
+    \max_{I_g}|\zeta'|=O(\ln^{18}T)
+  \end{equation}
+
+  En combinant \ref{eq:tnp-faible-3-integrales-part1} et \ref{eq:tnp-faible-3-integrales-part2} et en les injectant dans \ref{eq:tnp-faible-3-integrales}, on obtient
+  \[ \psi(x) = x
+  + O\left(x^{\sigma_0}\ln^{25}x\int_{-T}^T\frac{1}{1+|t|}\mathrm{d}t\right)
+  + O\left(\frac{x}{T}\ln^9T\right)
+  + O\left(\frac{x\ln^2x}{T}\right)
+  \]
+
+  L'intégrale est $O(\ln T)$, et le dernier terme peut être absorbé dans $O\left(\frac{x}{T}\ln^9T\right)$, donc
+  \[ \psi(x) = x + O(x^{\sigma_0}\ln^{26}x) + O\left(\frac{x}{T}\ln^9T\right) \]
+
+  En majorant encore plus grossièrement, c'est-à-dire $O(\ln^9 T) = O(\ln^26 T)$, on peut factoriser
+  \begin{align*}
+    \psi(x) &= x + O\left(x\ln^{26} x\left(x^{-\delta}+\frac{1}{T}\right)\right) \\
+    &= x + O\left(x\ln^{26} x\left(\mathrm{e}^{-\frac{c\ln x}{\ln^9(T+2)}}+\mathrm{e}^{-\ln T}\right)\right)
+  \end{align*}
+
+  Il faut noter que les deux termes en exponentiel varient en sens opposés lorsque $T$ augmente. On peut les rendre égaux en choisissant $T=\exp(\ln^{1/10}x)$, auquel cas on a :
+  \[ \psi(x) = x + O(x\ln^{26} x\mathrm{e}^{-c\ln^{1/10}x}). \]
+
+  En choisissant $c$ assez grand TODO, on obtient Enfin
+  \[ \psi(x) = x + O(x\mathrm{e}^{-c\ln^{1/10}x}). \]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Région classique sans zéros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Le terme d'erreur $O(x\mathrm{e}^{-c\ln^{1/10}x})$ dans \ref{eq:tnp-erreur-1} n'est pas terrible, on peut peut-être l'améliorer. En diagnostiquant la preuve ci-dessus, on remarque que ce terme d'erreur vient en très grande partie de l'intégrale sur le segment vertical de gauche. En fait, plus on arrive à décaler ce segment vers la gauche, plus l'intégrale sera petite.
+
+Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que celle du théorème \ref{eq:region-faible-sans-zero}. Le but de cette section est donc de démontrer le théorème suivante :
+
+
+\begin{theorem}[Région classique sans zéro]\label{eq:region-classique-sans-zero}
+  Il existe un réel $c>0$ tel que la fonction $\zeta$ ne s'annule pas sur la région du plan définie par
+  \[ \sigma\geq1-\frac{c}{\ln(2+|t|)} \]
+\end{theorem}
+
+\begin{proof}
+  %https://web.stanford.edu/~tonyfeng/riemann_zeta.pdf
+\end{proof}
+
+\begin{theorem}[Théorème des nombres premiers avec terme d'erreur, de la Vallée Poussin, 1900]\label{eq:tnp-vallee-poussin}
+  Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
+  \begin{equation}
+    \psi(x)=x+O(x\mathrm{e}^{-c\sqrt{\ln x}})
+  \end{equation}
+\end{theorem}
+
+\begin{proof}
+  La preuve est exactement la même que celle du théorème \ref{eq:tnp-erreur-1}, sauf qu'on utilise la nouvelle région sans zéros que l'on vient de définir plus haut, et le rectangle est de sommets $(\sigma_0,\pm iT)$, $(\sigma_1,\pm iT)$, avec 
+  \begin{itemize}
+    \item $\sigma_0=1-\frac{c}{\ln(2+T)}$
+    \item $\sigma_1=1+1/\ln x$
+  \end{itemize}
+  On réécrit :
+  \begin{equation}\label{eq:tnp-3-integrales}
+    \psi(x) = x +\frac{1}{2\pi i}\left(
+      \int_{\sigma_0-iT}^{\sigma_0+iT}
+      +\int_{\sigma_0+iT}^{\sigma_1+iT}
+      -\int_{\sigma_0-iT}^{\sigma_1-iT}
+    \right)
+    +O\left(\frac{x\ln^2x}{T}\right)
+  \end{equation}
+  Mais cette fois, sur les deux segments horizontaux $I_h$ et $I_b$ qui sont $[\sigma_0\pm iT,\sigma_1\pm iT]$, on a, utilisant la proposition TODO
+  \begin{align}
+    |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_1}}{T}\max_{I_h}\left|\frac{\zeta'}{\zeta}\right| \\
+    & = O\left(\frac{x^{\sigma_1}\ln(T+2)}{T}\right) \\
+    & = O\left(\frac{x\ln x}{T}\right) \label{eq:tnp-grand-O}
+  \end{align}
+  où la dernière égalité vient du fait que l'on n'oubliera pas, à la fin de la preuve, de choisir $T$ tel que $T=O(x)$ (et bien sûr grand, pour que le $2$ parte aussi).
+
+  Sur le segment vertical de gauche $I_g=[\sigma_0-iT, \sigma_0+iT]$, on a
+  \begin{align*}
+    |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_0}}{|s|}\max_{I_g}\left|\frac{\zeta'}{\zeta}\right| \\
+    & = O\left(\frac{x^{\sigma_0}\ln(T+2)}{|s|}\right) \\
+    & = O\left(\frac{x^{1-c/\ln(T+2)}\ln x}{|s|}\right)
+  \end{align*}
+  où la deuxième ligne est justifiée par TODO.
+
+  En réassemblant tout, on obtient
+  \begin{align*}
+    \psi(x) &= x + O\left(x^{1-\frac{c}{\ln(T+2)}}\ln x\int_{-T}^T\frac{\mathrm{d}t}{1+|t|}\right) + O\left(\frac{x\ln^2x}{T}\right) \\
+    &= x + O\left(x\ln^2 x\left(\mathrm{e}^{-\frac{c\ln x}{\ln(T+2)}}+\mathrm{e}^{-\ln T}\right)\right)
+  \end{align*}
+
+  En choisissant alors $T:=\mathrm{e}^{\sqrt{c\ln x}}$, on vérifie que $T=O(x)$ pour que \ref{eq:tnp-grand-O} soit justifiée, et on a aussi dans ce cas
+  \[ \psi(x)=x+O(x\mathrm{e}^{-c\sqrt{\ln x}}) \]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Enoncé avec $\pi(x)$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Nous avons vu, dans les deux section précédentes, deux théorèmes que nous avons appelés "théorème des nombres premiers", mais qui ne faisaient intervenir que $\psi(x)$, sans aucun lien apparent avec $\pi(x)$. Le théorème des nombres premiers s'appelle ainsi parce qu'il a quelque chose à dire sur la distribution des nombres premiers :
+
+\begin{theorem}[Théorème des nombres premiers]\label{eq:tnp-pi-x}
+  Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
+  \[ \pi(x) = \int_2^x\frac{\mathrm{d}t}{\ln t} + O(x\mathrm{e}^{-c\sqrt{\ln x}}) \]
+\end{theorem}
+
+Cette intégrale a en réalité un nom :
+
+\begin{definition}[Logarithme intégral] On définit le logarithme intégral, noté $\mathrm{li}$, par
+  \[ \mathrm{li}(x) = \int_2^x\frac{\mathrm{d}t}{\ln t} \]
+\end{definition}
+
+\begin{proof}[Démonstration du théorème \ref{eq:tnp-pi-x}]
+  TODO
+  % https://etd.ohiolink.edu/!etd.send_file?accession=kent1550224160190008&disposition=inline p42
+\end{proof}
+
+On en déduit également la forme suivante, plus faible, mais plus répandue :
+
+\begin{theorem}[Théorème des nombres premiers, version affaiblie]\label{eq:tnp-equivalence}
+  \[ \pi(x)\sim\int_2^x\frac{\mathrm{d}t}{\ln t} \]
+\end{theorem}
+
+\begin{proof}
+  Il suffit juste de voir que (TODO Pourquoi?)
+  \[ x\mathrm{e}^{-c\sqrt{\ln x}} = o(\mathrm{li}(x)). \]
+\end{proof}
+
+\begin{proposition}
+  \[ \mathrm{li}(x) = \frac{x}{\ln x} + \frac{x}{\ln^2 x} + O\left(\frac{x}{\ln^3 x} \right) \]
+\end{proposition}
+
+\begin{proof}
+  Cela se fait facilement par intégration par parties.
+\end{proof}
+
+On a donc $\pi(x)\sim\mathrm{li}(x)\sim\frac{x}{\ln x}$, mais $\mathrm{li}$ donne une meilleure approximation :
+
+TODO GRAPHE
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{L'hypothèse de Riemann}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+TODO
+
+\begin{theorem}
+  L'hypothèse de Riemann équivaut à
+  \[ \forall\epsilon>0,\quad\psi(x)=x+O_\epsilon(x^{1/2+\epsilon}) \]
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Formule explicite pour $\psi$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Random citation \cite{tenenbaum} embeddeed in text.
+% Random citation \cite{standord} embeddeed in text.
+
+
+% \bibliographystyle{ieeetr}
+% \bibliography{main}{}
 
 \end{document}
-This is never printed
