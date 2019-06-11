@@ -998,7 +998,7 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
   \[ \psi(x) = \sum_{n\geq1}\Lambda(n) = \frac{1}{2\pi i}\int_{\sigma_1-iT}^{\sigma_1+iT}\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\mathrm{d}s\,+\,O\left(\frac{x\ln^2 x}{T}\right). \]
   Nous allons utiliser le théorème des résidus pour estimer l'intégrale, et choisir $T$ à la fin convenablement pour compenser les termes d'erreur.
 
-  En fixant $c$ donné par le théorème \ref{eq:region-faible-sans-zero}, posons $\delta=\frac{c}{\ln^9(T+2)}$, $\sigma_0=1-\delta$, et rappelons que nous venons de poser $\sigma_1=1+\ln x$. Alors le rectangle de sommets $(\sigma_0,\pm iT)$ et $(\sigma_1,\pm iT)$ est contenu dans cette région sans zéros. En notant $f(s)=\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}$ l'intégrande, on a alors que $s=1$ est l'unique pôle de $f$ dans ce rectangle. Le théorème des résidus nous fournit alors (le terme à l'intérieur de l'intégrale, $f(s)\mathrm{d}s$, est omis pour clarté) :
+  En fixant $c$ donné par le théorème \ref{eq:region-faible-sans-zero}, posons $\delta=\frac{c}{\ln^9T}$, $\sigma_0=1-\delta$, et rappelons que nous venons de poser $\sigma_1=1+\ln x$. Alors le rectangle de sommets $(\sigma_0,\pm iT)$ et $(\sigma_1,\pm iT)$ est contenu dans cette région sans zéros. En notant $f(s)=\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}$ l'intégrande, on a alors que $s=1$ est l'unique pôle de $f$ dans ce rectangle. Le théorème des résidus nous fournit alors (le terme à l'intérieur de l'intégrale, $f(s)\mathrm{d}s$, est omis pour clarté) :
   \[ \psi(x) = \mathrm{Res}(f,1) + \frac{1}{2\pi i}\left(
     \int_{\sigma_0-iT}^{\sigma_0+iT}
     +\int_{\sigma_0+iT}^{\sigma_1+iT}
@@ -1066,7 +1066,7 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
   En majorant encore plus grossièrement, c'est-à-dire $O(\ln^9 T) = O(\ln^26 T)$, on peut factoriser
   \begin{align*}
     \psi(x) &= x + O\left(x\ln^{26} x\left(x^{-\delta}+\frac{1}{T}\right)\right) \\
-    &= x + O\left(x\ln^{26} x\left(\mathrm{e}^{-\frac{c\ln x}{\ln^9(T+2)}}+\mathrm{e}^{-\ln T}\right)\right)
+    &= x + O\left(x\ln^{26} x\left(\mathrm{e}^{-\frac{c\ln x}{\ln^9 T}}+\mathrm{e}^{-\ln T}\right)\right)
   \end{align*}
 
   Il faut noter que les deux termes en exponentiel varient en sens opposés lorsque $T$ augmente. On peut les rendre égaux en choisissant $T=\exp(\ln^{1/10}x)$, auquel cas on a :
@@ -1088,14 +1088,14 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
 
 \begin{theorem}[Région classique sans zéro]\label{eq:region-classique-sans-zero}
   Il existe un réel $c>0$ tel que la fonction $\zeta$ ne s'annule pas sur la région du plan définie par
-  \[ \sigma\geq1-\frac{c}{\ln(2+|t|)} \]
+  \[ |t|\geq2 \quad \mathrm{et} \quad \sigma\geq1-\frac{c}{\ln|t|} \]
 \end{theorem}
 
 \begin{proof}
   Nous partons de la propositions \ref{cor:zeta-zeta-prime-van-mangoldt}, qui nous fournit la série de Dirichlet
   \[ -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n\geq1}\frac{\Lambda(n)}{n^s}. \]
 
-  Son abscisse de convergence est également $1$, et on a d'après la formule \ref{thm:mertens-positif} due à Mertens, $\forall\sigma>1, \forall\gamma\in\mathbb{R}$
+  Son abscisse de convergence est $1$, et on a d'après la formule \ref{thm:mertens-positif} due à Mertens, $\forall\sigma>1, \forall\gamma\in\mathbb{R}$
 
  \begin{equation}\label{eq:mertens-zeta-zeta-prime}
   - 3\frac{\zeta'(\sigma)}{\zeta(\sigma)}
@@ -1104,7 +1104,7 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
   \geq0.
  \end{equation}
 
-  Nous allons majorer les 3 termes ci-dessus lorsque $\gamma$ est l'ordonnée d'un zéro $\rho=\beta+i\gamma$ de $\zeta$.
+  Soit $\rho=\beta+i\gamma$ de $\zeta$ un zéro de $\zeta$. Nous allons majorer les 3 termes ci-dessus.
 
   Premièrement,
   \[ -\frac{\zeta'(\sigma)}{\zeta(\sigma)} = \frac{1}{\sigma-1} + O(1). \]
@@ -1145,9 +1145,27 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
     1-\beta\geq\frac{1-c_1(\sigma-1)\ln|\gamma|}{(3/(\sigma-1))+c_1\ln|\gamma|}
   \]
 
-  TODO
+  En choisissant $\sigma=1+(2c_1\ln|\gamma|)^{-1}$, il suite
+  \[ 1-\beta\geq\frac{c_1}{14\ln|\gamma|} \]
 
+  ce qui prouve le théorème par contraposée.
 \end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Majorations dans cette région}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pour prouver le théorème des nombres premiers en utilisant cette région sans zéros, nous avons besoin de quelques majorations.
+
+\begin{proposition}\label{prop:majoration-zeta-zeta-prime-region-classique}
+  Il existe une constante positive $c$ telle que l'on ait, pour $|t|\geq2$ et $\sigma\geq1-\frac{c}{\ln|t|}$,
+  \[ \frac{\zeta'(s)}{\zeta(s)} = O(\ln|t|) \]
+\end{proposition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Théorème des nombres premiers}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{theorem}[Théorème des nombres premiers avec terme d'erreur, de la Vallée Poussin, 1900]\label{eq:tnp-vallee-poussin}
   Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
@@ -1159,7 +1177,7 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
 \begin{proof}
   La preuve est exactement la même que celle du théorème \ref{eq:tnp-erreur-1}, sauf qu'on utilise la nouvelle région sans zéros que l'on vient de définir plus haut, et le rectangle est de sommets $(\sigma_0,\pm iT)$, $(\sigma_1,\pm iT)$, avec 
   \begin{itemize}
-    \item $\sigma_0=1-\frac{c}{\ln(2+T)}$
+    \item $\sigma_0=1-\frac{c}{\ln(T)}$
     \item $\sigma_1=1+1/\ln x$
   \end{itemize}
   On réécrit :
@@ -1171,26 +1189,26 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
     \right)
     +O\left(\frac{x\ln^2x}{T}\right)
   \end{equation}
-  Mais cette fois, sur les deux segments horizontaux $I_h$ et $I_b$ qui sont $[\sigma_0\pm iT,\sigma_1\pm iT]$, on a, utilisant la proposition TODO
+  Mais cette fois, sur les deux segments horizontaux $I_h$ et $I_b$ qui sont $[\sigma_0\pm iT,\sigma_1\pm iT]$, on a, utilisant la proposition \ref{prop:majoration-zeta-zeta-prime-region-classique},
   \begin{align}
     |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_1}}{T}\max_{I_h}\left|\frac{\zeta'}{\zeta}\right| \\
-    & = O\left(\frac{x^{\sigma_1}\ln(T+2)}{T}\right) \\
+    & = O\left(\frac{x^{\sigma_1}\ln(T)}{T}\right) \\
     & = O\left(\frac{x\ln x}{T}\right) \label{eq:tnp-grand-O}
   \end{align}
-  où la dernière égalité vient du fait que l'on n'oubliera pas, à la fin de la preuve, de choisir $T$ tel que $T=O(x)$ (et bien sûr grand, pour que le $2$ parte aussi).
+  où la dernière égalité vient du fait que l'on n'oubliera pas, à la fin de la preuve, de choisir $T$ tel que $T=O(x)$.
 
   Sur le segment vertical de gauche $I_g=[\sigma_0-iT, \sigma_0+iT]$, on a
   \begin{align*}
     |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_0}}{|s|}\max_{I_g}\left|\frac{\zeta'}{\zeta}\right| \\
-    & = O\left(\frac{x^{\sigma_0}\ln(T+2)}{|s|}\right) \\
-    & = O\left(\frac{x^{1-c/\ln(T+2)}\ln x}{|s|}\right)
+    & = O\left(\frac{x^{\sigma_0}\ln T}{|s|}\right) \\
+    & = O\left(\frac{x^{1-c/\ln T}\ln x}{|s|}\right)
   \end{align*}
-  où la deuxième ligne est justifiée par TODO.
+  où la deuxième ligne est justifiée par la proposition \ref{prop:majoration-zeta-zeta-prime-region-classique}.
 
   En réassemblant tout, on obtient
   \begin{align*}
-    \psi(x) &= x + O\left(x^{1-\frac{c}{\ln(T+2)}}\ln x\int_{-T}^T\frac{\mathrm{d}t}{1+|t|}\right) + O\left(\frac{x\ln^2x}{T}\right) \\
-    &= x + O\left(x\ln^2 x\left(\mathrm{e}^{-\frac{c\ln x}{\ln(T+2)}}+\mathrm{e}^{-\ln T}\right)\right)
+    \psi(x) &= x + O\left(x^{1-\frac{c}{\ln T}}\ln x\int_{-T}^T\frac{\mathrm{d}t}{1+|t|}\right) + O\left(\frac{x\ln^2x}{T}\right) \\
+    &= x + O\left(x\ln^2 x\left(\mathrm{e}^{-\frac{c\ln x}{\ln T}}+\mathrm{e}^{-\ln T}\right)\right)
   \end{align*}
 
   En choisissant alors $T:=\mathrm{e}^{\sqrt{c\ln x}}$, on vérifie que $T=O(x)$ pour que \ref{eq:tnp-grand-O} soit justifiée, et on a aussi dans ce cas
