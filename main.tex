@@ -349,23 +349,34 @@ Il en découle immédiatement cette 1ère propriété intéressante :
 
 \begin{proof}
   Soit $p$ premier fixé. L'inégalité triangulaire donne $|1-p^{-s}|\leq1+p^{-\sigma}$. Par conséquent,
-  \[\log(|1-p^{-s}|)\leq\log(1+p^{-\sigma})\leq p^{-\sigma} \]
+  \[\ln(|1-p^{-s}|)\leq\ln(1+p^{-\sigma})\leq p^{-\sigma} \]
   où les inégalités sont données respectivement par la croissance et par la concavité du logarithme.
 
-  Ceci entraîne la convergence de la série $\sum_p\log(|1-p^{-s}|)$, pour tout $s$ avec $\sigma>1$. Notons $L_s$ sa limite:
-  \[ \log\left(\prod_p|1-p^{-s}|\right) = L_s, \]
+  Ceci entraîne la convergence de la série $\sum_p\ln(|1-p^{-s}|)$, pour tout $s$ avec $\sigma>1$. Notons $L_s$ sa limite:
+  \[ \ln\left(\prod_p|1-p^{-s}|\right) = L_s, \]
   et ainsi
   \[ \left|\prod_p\frac{1}{1-p^{-s}}\right| = \mathrm{e}^{-L_s} > 0, \]
   Le terme de gauche est exactement $|\zeta(s)|$ par le produit eulérien du théorème \ref{thm:produit-eulerien-complexe}.
 
 \end{proof}
 
-\begin{proposition}\label{eq:zeta-majoration-facile}
+\begin{proposition}\label{prop:zeta-majoration-facile}
   \[ |\zeta(s)|\leq\frac{\sigma}{\sigma-1}\quad(\sigma>1) \]
 \end{proposition}
 
 \begin{proof}
-  TODO
+  On passe par les intégrales. Soit $N\geq2$ et $s=\sigma+it$.
+  \begin{align*}
+    \left|\sum_{n=1}^N\frac{1}{n^s}\right|
+    &\leq \sum_{n=1}^N\left|\frac{1}{n^s}\right| \\
+    &= 1 + \sum_{n=2}^N\frac{1}{n^\sigma} \\
+    &= 1 + \sum_{n=2}^N\int_{n-1}^n\frac{\mathrm{d}t}{t^\sigma} \\
+    &= 1 + \int_{1}^N\frac{\mathrm{d}t}{t^\sigma} \\
+    &= 1 + \frac{1}{\sigma-1}\left(1-\frac{1}{N^{\sigma-1}}\right) \\
+    &\leq \frac{\sigma}{\sigma-1}.
+  \end{align*}
+
+  Il suffit alors de faire tendre $N$ vers $+\infty$.
 \end{proof}
 
 \begin{proposition}
@@ -458,7 +469,7 @@ Nous allons extraire une partie de la preuve ci-dessus, en la mettre dans le cor
 Cette proposition découle immédiatement du lemme suivant :
 
 \begin{lemma}
-  Soit $f$ méromorphe avec un pôle d'order $k$ en $s=\alpha$. Alors $\frac{f}{f'}$ a un pôle d'order 1 en $s=\alpha$, de résidu $-k$.
+  Soit $f$ méromorphe avec un pôle d'ordre $k$ en $s=\alpha$. Alors $\frac{f}{f'}$ a un pôle d'ordre 1 en $s=\alpha$, de résidu $-k$.
 \end{lemma}
 
 \begin{proof}
@@ -487,26 +498,26 @@ Cette proposition découle immédiatement du lemme suivant :
 \end{proof}
 
 \begin{corollary}\label{cor:zeta-sur-zeta-prime-o}
-  \[ \left|\frac{\zeta'(\sigma)}{\zeta(\sigma)}\right| = O_{\sigma\to1^+}\left(\frac{1}{\sigma-1}\right) \]
+  \[ \left|\frac{\zeta'(\sigma)}{\zeta(\sigma)}\right| = O_{\sigma\to1}\left(\frac{1}{\sigma-1}\right) \]
 \end{corollary}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Expression intégrale}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Expression intégrale}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{proposition}
-  Pour tout complexe $\sigma > 1$,
-  \[ \Gamma(s)\zeta(s) = \int_0^\infty\frac{t^{s-1}}{\mathrm{e}^t-1}\mathrm{d}t \]
-\end{proposition}
+% \begin{proposition}
+%   Pour tout complexe $\sigma > 1$,
+%   \[ \Gamma(s)\zeta(s) = \int_0^\infty\frac{t^{s-1}}{\mathrm{e}^t-1}\mathrm{d}t \]
+% \end{proposition}
 
-\begin{proof}
-  On part de la formule TODO
-  \[ \Gamma(s)n^{-s} = \int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t\quad (\sigma > 0) \]
+% \begin{proof}
+%   On part de la formule TODO
+%   \[ \Gamma(s)n^{-s} = \int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t\quad (\sigma > 0) \]
 
-  En sommant pour $n\geq1$, il vient pour $\sigma>1$
-  \[ \Gamma(s)\zeta(s) = \sum_{n=1}^\infty\int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t = \int_0^\infty \frac{t^{s-1}}{\mathrm{e}^t - 1}\mathrm{d}t \]
-  Remarquons que la série numérique $\sum\int_0^\infty |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^\infty t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
-\end{proof}
+%   En sommant pour $n\geq1$, il vient pour $\sigma>1$
+%   \[ \Gamma(s)\zeta(s) = \sum_{n=1}^\infty\int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t = \int_0^\infty \frac{t^{s-1}}{\mathrm{e}^t - 1}\mathrm{d}t \]
+%   Remarquons que la série numérique $\sum\int_0^\infty |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^\infty t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
+% \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -534,87 +545,161 @@ La définition de $\zeta$ que nous avons donnée en \ref{def:zeta-definition} es
 Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la région prolongée, $0\leq\sigma\leq1$, s'appelle la $bande\,critique$. Au fait, de nombreux résultats arithmétiques reliant $\zeta$ et les nombres premiers font appel aux propriétés de $\zeta$ sur cette bande critique.
 
 \begin{proposition} On a, pour $s\neq0$ et $\sigma>0$,
-  \[ \zeta(s) = \frac{s}{s-1}-s\int_1^\infty\frac{\{u\}}{u^{1+s}}\mathrm{d}u \]
+  \[ \zeta(s) = \frac{s}{s-1}-s\int_1^\infty\frac{\{t\}}{t^{1+s}}\mathrm{d}t \]
 \end{proposition}
 
 \begin{proof}
-  Sommation d'abel, TODO faire proprement
+  Pour $s>1$, appliquons la formule d'Abel, avec :
+  \begin{itemize}
+    \item $a_n=1$,
+    \item $f:x\mapsto 1/x^s$,
+    \item $x=1, y=N$
+  \end{itemize}
+  dans l'énoncé de la proposition \ref{lem:formule-abel}:
+  \[
+    \sum_{n=1}^N\frac{1}{n^s}
+    = \frac{1}{N^{s-1}} - 1 - s\int_1^N\lfloor t\rfloor t^{-s-1}\mathrm{d}t
+  \]
+  En faisant tendre $N$ vers $+\infty$,
+  \begin{align*}
+    \zeta(s)
+    &= - s\int_1^\infty\lfloor t\rfloor t^{-s-1}\mathrm{d}t \\
+    &= - s\int_1^\infty t^{-s}\mathrm{d}t - s\int_1^\infty \{t\}t^{-s-1}\mathrm{d}t \\
+    &= -s\left[\frac{t^{-s+1}}{-s+1}\right]_1^\infty - s\int_1^\infty \{t\}t^{-s-1}\mathrm{d}t \\
+    &= \frac{s}{s-1} - s\int_1^\infty \{t\}t^{-s-1}\mathrm{d}t
+  \end{align*}
 \end{proof}
 
 
-\begin{lemma}\label{lem:zeta-somme-partielle}
-  On a, pour $N\geq0$ et $\sigma>0$,
-  \[ \zeta(s) = \sum_{n=1}^N\frac{1}{n^s} + \frac{N^{1-s}}{s-1}-s\int_N^{\infty}\frac{\{u\}}{u^{1+s}}\mathrm{d}u \]
+\begin{lemma}[Formule du reste]\label{lem:formule-du-reste}
+  On a, pour $N\geq1$ et $\sigma>0$,
+  \[
+    \zeta(s)
+    = \sum_{n=1}^N\frac{1}{n^s}
+    + \frac{N^{1-s}}{s-1}-s\int_N^{\infty}\frac{\{t\}}{t^{1+s}}\mathrm{d}t
+  \]
 \end{lemma}
+
+\begin{proof}
+  $\forall\sigma>1,$
+  \begin{align*}
+    \zeta(s)-\sum_{n=1}^N
+    &= \int_N^\infty\frac{\mathrm{d}\lfloor t\rfloor}{t^s} \\
+    &= \int_N^\infty\frac{\mathrm{d}t}{t^s} - \int_N^\infty\frac{\mathrm{d}\{t\}}{t^s} \\
+    & = -\frac{N^{1-s}}{1-s} - \int_N^\infty\frac{\mathrm{d}\{t\}}{t^s} \\
+    & = -\frac{N^{1-s}}{1-s} - s\int_N^\infty\frac{\{t\}}{t^{s+1}}\mathrm{d}t
+  \end{align*}
+  et cette formule est encore valable pour $\sigma>0$ par prolongement analytique.
+\end{proof}
 
 \begin{proposition}\label{prop:majoration-zeta-et-zeta-prime}
   Pour tout réel $A>0$, sur la région du plan définie par $\{s\in\mathrm{C}\,|\,t\geq2,\,\sigma>1-\frac{A}{\ln t}\}$, on a :
   \[ \zeta(s) = O(\ln t) \]
   \[ \zeta'(s) = O(\ln^2 t) \]
-  où la constante dans le $O$ dépend de $A$.
+  lorsque $t\rightarrow+\infty$, où la constante dans le $O$ dépend de $A$.
 \end{proposition}
 
 \begin{proof}
-  Les égalités $|\zeta(2)|\leq\zeta(2)$ et $|\zeta'(2)|\leq\zeta'(2)$ sont triviales, donc les deux majorations sont vérifiées pour $\sigma\geq2$.
+  Pour $\sigma\geq2$, Les égalités $|\zeta(s)|\leq\zeta(2)=O(1)$ et $|\zeta'(s)|\leq\zeta'(2)=O(1)$ sont triviales, donc les deux majorations sont vérifiées pour $\sigma\geq2$.
 
-  On peut donc supposer maintenant que $\sigma<2$ et $t\geq2$, que l'on fixe tous les deux. On a alors (la première inégalité vient de l'inégalité triangulaire) :
+  On peut donc supposer maintenant que $\sigma<2$ et $t\geq2$. Pour tout couple $(\sigma, t)$ vérifiant ces conditions, on a (la première inégalité vient de l'inégalité triangulaire) :
   \[ |s|\leq\sigma+t<2+t\leq 2t \]
   et
   \[ |s-1|\geq t. \]
-  En reportant tout cela dans le lemme \ref{lem:zeta-somme-partielle}, on obtient, pour tout $N\geq1$ :
+  En reportant tout cela dans le lemme \ref{lem:formule-du-reste}, on obtient, pour tout $N\geq1$ :
   \begin{equation}\label{eq:zeta-abs-majoree}
     |\zeta(s)|\leq\sum_{n=1}^N\frac{1}{n^\sigma}
     + \frac{N^{1-\sigma}}{t}
     + 2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
   \end{equation}
  
-  En prenant TODO $N=|t|$, on a
+  En particulier, en prenant $N=|t|$, on a
   \begin{itemize}
     \item $N\leq t<N+1,$
     \item $\forall n\leq N,\,\ln n\leq\ln t.$
   \end{itemize}
 
   Par ailleurs, l'hypothèse $1-\sigma<A/\ln t$ entraîne
-  \[ \frac{1}{n^\sigma}
-  = \frac{1}{n}n^{1-\sigma}
-  = \frac{1}{n}\mathrm{e}^{(1-\sigma)\ln n}
-  < \frac{1}{n}\mathrm{e}^{A\frac{\ln n}{\ln t}}
-  \leq \frac{1}{n}\mathrm{e}^A
-  = O\left(\frac{1}{n}\right)
+  \[
+    \frac{1}{n^\sigma}
+    = \frac{1}{n}n^{1-\sigma}
+    = \frac{1}{n}\mathrm{e}^{(1-\sigma)\ln n}
+    < \frac{1}{n}\mathrm{e}^{A\frac{\ln n}{\ln t}}
+    \leq \frac{1}{n}\mathrm{e}^A
+    = O\left(\frac{1}{n}\right)
   \]
 
   On peut donc maintenant évaluer terme à terme l'équation \ref{eq:zeta-abs-majoree}.
 
-  \[ \sum_{n=1}^N\frac{1}{n^\sigma}
-  = O\left(\sum_{n=1}^N\frac{1}{n}\right)
-  = O(\ln N)
-  = O(\ln t)
+  \[
+    \sum_{n=1}^N\frac{1}{n^\sigma}
+    = O\left(\sum_{n=1}^N\frac{1}{n}\right)
+    = O(\ln N)
+    = O(\ln t)
   \]
 
-  \[ \frac{N^{1-\sigma}}{t}
-  = \frac{N}{t}\frac{1}{N^\sigma}
-  = O\left(\frac{1}{N}\right)
-  = O(1)
+  \[
+    \frac{N^{1-\sigma}}{t}
+    = \frac{N}{t}\frac{1}{N^\sigma}
+    = O\left(\frac{1}{N}\right)
+    = O(1)
   \]
 
-  \[ 2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
-  = \frac{2t}{\sigma N^\sigma}
-  = O\left(\frac{2t}{N}\right)
-  = O(1)
+  \[
+    2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
+    = \frac{2t}{\sigma N^\sigma}
+    = O\left(\frac{2t}{N}\right)
+    = O(1)
   \]
 
   En remplaçant dans \ref{eq:zeta-abs-majoree},
-  \[ |\zeta(s)|=O(\ln t) \]
+  \[ |\zeta(s)|=O(\ln t). \]
+
+  Pour la deuxième majoration, il suffit de dériver et d'appliquer le même raisonnement.
 \end{proof}
 
 Par symétrie par rapport à l'axe $t=0$, on a également :
 
 \begin{corollary}\label{cor:majoration-zeta-et-zeta-prime}
-  Pour tout réel $A>0$, sur la région du plan définie par $\{s\in\mathrm{C}\,|\,\,\sigma>1-\frac{A}{\ln (2+|t|)}\}$, on a :
-  \[ \zeta(s) = O(\ln (2+|t|)) \]
-  \[ \zeta'(s) = O(\ln^2 (2+|t|)) \]
+  Pour tout réel $A>0$, sur la région du plan définie par $\{s\in\mathrm{C}\,|\,\,|t|\geq2,\,\,\sigma>1-\frac{A}{\ln |t|}\}$, on a :
+  \[ \zeta(s) = O(\ln |t|) \]
+  \[ \zeta'(s) = O(\ln^2 |t|) \]
   où la constante dans le $O$ ne dépend que de $A$.
 \end{corollary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Majorations près du pôle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Les estimations ci-dessus requièrent que $|t|\geq2$, mais parfois, il nous faut estimer $\zeta$ près de son pôle $s=1$. C'est ce que nous allons faire dans cette section.
+
+\begin{proposition}\label{prop:majorations-pres-du-pole}
+  Soit $\epsilon>0$. Si $|t|\leq1$ et $0<\sigma\leq2$,
+  \[ \zeta(s) = O\left(\frac{1}{|s-1|}\right) \]
+  \[ \zeta'(s) = O\left(\frac{1}{|s-1|^2}\right) \]
+\end{proposition}
+
+\begin{proof}
+  En prenant $N=1$ dans la formule du reste \ref{lem:formule-du-reste}, on a:
+  \begin{equation}\label{eq:formule-du-reste-n-1}
+    \zeta(s) = 1+\frac{1}{s-1}-s\int_1^\infty\frac{\{t\}}{t^{s+1}}\mathrm{d}t
+  \end{equation}
+
+  où $\left|\frac{\{t\}}{t^{s+1}}\right|\leq\frac{1}{t^{\sigma+1}}$, donc l'intégrale converge absolument. Comme $|s|=O(1)$ dans le domaine étudié, on a bien
+  \[ |\zeta(s)| = O\left(\frac{1}{|s-1|}\right). \]
+
+  On dérive \ref{eq:formule-du-reste-n-1}:
+  \[
+    \zeta'(s)
+    = -\frac{1}{(s-1)^2}
+    - \int_1^\infty\frac{\{t\}}{t^{s+1}}\mathrm{d}t
+    - s\int_1^\infty\frac{(-\ln t)\{t\}}{t^{s+1}}\mathrm{d}t.
+  \]
+  Le même argument que ci-dessus montre que :
+  \[ \zeta'(s) = O\left(\frac{1}{|s-1|^2}\right). \]
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -771,7 +856,7 @@ Nous sommes maintenant en mesure de prouver le résultat suivant, qui va s'avér
   \[ \lim_{\sigma\to1^+}\frac{\zeta(\sigma+it_0)-\zeta(1+it_0)}{\sigma-1}\in\mathbb{C}\]
   donc on peut écrire, en appliquant l'hypothèse,
   \[ \zeta(\sigma+it_0)=O_{\sigma\to1^+}(\sigma-1). \]
-  De plus, comme $|\zeta(s)|\leq\frac{\sigma}{\sigma-1}$ par la proposition \ref{eq:zeta-majoration-facile}, on peut écrire
+  De plus, comme $|\zeta(s)|\leq\frac{\sigma}{\sigma-1}$ par la proposition \ref{prop:zeta-majoration-facile}, on peut écrire
   \[ \zeta(\sigma) = O_{\sigma\to1^+}\left(\frac{1}{\sigma-1}\right). \]
   Enfin, par continuité de $\zeta$,
   \[ \zeta(\sigma+2it_0) = O_{\sigma\to1^+}(1) \]
@@ -896,7 +981,7 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
 
 \begin{proof}[Démonstration du théorème \ref{eq:tnp-erreur-1}]
   Nous avons vu à la proposition \ref{cor:zeta-sur-zeta-prime-o} 
-  \[ \left|\frac{\zeta'(\sigma)}{\zeta(\sigma)}\right| = O_{\sigma\to1^+}\left(\frac{1}{\sigma-1}\right) \]
+  \[ \left|\frac{\zeta'(\sigma)}{\zeta(\sigma)}\right| = O_{\sigma\to1}\left(\frac{1}{\sigma-1}\right) \]
   Ainsi nous pouvons appliquer la seconde formule de Perron effective \ref{eq:perron-2-effective} avec :
   \begin{itemize}
     \item la série de Dirichlet $F(s)=\sum_{n\geq1}\frac{\Lambda(n)}{n^s}$
@@ -962,7 +1047,7 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
     & = O\left(\frac{x^{\sigma_0}}{|s|}\max_{I_g}|\zeta'|\ln^7 T\right)
   \end{align*}
 
-  Ici, il faut faire attention car ce segment est assez proche du pôle $s=1$, donc $\max_{I_g}|\zeta'|$ peut devenir assez importante. Nous utilisons la proposition TODO pour avoir la majoration
+  On est tenté ici d'utiliser encore une fois la proposition \ref{cor:majoration-zeta-et-zeta-prime} pour majorer $|\zeta'|$. Mais il faut faire attention, car on n'a plus le $|t|\geq2$ nécessaire pour \ref{cor:majoration-zeta-et-zeta-prime}, car ce segment est assez proche du pôle $s=1$, donc $\max_{I_g}|\zeta'|$ peut devenir assez importante. Mais par hypothèse, $\frac{1}{|\sigma-1|}=O(\ln^9|t|)$ Nous utilisons la proposition \ref{prop:majorations-pres-du-pole} pour avoir la majoration
   % https://web.stanford.edu/~tonyfeng/riemann_zeta.pdf
   \begin{equation}\label{eq:tnp-faible-3-integrales-part2}
     \max_{I_g}|\zeta'|=O(\ln^{18}T)
