@@ -48,15 +48,95 @@ Mertens, $\sum_p\frac{\ln p}{p}$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Tchebychev et ses fonctions}
+\section{Van Mangoldt, Tchebychev et leurs fonctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Nous introduisons ici les fonctions de Tchebychev, car elles vont nous suivre dans toute la suite de ce rapport.
 
-\begin{definition}[Fonctions de Tchebychev] Pour $x\in \mathbb{R}$,
-  \[ \theta(x) = \sum_{p \le x}\log p \]
+\begin{definition}[Fonction $\theta$ de Tchebychev] Pour $x\in \mathbb{R}$,
+  \[ \theta(x) = \sum_{p \le x}\ln p. \]
 \end{definition}
+
+Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très simple et très rapide de $\theta$, voir TODO HINDRY pour une démonstration.
+
+\begin{proposition}\label{prop:theta-majoration}
+  \[
+    \forall x\geq1,\quad \theta(x)\leq 2x\ln 2.
+  \]
+\end{proposition}
+
+\begin{definition}[Fonction de van Mangoldt]
+  \[
+    \Lambda(n)=
+    \begin{cases}
+      \ln p & \text{s'il existe $m\geq1$ et $p$ tels que $n=p^m$} \\
+      0 & \text{sinon}
+    \end{cases}
+  \]
+\end{definition}
+
+\begin{definition}[Fonction $\psi$ de Tchebychev] Pour $x\in \mathbb{R}$,
+  \[
+    \theta(x)
+    = \sum_{n \le x}\Lambda (n)
+    = \sum_{p \le x}\Lambda (p).
+  \]
+  $\theta$ est également appelée fonction sommatoire de von Mangoldt.
+\end{definition}
+
+\begin{proposition}
+  \[
+    \psi(x) = \sum_{k=1}^{\infty}\theta(x^{1/k}).
+  \]
+\end{proposition}
+
+\begin{proof}
+  Notons tout d'abord que cette somme est en réalité finie. En effet, dès que $k$ est strictement supérieur à $\log_2 x$, on a $x^{1/k}<2$, donc $\theta(x^{1/k})=0$.
+  \\
+
+  On peut écrire :
+  \[
+    \psi(s) = \sum_{p^k\leq x}\ln p  
+  \]
+  où $p$ est premier et $k\in\mathbb{N}^*$. Mais $p^k\leq x\Leftrightarrow p\leq x^{1/k}$, donc :
+  \[
+    \psi(s)
+    = \sum_{k\in\mathbb{N}^*}\sum_{p\leq x^{1/k}}\ln p 
+    = \sum_{k\in\mathbb{N}^*}\theta(x^{1/k}).
+  \]
+\end{proof}
+
+\begin{proposition}\label{prop:relation-psi-theta}
+  Au voisinage de $+\infty$,
+  \[
+    \psi(x) = \theta(x) + O(\sqrt{x}\ln x).
+  \]
+\end{proposition}
+
+\begin{proof}
+  Soit $x\geq1$, on peut utiliser la proposition précédente pour écrire :
+  \[
+    \psi(x)
+    = \theta(x) + \theta(\sqrt{x})
+    + \sum_{k=3}^{\infty}\theta(x^{1/k}).
+  \]
+
+  On utilise ensuite la majoration \ref{prop:theta-majoration} pour écrire :
+  \begin{align*}
+    \psi(x)-\theta(x)
+    &\leq 2\ln2\sqrt{x}
+    + 2\ln2\sum_{k=3}^{\infty}x^{1/k} \\
+    &\leq 2\ln2\sqrt{x}
+    + 2\ln2\sum_{k=3}^{\infty}x^{1/2}.
+  \end{align*}
+
+  Or on a vu dans la preuve de la proposition précédente qu'il y avait au plus $\log_2x$ termes dans la somme. Donc dernier terme est majoré par :
+  \[
+    \psi(x)-\theta(x)
+    = O(\sqrt{x}) + O(\log_2(x)x^{1/2}) = O(\sqrt{x}\ln x)
+  \]
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,29 +235,54 @@ Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une c
 \subsection{Séries de Dirichlet}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Le titre de ce rapport contient "la fonction $\zeta$" de Riemann, mais avant de la définir, nous allons d'abord définir ce qu'est une série de Dirichlet.
+Le titre de ce rapport contient "la fonction $\zeta$" de Riemann, mais avant de la définir, nous allons d'abord définir le cadre plus général des séries de Dirichlet.
 
 \begin{definition}\label{def:serie-dirichlet}
   Soit $f$ une fonction arithmétique. Alors la série de Dirichlet associée à $f$ est la série (formelle) :
   \[ F(s) = \sum_{n=1}^\infty\frac{f(n)}{n^s}. \]
 \end{definition}
 
-Nous n'allons pas démontrer le résultat suivant, voir TODO
-% http://mural.maynoothuniversity.ie/4470/1/finaldraftmsc.pdf p24 
-% WWL CHEN.Distribution of Prime Numbers, A Series of Lectures, (1981)
-pour un démonstration
+On sait (voir par exmple HINDRY TODO) qu'il existe un réel $\sigma_a$ appelé abscisse de convergence absolue tel que $F(s)$ converge absolument si $\sigma>\sigma_a$, et diverge si $\sigma<\sigma_a$.
 
-\begin{theorem}
-  Soit $F$ une série de Dirichlet, et supposons qu'il existe $s\in\mathbb{C}$ telle que $F(s)$ converge. Alors il existe trois réels :
-  \[ -\infty\leq\sigma_c\leq\sigma_u\leq\sigma_a\leq+\infty \]
-  tels que :
-  \begin{itemize}
-    \item $F$ converge pour tout $s$ vérifiant $\sigma>\sigma_c$.
-  \end{itemize}
+\begin{theorem}[Mertens]\label{thm:mertens-positif}
+  Soit $F(s) =\sum_{n\geq1}\frac{a_n}{n^s}$ une série de Dirichlet à coefficients positits ou nuls. Notons $\sigma_a$ sont abscisse de convergence. Alors:
+  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))\geq0 \quad(\sigma>\sigma_a) \]
 \end{theorem}
 
+\begin{proof}
+  Posons $\forall\theta\in\mathbb{R}, V(\theta) := 3+4\cos(\theta)+\cos(2\theta)$. Alors
+  \begin{align*}
+    V(\theta) &= 3+4\cos(\theta)+(2\cos^2(\theta)-1) \\
+              &= 2(1+2\cos(\theta)+\cos^2(\theta)) \\
+              &= 2(1+\cos(\theta))^2 \\
+              &\geq0.
+  \end{align*}
+  D'autre part, on a le calcul
+  \[
+    \Re(F(\sigma+it))
+    =\sum_{n=1}^\infty\frac{a_n}{n^s}\Re(\mathrm{e}^{it\ln n})
+    =\sum_{n=1}^\infty\frac{a_n}{n^s}\cos(t\ln n).
+  \]
+
+  On a aussi
+  \[
+    \Re(F(\sigma+2it))
+    = \sum_{n=1}^\infty\frac{a_n}{n^s}\cos(2t\ln n).
+  \]
+
+  D'où :
+  \[
+    3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))
+    = \sum_{n=1}^\infty\frac{a_n V(t\ln n)}{n^\sigma},
+  \]
+
+  et comme les $a_n$ sont positifs ou nuls, ainsi que $V$, cela implique bien que
+  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))\geq0 \]
+  
+\end{proof}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Formule de Perron}
+\subsection{Formules de Perron}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Nous établissons dans cette section la formule de Perron, reliant une série de Dirichlet à sa fonction sommatoire normalisée.
@@ -241,7 +346,7 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
     \item il existe une fonction B positive et croissante telle que
     \[ \forall n\geq1,\quad|a_n|\leq B(n) \]
   \end{itemize}
-  Alors, pour $x\geq2$, $T\geq2$, $\sigma\leq\sigma_a$, $\kappa:=\sigma_a-\sigma+1/\ln x$,
+  Alors, pour $x\geq2$, $T\geq2$, $\sigma\leq\sigma_a$, et en posant $\kappa:=\sigma_a-\sigma+1/\ln x$,
   \[ \sum_{n\leq x}\frac{a_n}{n^s}=\frac{1}{2\pi i}\int_{\kappa-iT}^{\kappa+iT}F(s+\omega)\frac{x^\omega}{\omega}\mathrm{d}\omega + O\left(x^{\sigma_a-\sigma}\frac{\ln^\alpha x}{T}+\frac{B(2x)}{x^\sigma}\left(1+x\frac{\ln T}{T}\right)\right) \]
 \end{theorem}
 
@@ -272,7 +377,7 @@ La somme de droite est clairement convergente, donc $\zeta(x)$ est bien défini.
 \begin{theorem}[Produit eulérien]\label{thm:produit-eulerien-reel}
   \[ \zeta(x) = \prod_p\frac{1}{1-p^{-x}}\quad(\sigma>1) \]
   Plus précisément, le produit infini signifie :
-  \[ \lim_{P\to+\infty}\prod_{p\,\mathrm{premier}\\p\leq P}\frac{1}{1-p^{-x}}=\zeta(x)\quad(\sigma>1) \]
+  \[ \lim_{N\to+\infty}\prod_{\substack{p\,\mathrm{premier}\\p\leq N}}\frac{1}{1-p^{-x}}=\zeta(x)\quad(\sigma>1) \]
 \end{theorem}
 
 \begin{proof}
@@ -395,16 +500,6 @@ Il en découle immédiatement cette 1ère propriété intéressante :
 
 $\zeta(s)$ est réel pour $s$ réel, et est strictement positif. Le logarithme de ce nombre existe et est réel. Il est donc naturel de choisir, parmi tous les $\log\zeta$ possible, de choisir celle qui prolonge $\ln\zeta$ sur l'axe réel.
 
-\begin{definition}[Fonction de van Mangoldt]
-\[
-  \Lambda(n)=
-  \begin{cases}
-    \ln p & \text{s'il existe $m\geq1$ et $p$ tels que $n=p^m$} \\
-    0 & \text{sinon}
-  \end{cases}
-\]
-\end{definition}
-
 \begin{proposition}\label{prop:log-zeta}
   On peut construuire une détermination holomorphe de $\log\zeta$ pour $\sigma>1$ en posant
   \[
@@ -493,8 +588,8 @@ Cette proposition découle immédiatement du lemme suivant :
   Comme $\frac{g'(s)}{g(s)}$ est holomorphe au voisinage de $\alpha$, ceci prouve le lemme.
 \end{proof}
 
-\begin{proof}[Preuve de la proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe}]
- $-\frac{\zeta'}{\zeta}$ a un pôle d'ordre 1 en 1, $\frac{1}{s-1}$ a un pôle d'ordre 1 en 1. Leur différence est donc holomorphe au voisiange de 1.
+\begin{proof}[Démonstration de la proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe}]
+ $-\frac{\zeta'}{\zeta}$ a un pôle d'ordre 1 en 1, $\frac{1}{s-1}$ a un pôle d'ordre 1 en 1. Leur différence est donc holomorphe au voisinage de 1.
 \end{proof}
 
 \begin{corollary}\label{cor:zeta-sur-zeta-prime-o}
@@ -525,6 +620,8 @@ Cette proposition découle immédiatement du lemme suivant :
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. Elle n'est pas strictement nécessaire à la preuve du théorème des nombres premiers (elle n'est pas du tout utilisée dans la preuve de la section \ref{section:region-affaiblie}), mais ce rapport étudie $\zeta$ en général, nous la mettons donc ici.
+
 \begin{theorem}[Equation fonctionnelle, Riemann]\label{thm:equation-fonctionnelle}
   \[ \zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)\quad (s\in\mathbb{C}\backslash\{0,1\}) \]
 \end{theorem}
@@ -536,7 +633,7 @@ Cette proposition découle immédiatement du lemme suivant :
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Prolongement et propriétés sur la bande critique}
+\section{Prolongement et propriétés sur la bande critique}\label{section:prolongement-proprietes-bande-critique}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -774,25 +871,42 @@ Prolongement sur $[0,1]$ par la sommation d'abel, sur $\sigma<0$ par l'équation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Lemmes d'analyse complexe}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Produit d'Hadamard}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}
-  On définit, pour $s\in\mathbb{C}\backslash\{0,1\}$,
+  On définit, pour $s\in\mathbb{C}$,
   \[ \xi(s) := s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s) \]
 \end{definition}
 
-\begin{proposition}
+La définition est possible pour $s\in\mathbb{C}\backslash\{0,1\}$, mais aussi en 1 car le pôle de $\zeta$ est compensé par $(s-1)$, et également en 0 par l'équation fonctionelle \ref{thm:equation-fonctionnelle}.
+\\
+
+La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ car elle est plus symétrique :
+
+\begin{proposition}\label{prop:xi-equation-fonctionnelle}
   La fonction $\xi$ vérifie l'équation fonctionelle
-  \[ \xi(s) = \xi(1-s) \]
+  \[ \xi(s) = \xi(1-s)\quad (s\in\mathbb{C}) \]
 \end{proposition}
 
 \begin{proof}
   C'est juste un reformulation du théorème \ref{thm:equation-fonctionnelle}.
+\end{proof}
+
+\begin{proposition}
+  $\xi$ est entière.
+\end{proposition}
+
+\begin{proof}
+  Sa régularité sur $\sigma\geq\frac{1}{2}$ vient de celles de $\zeta$ et $\Gamma$, compte tenu du fait que le pôle en 1 est compensé par le facteur $(s-1)$. Par \ref{prop:xi-equation-fonctionnelle}, $\xi$ est holomorphe dans tout le plan complexe.
+\end{proof}
+
+\begin{proposition}
+  Les zéros de $\xi$ sont dans la bande $0<\sigma<1$.
+\end{proposition}
+
+\begin{proof}
+  Par le théorème \ref{eq:zeta-non-nul-produit-eulerien}, $\zeta$ ne s'annule pas sur $\sigma\geq1$, donc $\xi$ non plus. Par l'équation fonctionelle, elle ne s'annule pas sur $\sigma\leq0$, les zéros triviaux de $\zeta$ étant compensés par les pôles de $\Gamma(\frac{1}{2}s)$.
 \end{proof}
 
 \begin{theorem}\label{thm:produit-hadamard}
@@ -807,34 +921,15 @@ Prolongement sur $[0,1]$ par la sommation d'abel, sur $\sigma<0$ par l'équation
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Localisation des zéros}
+\section{Localisation des zéros}\label{section:localisation-zeros}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Nous avons vu à la proposition \ref{eq:zeta-non-nul-produit-eulerien} que $\zeta$ ne s'annule pas pour $\sigma>1$. Nous allons montrer que cette propriété est vraie sur le demi-plan fermé $\sigma\geq1$.
 
-\begin{theorem}[Mertens]\label{thm:mertens-positif}
-  Soit $F(s) =\sum_{n\geq1}\frac{a_n}{n^s}$ une série de Dirichlet à coefficients positits ou nuls. Notions $\sigma_c$ sont abscisse de convergence. Alors:
-  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))\geq0 \quad(\sigma>\sigma_c) \]
-\end{theorem}
-
-\begin{proof}
-  Posons $\forall\theta\in\mathbb{R}, V(\theta) := 3+4\cos(\theta)+\cos(2\theta)$.
-  \begin{align*}
-    V(\theta) &= 3+4\cos(\theta)+(2\cos^2(\theta)-1) \\
-              &= 2(1+2\cos(\theta)+\cos^2(\theta)) \\
-              &= 2(1+\cos(\theta))^2 \\
-              &\geq0
-  \end{align*}
-  Or
-  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it)) = \sum_{n\geq1}\frac{a_n V(t\ln n)}{n^\sigma}, \]
-  et comme les $a_n$ sont positifs ou nuls, cela implique bien que
-  \[ 3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))\geq0 \]
-\end{proof}
-
-\begin{corollary}\label{cor:zeta-inegalite-1}
+\begin{proposition}\label{prop:zeta-inegalite-1}
   \[ \zeta^3(\sigma)|\zeta(\sigma+it)|^4|\zeta(\sigma+2it)|\geq1\quad(\sigma>1) \]  
-\end{corollary}
+\end{proposition}
 
 \begin{proof}
   On applique le théorème à la fonction
@@ -862,10 +957,10 @@ Nous sommes maintenant en mesure de prouver le résultat suivant, qui va s'avér
   \[ \zeta(\sigma+2it_0) = O_{\sigma\to1^+}(1) \]
   En regroupant ces trois comportements asymptotiques, il vient :
   \[ \zeta^3(\sigma)|\zeta(\sigma+it)|^4|\zeta(\sigma+2it)| = O_{\sigma\to1^+}(\sigma-1), \]
-  en particulier le membre de gauche peut être rendu arbitrairement petit lorsque $\sigma\to1^+$, ce qui contredit l'inégalité \ref{cor:zeta-inegalite-1}.
+  en particulier le membre de gauche peut être rendu arbitrairement petit lorsque $\sigma\to1^+$, ce qui contredit l'inégalité \ref{prop:zeta-inegalite-1}.
 \end{proof}
 
-\begin{corollary}
+\begin{corollary}\label{cor:zeta-non-nul-demi-plan-ferme-negatif}
   Dans le demi-plan $\sigma\leq0$, la fonction $\zeta$ admet pour seuls zéros les points $-2n, n\geq1$ entier. Ce sont des zéros simples.
 \end{corollary}
 
@@ -876,14 +971,14 @@ Nous sommes maintenant en mesure de prouver le résultat suivant, qui va s'avér
 
   En multipliant l'équation fonctionnelle par $(1-s)$ et en utilisant $s\Gamma(s)=\Gamma(s+1)$ TODO, on obtient
   \[ (1-s)\zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(2-s)\zeta(1-s). \]
-  On peut passer à la limite $s\to1$, en remarquant que d'une part $\Gamma(1)=1$, et d'autre part $\zeta(s)\sim\frac{1}{s-1}$ :
+  On peut passer à la limite $s\to1$, en remarquant que d'une part $\Gamma(1)=1$, et d'autre part $\zeta(s)\sim\frac{1}{s-1}$ (proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe}):
   \[ -1 = 2\zeta(0). \]
   Ceci montre que les seuls zéros possibles de $\zeta$ sont les $-2, -4...$.
 
   Synthèse. On a bien $\zeta(-2)=\zeta(-4)=...=0$
 \end{proof}
 
-Les zéros aux entiers négatifs pairs sont appelés les zéros triviaux de la fonction $\zeta$.
+Les zéros aux entiers négatifs pairs sont appelés les zéros triviaux de la fonction $\zeta$. Les autres zéros sont situés dans la région $0<\sigma<1$, aussi appelée la bande critique (c'est la même bande critique que celle définie dans la section \ref{section:prolongement-proprietes-bande-critique}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Répartition globale des zéros}
@@ -905,7 +1000,7 @@ Nous allons montrer le théorème des nombres premiers dans ce chapitre. Plus pr
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Région affaiblie sans zéros}
+\section{Région affaiblie sans zéros}\label{section:region-affaiblie}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -944,7 +1039,7 @@ L'ingrédient principal pour prouver le théorème des nombres premiers est le f
   
   où l'intégrale est bien définie car $|t|\geq2$ donc on évite le pôle, et $C_0$ est une constante positive qui vient du $0$ de \ref{cor:majoration-zeta-et-zeta-prime}.
 
-  On utilise maintenant l'inégalité fondamentale \ref{cor:zeta-inegalite-1} due à Mertens:
+  On utilise maintenant l'inégalité fondamentale \ref{prop:zeta-inegalite-1} due à Mertens:
   \begin{align*}
     \zeta(s_0)
     &\geq \frac{1}{\zeta(1+\eta)^3|\zeta(1+\eta+2it)|} \\
@@ -1018,7 +1113,9 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
     +O\left(\frac{x\ln^2x}{T}\right)
   \end{equation}
 
-  On voit déjà le terme $x$ de l'énoncé apparaître, essayons donc d'estimer les trois intégrales. Commençons par celle du milieu, qui a lieu sur le petit segment horizontal du haut. Notons $I_h$ ce segment, et on a la majoration grossière :
+  On voit déjà le terme $x$ de l'énoncé apparaître, essayons donc d'estimer les trois intégrales.
+  
+  \textbf{Estimation de la 2ème intégrale}. Commençons par celle du milieu, qui a lieu sur le petit segment horizontal du haut. Notons $I_h$ ce segment, et on a la majoration grossière :
   \begin{align*}
     |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_1}}{T}\max_{I_h}|\zeta'|\max_{I_h}\left|\frac{1}{\zeta}\right| \\
     & \leq\frac{x}{T}\max_{I_h}|\zeta'|\max_{I_h}\left|\frac{1}{\zeta}\right|.
@@ -1039,9 +1136,10 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
     \int_{\sigma_0+iT}^{\sigma_1+iT}f(s)\mathrm{d}s = O\left(\frac{x}{T}\ln^9T\right)
   \end{equation}
 
-  Par symétrie par rapport à l'axe des abscisses, la troisième intégrale sur le segment de bas $I_b$ dans \ref{eq:tnp-faible-3-integrales} est également $O\left(\frac{x}{T}\ln^9T\right)$.
+  \textbf{Estimation de la 3ème intégrale}. Par symétrie par rapport à l'axe des abscisses, la troisième intégrale sur le segment de bas $I_b$ dans \ref{eq:tnp-faible-3-integrales} est également $O\left(\frac{x}{T}\ln^9T\right)$.
+  \\
 
-  Reste à évaluer la première intégrale sur le segment vertical de gauche $I_g$. Pareil, majorons grossièrement :
+  \textbf{Estimation de la 1ère intégrale}. Reste à évaluer la première intégrale sur le segment vertical de gauche $I_g$. Pareil, majorons grossièrement :
   \begin{align*}
     |f(s)| = \left|\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\right| & \leq\frac{x^{\sigma_0}}{|s|}\max_{I_g}|\zeta'|\max_{I_g}\left|\frac{1}{\zeta}\right| \\
     & = O\left(\frac{x^{\sigma_0}}{|s|}\max_{I_g}|\zeta'|\ln^7 T\right)
@@ -1091,25 +1189,31 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
   \[ |t|\geq2 \quad \mathrm{et} \quad \sigma\geq1-\frac{c}{\ln|t|} \]
 \end{theorem}
 
+La preuve de la région affaiblie dans la section précédente était assez simple et ne requérait pas d'outils très avancés. Mais nous allons voir que cette preuve ci-dessus utilise des outils tels que le produit de Hadamard ou l'analyse de la fonction $\Gamma$.
+
 \begin{proof}
-  Nous partons de la propositions \ref{cor:zeta-zeta-prime-van-mangoldt}, qui nous fournit la série de Dirichlet
+  Soit $\rho_0=\beta+i\gamma$ un zéro non-trivial de $\zeta$, avec $|\gamma|\geq2$. Nous allons montrer qu'il existe un $c>0$, indépendent de $\rho_0$, tel que 
+  \[ \beta<1-\frac{c}{\ln|\gamma|}. \]
+
+  Nous partons de la propositions \ref{cor:zeta-zeta-prime-van-mangoldt}, qui nous fournit la série de Dirichlet à termes positifs ou nuls :
   \[ -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n\geq1}\frac{\Lambda(n)}{n^s}. \]
 
-  Son abscisse de convergence est $1$, et on a d'après la formule \ref{thm:mertens-positif} due à Mertens, $\forall\sigma>1, \forall\gamma\in\mathbb{R}$
+  Son abscisse de convergence est $1$, et on a d'après la formule \ref{thm:mertens-positif} due à Mertens, $\forall\sigma>1, \forall t\in\mathbb{R}$
 
  \begin{equation}\label{eq:mertens-zeta-zeta-prime}
   - 3\frac{\zeta'(\sigma)}{\zeta(\sigma)}
-  - 4\Re\frac{\zeta'(\sigma+i\gamma)}{\zeta(\sigma+i\gamma)}
-  - \Re\frac{\zeta'(\sigma+2i\gamma)}{\zeta(\sigma+2i\gamma)}
+  - 4\Re\frac{\zeta'(\sigma+it)}{\zeta(\sigma+it)}
+  - \Re\frac{\zeta'(\sigma+2it)}{\zeta(\sigma+2it)}
   \geq0.
  \end{equation}
 
-  Soit $\rho=\beta+i\gamma$ de $\zeta$ un zéro de $\zeta$. Nous allons majorer les 3 termes ci-dessus.
+  Nous allons majorer les 3 termes ci-dessus.
+  \\
 
-  Premièrement,
-  \[ -\frac{\zeta'(\sigma)}{\zeta(\sigma)} = \frac{1}{\sigma-1} + O(1). \]
+  \textbf{1er terme}. Il suffit d'utiliser le fait que 1 est un pôle d'ordre 1 et de résidu 1 pour $\zeta$, démontré dans la  proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe},
+  \[ -3\frac{\zeta'(\sigma)}{\zeta(\sigma)} \leq \frac{3}{\sigma-1} + O(1). \]
 
-  Deuxièmement, en dérivant logarithmitiquement la formule du produit de Hadamard \ref{thm:produit-hadamard} de $\zeta$, on a:
+  \textbf{2ème terme}. En dérivant logarithmitiquement la formule du produit de Hadamard \ref{thm:produit-hadamard} de $\zeta$, on a, pour $s\neq1$ et $s\neq\rho$:
 
   \begin{align*}
     -\frac{\zeta'(s)}{\zeta(s)}
@@ -1118,39 +1222,61 @@ Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que
     - \sum_{\rho}\left(\frac{-1}{1-\frac{s}{\rho}} + \frac{1}{\rho}\right) \\
     &= -b + \frac{1}{s-1}
     + \frac{\Gamma'(\frac{s}{2}+1)}{2\Gamma(\frac{s}{2}+1)}
-    - \sum_{\rho}\left(\frac{1}{\rho} + \frac{1}{s-\rho} \right)
+    - \sum_{\rho}\left(\frac{1}{\rho} + \frac{1}{s-\rho} \right).
   \end{align*}
 
-  En utlisant la formule de Stirling complexe \ref{thm:stirling-complexe} POURQUOI, on a
-  \[ -\Re\frac{\zeta'(s)}{\zeta(s)} = O(\ln(|t|))\quad(\sigma>1, |t|\geq2) \]
+  Clairement, les deux premiers termes sont majorés en norme au voisinage de $+\infty$ :
+  \[ -b + \frac{1}{s-1} = O(1) \]
 
-  et aussi, en tenant compte de la contribution du zéro $\beta+i\gamma$, POURQUOI
-  \[ aaa \]
+  On a également, en utlisant la formule de Stirling complexe \ref{thm:stirling-complexe} POURQUOI, on a
+  \[ -\Re\frac{\zeta'(s)}{\zeta(s)} = O(\ln(|t|))\quad(\sigma>1, |t|\geq2). \]
 
-  En reportant dans \ref{eq:mertens-zeta-zeta-prime},
+  On a donc temporairement
+
+  \begin{equation}\label{eq:thm-region-classique-temporaire}
+    - \Re\frac{\zeta'(s)}{\zeta(s)}
+    \leq O(1)
+    + O(\ln|t|)
+    - \sum_{\rho}\Re\left(\frac{1}{\rho} + \frac{1}{s-\rho} \right).
+  \end{equation}
+
+  Par ailleurs, remarquons que dans la somme, chaque terme est strictement positif. Nous utilisons le fait que tous ces $\rho$ zéros non-triviaux de $\zeta$ sont situés dans la bande critique $0<t<1$ (lire la section \ref{section:localisation-zeros}). On a que tous les $\rho$ vérifient $\Re\rho>0$, donc $\Re\frac{1}{\rho}>0$. De même $\Re s=\sigma>1$ et $\Re\rho<1$, donc $\Re(s-\rho)>0$, donc $\Re\frac{1}{s-\rho}>0$. 
+  \\
+
+  Fixons un complexe $s=\sigma+i\gamma$ avec $\sigma>1$ et de partie imaginaire identique à $\rho_0$. On applique alors l'équation \ref{eq:thm-region-classique-temporaire} à $s$. Les termes de la sommes étant positifs, on ne garde qu'un seul, celui qui correspond à $\frac{1}{s-\rho_0}=\frac{1}{\sigma-\beta}$.
+  \begin{align*}
+    - \Re\frac{\zeta'(\sigma+i\gamma)}{\zeta(\sigma+i\gamma)}
+    &\leq O(\ln|t|)
+    -\frac{1}{\sigma-\beta} \\
+    &\leq\frac{c'}{2}\ln|\gamma|
+    -\frac{1}{\sigma-\beta}
+  \end{align*}
+  pour une certain constante $c'>0$, ne dépendant ni de $s$ ni de $\rho_0$.
+  \\
+
+  \textbf{3ème terme}. On applique le même raisonnement que pour le 2ème terme à $s=\sigma+2i\gamma$, et on ne garde aucun terme dans la somme \ref{eq:thm-region-classique-temporaire} (possible, car les termes sont tous strictement positifs).
+  En choisissant $c'$ assez grand, on peut alors trouver que pour la même constante $c'$, on a
   \[
-    \frac{-3}{\sigma - 1} -3 M_1(\sigma)
-    - \frac{4}{\sigma-\beta} + 4M_2(|\gamma|)\ln|\gamma|
-    + M_3(|\gamma|)\ln|\gamma|
-    \geq0,
+    - \Re\frac{\zeta'(\sigma+2i\gamma)}{\zeta(\sigma+2i\gamma)}
+    \leq\frac{c'}{2}\ln|\gamma|
   \]
 
-  En notant $c_1$, on a alors, pour $\gamma\geq2$
+  \textbf{Conclusion}. En reportant les 3 majorations dans l'inégalité \ref{eq:mertens-zeta-zeta-prime}, on obtient
   \[
-    \frac{3}{\sigma-1}-\frac{4}{\sigma-\beta}\geq c_1\ln|\gamma|
+    \frac{-3}{\sigma-1}+\frac{4}{\sigma-\beta}-c'\ln|\gamma|\leq0.
   \]
 
-  d'où
-  \[
-    1-\beta\geq\frac{1-c_1(\sigma-1)\ln|\gamma|}{(3/(\sigma-1))+c_1\ln|\gamma|}
-  \]
-
-  En choisissant $\sigma=1+(2c_1\ln|\gamma|)^{-1}$, il suite
-  \[ 1-\beta\geq\frac{c_1}{14\ln|\gamma|} \]
-
-  ce qui prouve le théorème par contraposée.
+  On isole $1-\beta$. Comme la constante $c'$ ne dépend pas du $\rho_0$ initialement choisi, on a donc, pour tout $\sigma>1$, pour tout zéro non-trivial $\rho=\beta+i\gamma$ tel que $|\gamma|\geq2$,
+  \begin{align*}
+    1-\beta
+    &\geq \frac{4}{c'\ln|\gamma|+\frac{3}{\sigma-1}} - (\sigma -1) \\
+    &=\frac{1/2}{7c'\ln|\gamma|} \\
+    &=\frac{c}{\ln|\gamma|}
+  \end{align*}
+  où l'on a posé $c=c'/14>0$. Ceci achève la démonstration.
 \end{proof}
 
+TODO image %p11 de I2.pdf%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Majorations dans cette région}
@@ -1162,6 +1288,10 @@ Pour prouver le théorème des nombres premiers en utilisant cette région sans 
   Il existe une constante positive $c$ telle que l'on ait, pour $|t|\geq2$ et $\sigma\geq1-\frac{c}{\ln|t|}$,
   \[ \frac{\zeta'(s)}{\zeta(s)} = O(\ln|t|) \]
 \end{proposition}
+
+\begin{proof}
+  TODO
+\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Théorème des nombres premiers}
@@ -1225,53 +1355,60 @@ Nous avons vu, dans les deux section précédentes, deux théorèmes que nous av
 
 \begin{theorem}[Théorème des nombres premiers]\label{eq:tnp-pi-x}
   Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
-  \[ \pi(x) = \int_2^x\frac{\mathrm{d}t}{\ln t} + O(x\mathrm{e}^{-c\sqrt{\ln x}}) \]
+  \[ \pi(x) = \mathrm{Li}(x) + O(x\mathrm{e}^{-c\sqrt{\ln x}}). \]
 \end{theorem}
 
-Cette intégrale a en réalité un nom :
+On rappelle la définition de $\mathrm{Li}$ :
 
-\begin{definition}[Logarithme intégral] On définit le logarithme intégral, noté $\mathrm{li}$, par
-  \[ \mathrm{li}(x) = \int_0^x\frac{\mathrm{d}t}{\ln t}. \]
-
-  On définit également la fonction d'écart logarithmique intégrale :
+\begin{definition}[Logarithme intégral] On définit la fonction d'écart logarithmique intégrale :
   \[
     \mathrm{Li}(x)
     = \int_2^x\frac{\mathrm{d}t}{\ln t}
-    = \mathrm{li}(x) - \mathrm{li}(2)
   \]
 \end{definition}
 
-Remarquons que $t\mapsto\frac{1}{\ln t}$ n'est pas définie pour $t=1$, et la définition de $\mathrm{li}$ doit être interprétée en valeur principale de Cauchy :
-\[
-  \mathrm{li}(x)
-  = \lim_{\epsilon\mapsto0}\left(
-      \int_0^{1-\epsilon}\frac{\mathrm{d}t}{\ln t}
-      + \int_{1-\epsilon}^\infty\frac{\mathrm{d}t}{\ln t}
-    \right).
+et on l'accompagne d'une petite proposition :
+
+\begin{proposition}
+  \[ \mathrm{Li}(x) = \frac{x}{\ln x} + \frac{x}{\ln^2 x} + O\left(\frac{x}{\ln^3 x} \right) \]
+\end{proposition}
+
+\begin{proof}
+  Cela se fait facilement par intégration par parties.
+\end{proof}
+
+\begin{lemma}\label{lem:psi-x-r}
+  Soit $R:\mathbb{R}\to\mathbb{R}$ une fonction intégrable, croissante et strictement positive, telle que l'on ait, au voisinage de $+\infty$ : $\psi(x)=x+O(R(x))$. Alors, au voisinage de $+\infty$ :
+  \[
+    \pi(x)
+    = \mathrm{Li}(x)
+    + O(\frac{R(x)}{\ln x} + R(\sqrt{x}) + \sqrt{x})
   \]
+\end{lemma}
+
+\begin{proof}
+  Appliquons la formule d'Abel \ref{lem:formule-abel} avec $f(x)=\frac{1}{\ln x}$ et $A(x)=\pi(x)=\sum_{2\leq n\leq x}a_nf(n)$ où $a_n$ vaut $\ln p$ si $n=p$ est un nombre premier et 0 sinon. On obtient :
+  \[
+    \pi(x)
+    = \frac{\theta(x)}{\ln x}
+    + \int_2^x{\frac{\theta(u)}{u\ln^2u}}\mathrm{d}u
+  \]
+\end{proof}
 
 \begin{proof}[Démonstration du théorème \ref{eq:tnp-pi-x}]
-  TODO
+  Appliquons la formule sommatoire d'Abel \ref{lem:formule-abel}
   % https://etd.ohiolink.edu/!etd.send_file?accession=kent1550224160190008&disposition=inline p42
 \end{proof}
 
 On en déduit également la forme suivante, plus faible, mais plus répandue :
 
-\begin{theorem}[Théorème des nombres premiers, version affaiblie]\label{eq:tnp-equivalence}
-  \[ \pi(x)\sim\int_2^x\frac{\mathrm{d}t}{\ln t} \]
+\begin{theorem}[Théorème des nombres premiers, sans terme d'erreur]\label{eq:tnp-equivalence}
+  \[ \pi(x)\sim\mathrm{Li}(x) \]
 \end{theorem}
 
 \begin{proof}
   Il suffit juste de voir que (TODO Pourquoi?)
-  \[ x\mathrm{e}^{-c\sqrt{\ln x}} = o(\mathrm{li}(x)). \]
-\end{proof}
-
-\begin{proposition}
-  \[ \mathrm{li}(x) = \frac{x}{\ln x} + \frac{x}{\ln^2 x} + O\left(\frac{x}{\ln^3 x} \right) \]
-\end{proposition}
-
-\begin{proof}
-  Cela se fait facilement par intégration par parties.
+  \[ x\mathrm{e}^{-c\sqrt{\ln x}} = o(\mathrm{Li}(x)). \]
 \end{proof}
 
 On a donc $\pi(x)\sim\mathrm{li}(x)\sim\frac{x}{\ln x}$, mais $\mathrm{li}$ donne une meilleure approximation :
