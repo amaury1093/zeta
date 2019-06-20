@@ -140,12 +140,6 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Les méthodes du crible}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Notre boîte à outils pour l'analyse}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -879,13 +873,13 @@ Prolongement sur $[0,1]$ par la sommation d'abel, sur $\sigma<0$ par l'équation
   \[ \xi(s) := s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s) \]
 \end{definition}
 
-La définition est possible pour $s\in\mathbb{C}\backslash\{0,1\}$, mais aussi en 1 car le pôle de $\zeta$ est compensé par $(s-1)$, et également en 0 par l'équation fonctionelle \ref{thm:equation-fonctionnelle}.
+La définition est possible pour $s\in\mathbb{C}\backslash\{0,1\}$, mais aussi en 1 car le pôle de $\zeta$ est compensé par $(s-1)$, et également en 0 par l'équation fonctionnelle \ref{thm:equation-fonctionnelle}.
 \\
 
 La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ car elle est plus symétrique :
 
 \begin{proposition}\label{prop:xi-equation-fonctionnelle}
-  La fonction $\xi$ vérifie l'équation fonctionelle
+  La fonction $\xi$ vérifie l'équation fonctionnelle
   \[ \xi(s) = \xi(1-s)\quad (s\in\mathbb{C}) \]
 \end{proposition}
 
@@ -906,7 +900,7 @@ La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ 
 \end{proposition}
 
 \begin{proof}
-  Par le théorème \ref{eq:zeta-non-nul-produit-eulerien}, $\zeta$ ne s'annule pas sur $\sigma\geq1$, donc $\xi$ non plus. Par l'équation fonctionelle, elle ne s'annule pas sur $\sigma\leq0$, les zéros triviaux de $\zeta$ étant compensés par les pôles de $\Gamma(\frac{1}{2}s)$.
+  Par le théorème \ref{eq:zeta-non-nul-produit-eulerien}, $\zeta$ ne s'annule pas sur $\sigma\geq1$, donc $\xi$ non plus. Par l'équation fonctionnelle, elle ne s'annule pas sur $\sigma\leq0$, les zéros triviaux de $\zeta$ étant compensés par les pôles de $\Gamma(\frac{1}{2}s)$.
 \end{proof}
 
 \begin{theorem}\label{thm:produit-hadamard}
@@ -925,14 +919,20 @@ La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Nous avons vu à la proposition \ref{eq:zeta-non-nul-produit-eulerien} que $\zeta$ ne s'annule pas pour $\sigma>1$. Nous allons montrer que cette propriété est vraie sur le demi-plan fermé $\sigma\geq1$.
+La question que nous allons nous poser dans cette section est : pour quelles valeurs de $s$ la fonction $\zeta$ s'annule-t-elle ?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sur le demi-plan $\sigma\geq 1$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Nous avons vu à la proposition \ref{eq:zeta-non-nul-produit-eulerien} que $\zeta$ ne s'annulait pas pour $\sigma>1$. Nous allons montrer que cette propriété est vraie sur le demi-plan fermé $\sigma\geq1$.
 
 \begin{proposition}\label{prop:zeta-inegalite-1}
   \[ \zeta^3(\sigma)|\zeta(\sigma+it)|^4|\zeta(\sigma+2it)|\geq1\quad(\sigma>1) \]  
 \end{proposition}
 
 \begin{proof}
-  On applique le théorème à la fonction
+  On applique le théorème de Mertens \ref{thm:mertens-positif} à la fonction
   \[ F(s) = \log\zeta(s) = \sum_{n\geq2}\frac{\Lambda(n)}{n^s\ln n}\quad(\sigma>1) \]
   où la 2ème égalité vient de la proposition \ref{prop:log-zeta}. La série de droite est bien une série de Dirichlet à coefficient positifs ou nuls, d'abscisse de convergence 1.
 \end{proof}
@@ -960,33 +960,61 @@ Nous sommes maintenant en mesure de prouver le résultat suivant, qui va s'avér
   en particulier le membre de gauche peut être rendu arbitrairement petit lorsque $\sigma\to1^+$, ce qui contredit l'inégalité \ref{prop:zeta-inegalite-1}.
 \end{proof}
 
-\begin{corollary}\label{cor:zeta-non-nul-demi-plan-ferme-negatif}
-  Dans le demi-plan $\sigma\leq0$, la fonction $\zeta$ admet pour seuls zéros les points $-2n, n\geq1$ entier. Ce sont des zéros simples.
-\end{corollary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sur le demi-plan $\sigma\leq 0$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proposition}
+  Dans le demi-plan $\sigma\leq0$, la fonction $\zeta$ admet pour seuls zéros les points $-2n, n\geq1$ entier.
+\end{proposition}
 
 \begin{proof}
-  Analyse. Soit $s$ tel que $\sigma\leq0$. Réécrivons l'équation fonctionelle \ref{thm:equation-fonctionnelle} :
-  \[ \zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)\quad (s\in\mathbb{C}\backslash\{0,1\}) \]
-  Ainsi, si $s\neq0$, $\sigma\leq0$ et $\zeta(s)=0$, on a forcément $\sin(\frac{\pi s}{2})=0$, et donc $s=-2,-4,...$. Mais il reste à voir si $\zeta(0)$ est nul ou non.
+  On distingue 2 cas.
 
-  En multipliant l'équation fonctionnelle par $(1-s)$ et en utilisant $s\Gamma(s)=\Gamma(s+1)$ TODO, on obtient
-  \[ (1-s)\zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(2-s)\zeta(1-s). \]
+  \textbf{1er cas} : Etude sur $\{s\in\mathbb{C}\,|\,\sigma\leq 0,\,s\neq 0\}$. Soit $s$ dans cet ensemble tel que $\zeta(s)=0$. On peut écrire l'équation fonctionnelle \ref{thm:equation-fonctionnelle} en $s$ :
+  \[
+    0 = \zeta(s)
+    = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)\quad
+  \]
+  Comme les termes $\Gamma(1-s)$ et $2^s\pi^{s-1}$ sont non nuls, on a forcément $\sin(\frac{\pi s}{2})=0$. On revient à la définition du sinus complexe: pour $z=x+iy\in\mathbb{C}$,
+  \[
+    \sin(z)=0
+    \Leftrightarrow \mathrm{e}^{iz}=\mathrm{e}^{-iz}\Leftrightarrow \mathrm{e}^{-y}\mathrm{e}^{ix}=\mathrm{e}^y\mathrm{e}^{ix}
+    \Leftrightarrow y=0\,\mathrm{et}\,x\in\pi\mathbb{Z}.
+  \]
+  
+  D'où 
+  \[
+    \sin(\frac{\pi s}{2})=0
+    \Leftrightarrow s\in2\mathbb{Z}
+    \Leftrightarrow s\in-2\mathbb{N}^*
+  \]
+
+  car on a supposé $\sigma\leq 0$.
+  \\
+  
+  \textbf{2nd cas} : Calcul de $\zeta(0)$. En multipliant l'équation fonctionnelle par $(1-s)$ et en utilisant $s\Gamma(s)=\Gamma(s+1)$ TODO, on obtient
+  \[
+    \forall s\neq0,\,s\neq1\quad
+    (1-s)\zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(2-s)\zeta(1-s).
+  \]
+
   On peut passer à la limite $s\to1$, en remarquant que d'une part $\Gamma(1)=1$, et d'autre part $\zeta(s)\sim\frac{1}{s-1}$ (proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe}):
-  \[ -1 = 2\zeta(0). \]
-  Ceci montre que les seuls zéros possibles de $\zeta$ sont les $-2, -4...$.
-
-  Synthèse. On a bien $\zeta(-2)=\zeta(-4)=...=0$
+  \[
+    -1 = 2\zeta(0).
+  \].
 \end{proof}
 
-Les zéros aux entiers négatifs pairs sont appelés les zéros triviaux de la fonction $\zeta$. Les autres zéros sont situés dans la région $0<\sigma<1$, aussi appelée la bande critique (c'est la même bande critique que celle définie dans la section \ref{section:prolongement-proprietes-bande-critique}).
+Les zéros aux entiers négatifs pairs sont appelés les zéros triviaux de la fonction $\zeta$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Répartition globale des zéros}
+\subsection{Sur la bande critique $0<\sigma<1$}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Développement en produit de Hadamard.
+Les autres zéros de $\zeta$ (s'il y en a) sont donc situés dans la région $0<\sigma<1$, aussi appelée la bande critique (c'est la même bande critique que celle définie dans la section \ref{section:prolongement-proprietes-bande-critique}).
+\\
 
-Régions sans zéros qui seront explorées plus en détails dans le chapitre sur le théorème des nombres premiers.
+Nous n'allons pas démontrer ce résultat, mais en réalité il existe une infinité de zéros dans cette bande critique. Nous pouvons en revanche affirmer que si $\rho$ est un zéro de $\zeta$ dans cette région, alors par l'équation fonctionnelle, $1-\rho$ aussi. De même, pour $s\geq0$, $\overline{\zeta(s)}=\zeta(\bar{s})$. Ceci montre que l'axe des réels et l'axe $\frac{1}{2}i\mathbb{R}$ (appelée droite critique) sont deux axes de symétrie pour les zéros de $\zeta$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1020,14 +1048,13 @@ L'ingrédient principal pour prouver le théorème des nombres premiers est le f
   lorsque $t\mapsto+\infty$. En particuler, $\zeta$ ne s'annule pas sur cette région du plan.
 \end{theorem}
 
-\begin{proof}
-  Par les hypothèses du corollaire \ref{cor:majoration-zeta-et-zeta-prime},
+\begin{proof} On a :
   \begin{itemize}
     \item $\forall c>0$,
     \item $\forall 0<\eta<\frac{c}{\ln|t|}$,
     \item $\forall s=\sigma+it\,\,\mathrm{avec}\,\,\sigma>1-\eta, |t|\geq2$,
   \end{itemize}
-  alors on a bien $\sigma > 1-\frac{c}{\ln|t|}$, $|t|\geq2$, et on pose $s_0=1+\eta+it$. Par ce corollaire \ref{cor:majoration-zeta-et-zeta-prime},
+  alors on a bien $\sigma > 1-\frac{c}{\ln|t|}$, $|t|\geq2$, et on pose $s_0=1+\eta+it$. Par le corollaire \ref{cor:majoration-zeta-et-zeta-prime} sur les majorations de $\zeta$ et de $\zeta'$,
   TODO Figure
 
   \begin{align*}
