@@ -1297,7 +1297,7 @@ Pour prouver le théorème des nombres premiers en utilisant cette région sans 
 \subsection{Théorème des nombres premiers}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{theorem}[Théorème des nombres premiers avec terme d'erreur, de la Vallée Poussin, 1900]\label{eq:tnp-vallee-poussin}
+\begin{theorem}[Théorème des nombres premiers avec terme d'erreur, de la Vallée Poussin, 1900]\label{thm:tnp-terme-erreur-classique}
   Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
   \begin{equation}
     \psi(x)=x+O(x\mathrm{e}^{-c\sqrt{\ln x}})
@@ -1363,18 +1363,27 @@ On rappelle la définition de $\mathrm{Li}$ :
 \begin{definition}[Logarithme intégral] On définit la fonction d'écart logarithmique intégrale :
   \[
     \mathrm{Li}(x)
-    = \int_2^x\frac{\mathrm{d}t}{\ln t}
+    = \int_2^x\frac{\mathrm{d}u}{\ln u}
   \]
 \end{definition}
 
 et on l'accompagne d'une petite proposition :
 
-\begin{proposition}
-  \[ \mathrm{Li}(x) = \frac{x}{\ln x} + \frac{x}{\ln^2 x} + O\left(\frac{x}{\ln^3 x} \right) \]
+\begin{proposition}\label{prop:li-development-asymptotique}
+  Au voisinage de $+\infty$,
+  \[
+    \mathrm{Li}(x)
+    \sim \frac{x}{\ln x}
+  \]
 \end{proposition}
 
 \begin{proof}
-  Cela se fait facilement par intégration par parties.
+  En intégrant le terme 1 et en dérivant le terme $1/\ln u$ dans la définition de $\mathrm{Li}$, on a par intégration par parties :
+  \begin{equation}\label{eq:li-ipp}
+    \mathrm{Li}(x)=\frac{x}{\ln x}-\frac{2}{\ln2}+\int_2^x\frac{\mathrm{d}u}{\ln^2u}.
+  \end{equation}
+
+  Or $u\mapsto 1/\ln^2 u = o(1/\ln u)$, donc la dernière intégrale est négligeable devant $\mathrm{Li}$, d'où le résultat.
 \end{proof}
 
 \begin{lemma}\label{lem:psi-x-r}
@@ -1382,7 +1391,7 @@ et on l'accompagne d'une petite proposition :
   \[
     \pi(x)
     = \mathrm{Li}(x)
-    + O(\frac{R(x)}{\ln x} + R(\sqrt{x}) + \sqrt{x})
+    + O\left(\frac{R(x)}{\ln x} + R(\sqrt{x}) + \sqrt{x}\right)
   \]
 \end{lemma}
 
@@ -1393,11 +1402,84 @@ et on l'accompagne d'une petite proposition :
     = \frac{\theta(x)}{\ln x}
     + \int_2^x{\frac{\theta(u)}{u\ln^2u}}\mathrm{d}u
   \]
+
+  Or on a vu, dans la proposition \ref{prop:relation-psi-theta}, $\psi(x) = \theta(x)+O(\sqrt{x}\ln x)$, donc en combinant avec l'hypothèse de l'énoncé sur $\psi$, on a $\theta(x) = x + O(R(x)+\sqrt{x}\ln x)$. On remplace alors :
+  \begin{align*}
+    \pi(x)
+    &= \frac{x}{\ln x} \\
+    &\quad + O\left(\frac{R(x)}{\ln x} + \sqrt{x}\right) \\
+    &\quad + \int_2^x\frac{\mathrm{d}u}{\ln^2 u}
+    + \int_2^x\left( O\left(\frac{R(u)}{u\ln^2 u}\right) + O\left(\frac{1}{\sqrt{u}\ln u}\right) \right)\mathrm{d}u. \\
+    &= \mathrm{Li}(x) + \frac{2}{\ln2} - \int_2^x{\frac{\mathrm{d}u}{\ln^2 u}}\\
+    &\quad + O\left(\frac{R(x)}{\ln x} + \sqrt{x}\right) \\
+    &\quad + \int_2^x\frac{\mathrm{d}u}{\ln^2 u}
+    + \int_2^x\left( O\left(\frac{R(u)}{u\ln^2 u}\right) + O\left(\frac{1}{\sqrt{u}\ln u}\right) \right)\mathrm{d}u \\
+    &= \mathrm{Li}(x) \\
+    &\quad + O\left(\frac{R(x)}{\ln x} + \sqrt{x}\right) \\
+    &\quad + \int_2^x O\left(\frac{R(u)}{u\ln^2 u}\right)\mathrm{d}u
+    + \int_2^xO\left(\frac{1}{\sqrt{u}\ln u}\right)\mathrm{d}u
+  \end{align*}
+
+  où, à la ligne 2, on a fait apparaître $\mathrm{Li}$ grâce à l'équation \ref{eq:li-ipp} un peu plus haut; et à la ligne 3, $\frac{2}{\ln2}$ a été absorbé dans $O(\sqrt{x})$ et les deux $\int_2^x\frac{\mathrm{d}u}{\ln^2 u}$ s'annulent.
+  \\
+
+  On va maintenant étudier indépendamment les deux intégrales de la dernière ligne.
+  \\
+
+  \textbf{1ère intégrale}. Comme on étudie le comportement en $+\infty$, on peut supposer $x\geq4$, et donc on peut découper l'intégrale en 2 parties au point $\sqrt{x}$, et, en utilisant le fait que $R$ est croissante, majorer simplement:
+  \begin{align*}
+    \int_2^x \frac{R(u)}{u\ln^2 u}\mathrm{d}u
+    &\leq R(\sqrt{x})\int_2^{\sqrt{x}} \frac{1}{u\ln^2u}\mathrm{d}u
+    + R(x)\int_{\sqrt{x}}^x \frac{1}{u\ln^2u}\mathrm{d}u \\
+    &= R(\sqrt{x})\int_2^{\sqrt{x}} \frac{1}{u\ln^2u}\mathrm{d}u
+    + R(x)\left(\frac{1}{\ln x}-\frac{2}{\ln x}\right)
+  \end{align*}
+  
+  Or l'intégrale restante est une intégrale de Bertrand convergente, donc :
+  \[
+    \int_2^x \frac{R(u)}{u\ln^2 u}\mathrm{d}u
+    = O(R(\sqrt{x})) + O\left(\frac{R(x)}{\ln x}\right).
+  \]
+  \\
+
+  \textbf{2nde intégrale}. Posons pour tout $x\geq2$,
+  \[
+    f(x) = \int_2^x\frac{1}{\sqrt{u}\ln u}\mathrm{d}u - \sqrt{x}.
+  \]
+  Sa dérivée s'écrit :
+  \[
+    f'(x)=\frac{2-\ln x}{2\sqrt{x}\ln x}.
+  \]
+
+  Donc $f'(x)<0\Leftrightarrow x>\mathrm{e}^2$, avec $f(e^2)\approx-0.72<0$. Donc $f$ est strictement négative, et donc :
+  \[
+    \int_2^x\frac{1}{\sqrt{u}\ln u}\mathrm{d}u 
+    \leq \sqrt{x}
+    = O(\sqrt{x}).
+  \]
+
+  \textbf{Conclusion}. Il suffit maintenant de remplacer ces deux majorations dans la formule de $\pi(x)$ plus haut.
 \end{proof}
 
 \begin{proof}[Démonstration du théorème \ref{eq:tnp-pi-x}]
-  Appliquons la formule sommatoire d'Abel \ref{lem:formule-abel}
-  % https://etd.ohiolink.edu/!etd.send_file?accession=kent1550224160190008&disposition=inline p42
+  Posons, en prenant le $c$ dans le théorème des nombres premiers \ref{thm:tnp-terme-erreur-classique} :
+  \[
+    R(x) = x\mathrm{e}^{-c\sqrt{\ln x}}.
+  \]
+
+  On a
+  \[
+    R'(x) = \frac{\mathrm{e}^{-c\sqrt{\ln x}}(2\sqrt{\ln x}-c)}{2\sqrt{\ln x}},
+  \]
+
+  donc $R$ est positive, strictement croissante pour $x>\mathrm{e}^{c^2/4}$, et intégrable. Le lemme précédent \ref{lem:psi-x-r} donne donc :
+  \[
+    \pi(x)
+    = \mathrm{Li}(x)
+    + O\left(\frac{R(x)}{\ln x} + R(\sqrt{x}) + \sqrt{x}\right)
+  \]
+
+  On a trivialement $O(\frac{R(x)}{\ln x})=O(R(x))$, $O(R(\sqrt{x}))=O(R(x))$ et $\sqrt{x}=O(R(x))$.
 \end{proof}
 
 On en déduit également la forme suivante, plus faible, mais plus répandue :
@@ -1407,11 +1489,15 @@ On en déduit également la forme suivante, plus faible, mais plus répandue :
 \end{theorem}
 
 \begin{proof}
-  Il suffit juste de voir que (TODO Pourquoi?)
-  \[ x\mathrm{e}^{-c\sqrt{\ln x}} = o(\mathrm{Li}(x)). \]
+  Il suffit juste de voir que le terme d'erreur
+  \[
+    x\mathrm{e}^{-c\sqrt{\ln x}}
+    = o\left(\frac{x}{\ln x}\right)
+    = o(\mathrm{Li}(x)).
+  \]
 \end{proof}
 
-On a donc $\pi(x)\sim\mathrm{li}(x)\sim\frac{x}{\ln x}$, mais $\mathrm{li}$ donne une meilleure approximation :
+On a donc $\pi(x)\sim\mathrm{Li}(x)\sim\frac{x}{\ln x}$, mais $\mathrm{li}$ donne une meilleure approximation :
 
 TODO GRAPHE
 
