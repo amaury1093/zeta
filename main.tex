@@ -87,7 +87,7 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
 
 \begin{proposition}
   \[
-    \psi(x) = \sum_{k=1}^{\infty}\theta(x^{1/k}).
+    \psi(x) = \sum_{k=1}^{+\infty}\theta(x^{1/k}).
   \]
 \end{proposition}
 
@@ -119,16 +119,16 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
   \[
     \psi(x)
     = \theta(x) + \theta(\sqrt{x})
-    + \sum_{k=3}^{\infty}\theta(x^{1/k}).
+    + \sum_{k=3}^{+\infty}\theta(x^{1/k}).
   \]
 
   On utilise ensuite la majoration \ref{prop:theta-majoration} pour écrire :
   \begin{align*}
     \psi(x)-\theta(x)
     &\leq 2\ln2\sqrt{x}
-    + 2\ln2\sum_{k=3}^{\infty}x^{1/k} \\
+    + 2\ln2\sum_{k=3}^{+\infty}x^{1/k} \\
     &\leq 2\ln2\sqrt{x}
-    + 2\ln2\sum_{k=3}^{\infty}x^{1/2}.
+    + 2\ln2\sum_{k=3}^{+\infty}x^{1/2}.
   \end{align*}
 
   Or on a vu dans la preuve de la proposition précédente qu'il y avait au plus $\log_2x$ termes dans la somme. Donc dernier terme est majoré par :
@@ -221,7 +221,7 @@ Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une c
     = (s-\frac{1}{2})\log s
     - s
     + \frac{1}{2}\ln(2\pi)
-    - \int_0^\infty B_1(t)\frac{\mathrm{d}t}{s+t}
+    - \int_0^{+\infty} B_1(t)\frac{\mathrm{d}t}{s+t}
   \]
 \end{theorem}
 
@@ -233,7 +233,7 @@ Le titre de ce rapport contient "la fonction $\zeta$" de Riemann, mais avant de 
 
 \begin{definition}\label{def:serie-dirichlet}
   Soit $f$ une fonction arithmétique. Alors la série de Dirichlet associée à $f$ est la série (formelle) :
-  \[ F(s) = \sum_{n=1}^\infty\frac{f(n)}{n^s}. \]
+  \[ F(s) = \sum_{n=1}^{+\infty}\frac{f(n)}{n^s}. \]
 \end{definition}
 
 On sait (voir par exmple HINDRY TODO) qu'il existe un réel $\sigma_a$ appelé abscisse de convergence absolue tel que $F(s)$ converge absolument si $\sigma>\sigma_a$, et diverge si $\sigma<\sigma_a$.
@@ -254,20 +254,20 @@ On sait (voir par exmple HINDRY TODO) qu'il existe un réel $\sigma_a$ appelé a
   D'autre part, on a le calcul
   \[
     \Re(F(\sigma+it))
-    =\sum_{n=1}^\infty\frac{a_n}{n^s}\Re(\mathrm{e}^{it\ln n})
-    =\sum_{n=1}^\infty\frac{a_n}{n^s}\cos(t\ln n).
+    =\sum_{n=1}^{+\infty}\frac{a_n}{n^s}\Re(\mathrm{e}^{it\ln n})
+    =\sum_{n=1}^{+\infty}\frac{a_n}{n^s}\cos(t\ln n).
   \]
 
   On a aussi
   \[
     \Re(F(\sigma+2it))
-    = \sum_{n=1}^\infty\frac{a_n}{n^s}\cos(2t\ln n).
+    = \sum_{n=1}^{+\infty}\frac{a_n}{n^s}\cos(2t\ln n).
   \]
 
   D'où :
   \[
     3F(\sigma)+4\Re(F(\sigma+it))+\Re(F(\sigma+2it))
-    = \sum_{n=1}^\infty\frac{a_n V(t\ln n)}{n^\sigma},
+    = \sum_{n=1}^{+\infty}\frac{a_n V(t\ln n)}{n^\sigma},
   \]
 
   et comme les $a_n$ sont positifs ou nuls, ainsi que $V$, cela implique bien que
@@ -349,6 +349,18 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Quelques lemmes techniques}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lemma}[Lemme de la partie réelle de Borel-Carathéodory]\label{lem:borel-caratheodory}
+  Soit $F$ une fonction holomorphe pour $s\leq|R|$, telle que $F(0)=0$. On suppose que $\max_{|s|=R}\Re(F(s))\leq A$. Alors
+  \[
+    \forall |s|\leq R,\quad|F(s)|\leq\frac{2A|s|}{R-|s|}  
+  \]
+  
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{La fonction $\zeta$ de Riemann}
@@ -364,7 +376,7 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
 
 La fonction que nous appelons aujourd'hui fonction $\zeta$ de Riemann a en réalité été introduite par Euler au XVIIIème siècle. Il a défini, pour tout $x\in\mathbb{R}, x>1$, la fonction
 
-\[ \zeta(x) = \sum_{n=1}^{\infty}\frac{1}{n^x} \]
+\[ \zeta(x) = \sum_{n=1}^{+\infty}\frac{1}{n^x} \]
 
 La somme de droite est clairement convergente, donc $\zeta(x)$ est bien défini. Euler démontra par la suite le résultat suivant, qui définit un lien entre les nombres premiers et l'analyse.
 
@@ -393,7 +405,7 @@ La somme de droite est clairement convergente, donc $\zeta(x)$ est bien défini.
   \\
 
   Ainsi,
-  \[ \left|\sum_{n=1}^{\infty}\frac{1}{n^x}-\prod_{p\leq T}\frac{1}{1-p^{-x}}\right|
+  \[ \left|\sum_{n=1}^{+\infty}\frac{1}{n^x}-\prod_{p\leq T}\frac{1}{1-p^{-x}}\right|
   = \left|\sum_{n\notin\mathbb{N}_T}\frac{1}{n^x}\right|
   \leq \sum_{n\notin\mathbb{N}_T}\frac{1}{n^x}
   \leq \sum_{n>T}\frac{1}{n^x}
@@ -414,7 +426,7 @@ Avant d'étudier ses propriétés, commençons par définir officiellement $\zet
 
 \begin{definition}[Fonction $\zeta$ de Riemann]\label{def:zeta-definition}
   On définit, pour tout $s$ complexe tel que $\sigma > 1$,
-  \[ \zeta(s) = \sum_{n=1}^{\infty}\frac{1}{n^s} \]
+  \[ \zeta(s) = \sum_{n=1}^{+\infty}\frac{1}{n^s} \]
 \end{definition}
 
 Remarquons que $\zeta$ est la série de Dirichlet (voir la définition \ref{def:serie-dirichlet}) associée à la fonction constante $1$.
@@ -499,7 +511,7 @@ $\zeta(s)$ est réel pour $s$ réel, et est strictement positif. Le logarithme d
   \[
     \log\zeta(s)
     = \sum_p\sum_{\nu\geq1}\frac{1}{\nu p^{\nu s}}
-    = \sum_{n=2}^\infty\frac{\Lambda(n)}{n^s\ln n}\quad(\sigma>1).
+    = \sum_{n=2}^{+\infty}\frac{\Lambda(n)}{n^s\ln n}\quad(\sigma>1).
   \]
 
   Alors pour $x$ réel,
@@ -534,11 +546,11 @@ $\zeta(s)$ est réel pour $s$ réel, et est strictement positif. Le logarithme d
     D'(s)
     = \frac{\zeta'(s)}{\zeta(s)}
     = -\sum_p\sum_{\nu\geq1}\frac{\ln p}{p^{\nu s}}
-    = -\sum_{n=2}^\infty\frac{\Lambda(n)}{n^s}.
+    = -\sum_{n=2}^{+\infty}\frac{\Lambda(n)}{n^s}.
   \]
 
   En intégrant terme à terme, la série $D$ se réecrit alors:
-  \[ D(s) = \sum_{n=2}^\infty\frac{\Lambda(n)}{n^s\ln n} \]
+  \[ D(s) = \sum_{n=2}^{+\infty}\frac{\Lambda(n)}{n^s\ln n} \]
 
   ce qui prouve la proposition.
 \end{proof}
@@ -547,11 +559,11 @@ Nous allons extraire une partie de la preuve ci-dessus, en la mettre dans le cor
 
 \begin{corollary}\label{cor:zeta-zeta-prime-van-mangoldt}
   On a l'égalité
-  \[ -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n\geq1}\frac{\Lambda(n)}{n^s}\quad(\sigma>1) \]
+  \[ -\frac{\zeta'(s)}{\zeta(s)} = \sum_{n=1}^{+\infty}\frac{\Lambda(n)}{n^s}\quad(\sigma>1) \]
 \end{corollary}
 
 \begin{proposition}\label{prop:zeta-sur-zeta-prime-1-sur-holomorphe}
-  La fonction suivant est analytique au voisinage de 1 :
+  La fonction suivante est analytique au voisinage de 1 :
   \[ F(s) = - \frac{\zeta'(s)}{\zeta(s)} - \frac{1}{s-1} \]
 \end{proposition}
 
@@ -596,16 +608,16 @@ Cette proposition découle immédiatement du lemme suivant :
 
 % \begin{proposition}
 %   Pour tout complexe $\sigma > 1$,
-%   \[ \Gamma(s)\zeta(s) = \int_0^\infty\frac{t^{s-1}}{\mathrm{e}^t-1}\mathrm{d}t \]
+%   \[ \Gamma(s)\zeta(s) = \int_0^{+\infty}\frac{t^{s-1}}{\mathrm{e}^t-1}\mathrm{d}t \]
 % \end{proposition}
 
 % \begin{proof}
 %   On part de la formule TODO
-%   \[ \Gamma(s)n^{-s} = \int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t\quad (\sigma > 0) \]
+%   \[ \Gamma(s)n^{-s} = \int_0^{+\infty} t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t\quad (\sigma > 0) \]
 
 %   En sommant pour $n\geq1$, il vient pour $\sigma>1$
-%   \[ \Gamma(s)\zeta(s) = \sum_{n=1}^\infty\int_0^\infty t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t = \int_0^\infty \frac{t^{s-1}}{\mathrm{e}^t - 1}\mathrm{d}t \]
-%   Remarquons que la série numérique $\sum\int_0^\infty |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^\infty t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
+%   \[ \Gamma(s)\zeta(s) = \sum_{n=1}^{+\infty}\int_0^{+\infty} t^{s-1}\mathrm{e}^{-nt}\mathrm{d}t = \int_0^{+\infty} \frac{t^{s-1}}{\mathrm{e}^t - 1}\mathrm{d}t \]
+%   Remarquons que la série numérique $\sum\int_0^{+\infty} |t^{s-1}|\mathrm{e}^{-nt}\mathrm{d}t = \sum\int_0^{+\infty} t^{\sigma-1}\mathrm{e}^{-nt}\mathrm{d}t$ converge, donc l'interversion somme/intégrale est justifiée.
 % \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -636,7 +648,7 @@ La définition de $\zeta$ que nous avons donnée en \ref{def:zeta-definition} es
 Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la région prolongée, $0\leq\sigma\leq1$, s'appelle la $bande\,critique$. Au fait, de nombreux résultats arithmétiques reliant $\zeta$ et les nombres premiers font appel aux propriétés de $\zeta$ sur cette bande critique.
 
 \begin{proposition} On a, pour $s\neq0$ et $\sigma>0$,
-  \[ \zeta(s) = \frac{s}{s-1}-s\int_1^\infty\frac{\{t\}}{t^{1+s}}\mathrm{d}t \]
+  \[ \zeta(s) = \frac{s}{s-1}-s\int_1^{+\infty}\frac{\{t\}}{t^{1+s}}\mathrm{d}t \]
 \end{proposition}
 
 \begin{proof}
@@ -654,10 +666,10 @@ Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la
   En faisant tendre $N$ vers $+\infty$,
   \begin{align*}
     \zeta(s)
-    &= - s\int_1^\infty\lfloor t\rfloor t^{-s-1}\mathrm{d}t \\
-    &= - s\int_1^\infty t^{-s}\mathrm{d}t - s\int_1^\infty \{t\}t^{-s-1}\mathrm{d}t \\
-    &= -s\left[\frac{t^{-s+1}}{-s+1}\right]_1^\infty - s\int_1^\infty \{t\}t^{-s-1}\mathrm{d}t \\
-    &= \frac{s}{s-1} - s\int_1^\infty \{t\}t^{-s-1}\mathrm{d}t
+    &= - s\int_1^{+\infty}\lfloor t\rfloor t^{-s-1}\mathrm{d}t \\
+    &= - s\int_1^{+\infty} t^{-s}\mathrm{d}t - s\int_1^{+\infty} \{t\}t^{-s-1}\mathrm{d}t \\
+    &= -s\left[\frac{t^{-s+1}}{-s+1}\right]_1^{+\infty} - s\int_1^{+\infty} \{t\}t^{-s-1}\mathrm{d}t \\
+    &= \frac{s}{s-1} - s\int_1^{+\infty} \{t\}t^{-s-1}\mathrm{d}t
   \end{align*}
 \end{proof}
 
@@ -667,7 +679,7 @@ Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la
   \[
     \zeta(s)
     = \sum_{n=1}^N\frac{1}{n^s}
-    + \frac{N^{1-s}}{s-1}-s\int_N^{\infty}\frac{\{t\}}{t^{1+s}}\mathrm{d}t
+    + \frac{N^{1-s}}{s-1}-s\int_N^{+\infty}\frac{\{t\}}{t^{1+s}}\mathrm{d}t
   \]
 \end{lemma}
 
@@ -675,10 +687,10 @@ Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la
   $\forall\sigma>1,$
   \begin{align*}
     \zeta(s)-\sum_{n=1}^N
-    &= \int_N^\infty\frac{\mathrm{d}\lfloor t\rfloor}{t^s} \\
-    &= \int_N^\infty\frac{\mathrm{d}t}{t^s} - \int_N^\infty\frac{\mathrm{d}\{t\}}{t^s} \\
-    & = -\frac{N^{1-s}}{1-s} - \int_N^\infty\frac{\mathrm{d}\{t\}}{t^s} \\
-    & = -\frac{N^{1-s}}{1-s} - s\int_N^\infty\frac{\{t\}}{t^{s+1}}\mathrm{d}t
+    &= \int_N^{+\infty}\frac{\mathrm{d}\lfloor t\rfloor}{t^s} \\
+    &= \int_N^{+\infty}\frac{\mathrm{d}t}{t^s} - \int_N^{+\infty}\frac{\mathrm{d}\{t\}}{t^s} \\
+    & = -\frac{N^{1-s}}{1-s} - \int_N^{+\infty}\frac{\mathrm{d}\{t\}}{t^s} \\
+    & = -\frac{N^{1-s}}{1-s} - s\int_N^{+\infty}\frac{\{t\}}{t^{s+1}}\mathrm{d}t
   \end{align*}
   et cette formule est encore valable pour $\sigma>0$ par prolongement analytique.
 \end{proof}
@@ -701,7 +713,7 @@ Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la
   \begin{equation}\label{eq:zeta-abs-majoree}
     |\zeta(s)|\leq\sum_{n=1}^N\frac{1}{n^\sigma}
     + \frac{N^{1-\sigma}}{t}
-    + 2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
+    + 2t\int_n^{+\infty}\frac{1}{u^{1+\sigma}}\mathrm{d}u
   \end{equation}
  
   En particulier, en prenant $N=|t|$, on a
@@ -737,7 +749,7 @@ Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la
   \]
 
   \[
-    2t\int_n^\infty\frac{1}{u^{1+\sigma}}\mathrm{d}u
+    2t\int_n^{+\infty}\frac{1}{u^{1+\sigma}}\mathrm{d}u
     = \frac{2t}{\sigma N^\sigma}
     = O\left(\frac{2t}{N}\right)
     = O(1)
@@ -775,7 +787,7 @@ Les estimations ci-dessus requièrent que $|t|\geq2$, mais parfois, il nous faut
 \begin{proof}
   En prenant $N=1$ dans la formule du reste \ref{lem:formule-du-reste}, on a:
   \begin{equation}\label{eq:formule-du-reste-n-1}
-    \zeta(s) = 1+\frac{1}{s-1}-s\int_1^\infty\frac{\{t\}}{t^{s+1}}\mathrm{d}t
+    \zeta(s) = 1+\frac{1}{s-1}-s\int_1^{+\infty}\frac{\{t\}}{t^{s+1}}\mathrm{d}t
   \end{equation}
 
   où $\left|\frac{\{t\}}{t^{s+1}}\right|\leq\frac{1}{t^{\sigma+1}}$, donc l'intégrale converge absolument. Comme $|s|=O(1)$ dans le domaine étudié, on a bien
@@ -785,8 +797,8 @@ Les estimations ci-dessus requièrent que $|t|\geq2$, mais parfois, il nous faut
   \[
     \zeta'(s)
     = -\frac{1}{(s-1)^2}
-    - \int_1^\infty\frac{\{t\}}{t^{s+1}}\mathrm{d}t
-    - s\int_1^\infty\frac{(-\ln t)\{t\}}{t^{s+1}}\mathrm{d}t.
+    - \int_1^{+\infty}\frac{\{t\}}{t^{s+1}}\mathrm{d}t
+    - s\int_1^{+\infty}\frac{(-\ln t)\{t\}}{t^{s+1}}\mathrm{d}t.
   \]
   Le même argument que ci-dessus montre que :
   \[ \zeta'(s) = O\left(\frac{1}{|s-1|^2}\right). \]
@@ -807,7 +819,7 @@ Une fois ce théorème démontré, nous allons encore noter $\zeta$ cet unique p
 \subsection{Par la formule d'Euler-Maclaurin}
 
 \begin{proof}
-Fixons $s$ tel que $\sigma>1$, et appliquons la formule d'Euler-Maclaurin \ref{eq:euler-maclaurin} à l'ordre $r\geq1$ sur l'intervalle $[1,N]$ à la fonction $f:t\mapsto t^{-s}$, de classe $C^\infty$ sur $[1,N]$ :
+Fixons $s$ tel que $\sigma>1$, et appliquons la formule d'Euler-Maclaurin \ref{eq:euler-maclaurin} à l'ordre $r\geq1$ sur l'intervalle $[1,N]$ à la fonction $f:t\mapsto t^{-s}$, de classe $C^{+\infty}$ sur $[1,N]$ :
 
 \begin{align*}
   \sum_{n=1}^N n^{-s} = \frac{1-N^{1-s}}{s-1} + \frac{1+N^{-s}}{2} &+ \sum_{k=2}^r B_k\frac{s(s+1)...(s+k-2)}{k!}(1-N^{-s-k+1}) \\
@@ -823,11 +835,11 @@ Comme les $B_r$ sont périodiques et polynomiaux sur $[0,1[$, ils sont bornés. 
 
 où l'on a noté
 
-\[ F_r(s) = \frac{1}{2} + \sum_{k=2}^r B_k\frac{s(s+1)...(s+k-2)}{k!} - \frac{s(s+1)...(s+r-1)}{r!}\int_1^\infty B_r(t)t^{-s-r}\mathrm{d}t. \]
+\[ F_r(s) = \frac{1}{2} + \sum_{k=2}^r B_k\frac{s(s+1)...(s+k-2)}{k!} - \frac{s(s+1)...(s+r-1)}{r!}\int_1^{+\infty} B_r(t)t^{-s-r}\mathrm{d}t. \]
 
 Montrons que $F_r$ est holomorphe sur $\Omega_r=\{ s\in\mathbb{C}\,|\,\sigma > 1-r\}$. Il suffit que montrer que $G_r$ l'est, où
 
-\[ G_r(s) = \int_1^\infty B_r(t)t^{-s-r}\mathrm{d}t.\]
+\[ G_r(s) = \int_1^{+\infty} B_r(t)t^{-s-r}\mathrm{d}t.\]
 
 On remarque que, à $t$ fixé, la fonction à l'intérieur $s\mapsto B_r(t)t^{-s-r}$ l'est. Soit $K$ un compact de $\Omega_r$, on peut fixer un $\delta>0$ tel que $K\subset\{ s\in\mathbb{C}\,|\,\sigma > 1-r+\delta\}$. Sur ce compact,
 
@@ -1178,7 +1190,8 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
     \max_{I_g}|\zeta'|=O(\ln^{18}T)
   \end{equation}
 
-  En combinant \ref{eq:tnp-faible-3-integrales-part1} et \ref{eq:tnp-faible-3-integrales-part2} et en les injectant dans \ref{eq:tnp-faible-3-integrales}, on obtient
+
+  \textbf{Conclusion}. En combinant \ref{eq:tnp-faible-3-integrales-part1} et \ref{eq:tnp-faible-3-integrales-part2} et en les injectant dans \ref{eq:tnp-faible-3-integrales}, on obtient
   \[ \psi(x) = x
   + O\left(x^{\sigma_0}\ln^{25}x\int_{-T}^T\frac{1}{1+|t|}\mathrm{d}t\right)
   + O\left(\frac{x}{T}\ln^9T\right)
@@ -1211,7 +1224,7 @@ Le terme d'erreur $O(x\mathrm{e}^{-c\ln^{1/10}x})$ dans \ref{eq:tnp-erreur-1} n'
 
 Mais pour ce faire, il nous faut trouver une région sans zéros plus grande que celle du théorème \ref{eq:region-faible-sans-zero}. Le but de cette section est donc de démontrer le théorème suivante :
 
-\begin{theorem}[Région classique sans zéro]\label{eq:region-classique-sans-zero}
+\begin{theorem}[Région classique sans zéro]\label{thm:region-classique-sans-zero}
   Il existe un réel $c>0$ tel que la fonction $\zeta$ ne s'annule pas sur la région du plan définie par
   \[ |t|\geq2 \quad \mathrm{et} \quad \sigma\geq1-\frac{c}{\ln|t|} \]
 \end{theorem}
@@ -1242,15 +1255,15 @@ La preuve de la région affaiblie dans la section précédente était assez simp
 
   \textbf{2ème terme}. En dérivant logarithmitiquement la formule du produit de Hadamard \ref{thm:produit-hadamard} de $\zeta$, on a, pour $s\neq1$ et $s\neq\rho$:
 
-  \begin{align*}
+  \begin{align}
     -\frac{\zeta'(s)}{\zeta(s)}
     &= -b + \frac{1}{s-1}
     + \frac{\Gamma'(\frac{s}{2}+1)}{2\Gamma(\frac{s}{2}+1)}
     - \sum_{\rho}\left(\frac{-1}{1-\frac{s}{\rho}} + \frac{1}{\rho}\right) \\
     &= -b + \frac{1}{s-1}
     + \frac{\Gamma'(\frac{s}{2}+1)}{2\Gamma(\frac{s}{2}+1)}
-    - \sum_{\rho}\left(\frac{1}{\rho} + \frac{1}{s-\rho} \right).
-  \end{align*}
+    - \sum_{\rho}\left(\frac{1}{\rho} + \frac{1}{s-\rho} \right). \label{eq:hadamard-derivee-logarithmique}
+  \end{align}
 
   Clairement, les deux premiers termes sont majorés en norme au voisinage de $+\infty$ :
   \[ -b + \frac{1}{s-1} = O(1) \]
@@ -1317,7 +1330,155 @@ Pour prouver le théorème des nombres premiers en utilisant cette région sans 
 \end{proposition}
 
 \begin{proof}
-  TODO
+  D'après le théorème précédent \ref{thm:region-classique-sans-zero}, on peut fixer un $c$, que l'on peut supposer inférieur à $\frac{1}{16}$, tel que l'on ait pour tout $\rho=\beta+i\gamma$ zéro non trivial de $\zeta$, $\beta<1-\frac{8c}{\ln|\gamma|}$. Soit maintenant $s=\sigma+it$ un nombre complexe tel que $|t|\geq 4$ et $\sigma>1-\frac{4c}{\ln |t|}$. On pose :
+  \[
+    \mu=\inf_\rho\left\{\Re\left(\frac{1}{\rho}+\frac{1}{s-\rho}\right)\right\}
+  \]
+
+  \textbf{1ère étape} : $\mu\geq0$. On fixe un $\rho$ zéro non trivial de $\zeta$, et on fait une distinction de cas.
+
+  \textit{1er cas}: $|s-\rho|>\frac{1}{2}|\rho|$. On peut calculer :
+  \begin{align}
+    \Re\left(\frac{1}{\rho}+\frac{1}{s-\rho}\right)
+    &= \frac{\beta}{|\rho|^2} + \frac{\sigma - \beta}{|s-\rho|^2} \\
+    &= \frac{\beta|s-\rho|^2 + |\rho|^2(\sigma-\beta)}{|\rho|^2|s-\rho|^2} \\
+    &= \frac{\frac{\theta^2 \beta}{4} + \sigma - \beta}{|s-\rho|^2} \label{eq:re-rho-s-moins-rho}
+  \end{align}
+
+  où l'on a posé $\theta = 2\frac{|s-\rho|}{|\rho|}$. Par hypothèse de notre 1er cas, $\theta>1$. 
+    
+  \begin{align*}
+    \Re\left(\frac{1}{\rho}+\frac{1}{s-\rho}\right)
+    & > \frac{\frac{\beta}{4} + \sigma - \beta}{|s-\rho|^2} \\
+    & = \frac{\sigma - \frac{3}{4}\beta}{|s-\rho|^2} \\
+    & > \frac{\sigma - \frac{3}{4}}{|s-\rho|^2}
+  \end{align*}
+
+  où on a utlisé dans la dernière inégalité $\beta<1$, car $\rho$ est dans la bande critique. Comme on a pris $|t|\geq 4$ et $c<\frac{1}{16}$, on a $\sigma\geq 1-\frac{1}{4\ln 4}\approx 0.81$, donc $\sigma-0.75>0$, donc $ \Re\left(\frac{1}{\rho}+\frac{1}{s-\rho}\right)>0$. Et il suit que $\mu\geq0$.
+  \\
+
+  \textit{2ème cas}: $|s-\rho|\leq\frac{1}{2}\rho$. Alors en remplaçant $s$ et $\rho$ par leurs parties réelles et imaginaires, 
+  \begin{align*}
+    4((\sigma-\beta)^2 + (t-\gamma)^2)
+    &\leq \gamma^2 + \beta^2 \\
+    &< \gamma^2 + 1 \\
+    &\leq (|\gamma|+1)^2
+  \end{align*}
+
+  en utilisant le fait que $\beta<1$ dans la deuxième inégalité. En minorant $(\sigma-\beta)^2\geq 0$, on a alors $4(t-\gamma)^2\leq (|\gamma|+1)^2$, donc $2|t-\gamma| \leq |\gamma| + 1$. Par ailleurs, par inégalité triangulaire, on a aussi $2|t-\gamma| \geq 2||t| - |\gamma||$. On va montrer par (encore une !) distinction de cas que cela implique toujours :
+  \[
+    |\gamma|\leq 2t+1.
+  \]
+
+  \begin{itemize}
+    \item si $|\gamma|\geq t$, alors $|\gamma|+1\geq 2|\gamma|-2t$, soit $|\gamma|\leq 2t+1$.
+    \item si $|\gamma|\leq t$, alors l'inégalité annoncée est triviale.
+  \end{itemize}
+
+  Maintenant que l'on a établi $|\gamma|\leq 2t+1$, l'inégalité $\beta< 1-\frac{8c}{\ln|\gamma|}$ devient :
+  \[
+    \beta
+    < 1-\frac{8c}{\ln(2t+1)}
+    \leq 1-\frac{4c}{\ln t}
+    \leq \sigma
+  \]
+
+  où la deuxième égalité vient de l'étude de la fonction $t\mapsto\frac{8c}{\ln(2t+1)}-\frac{4c}{\ln t}$, qui est positive ou nulle pour $t\geq 1+\sqrt{2}$, ce qui est bien notre case puisque l'on a pris $t\geq 4\geq 1+\sqrt{2}$. On réécrit l'équation \ref{eq:re-rho-s-moins-rho}, toujours valable :
+  \[
+    \Re\left(\frac{1}{\rho}+\frac{1}{s-\rho}\right)
+    = \frac{\frac{\theta^2 \beta}{4} + \sigma - \beta}{|s-\rho|^2}.
+  \]
+
+  Mais on vient de montrer que $\beta<\sigma$, donc cette partie réelle est strictement positive. Par passage à la borne inférieure, $\mu\geq 0$.
+  \\
+
+  \textbf{2ème étape}. On part de la formule de dérivée logarithmique du produit de Hadamard, donnée en \ref{eq:hadamard-derivee-logarithmique} dans le théorème \ref{thm:region-classique-sans-zero}. En prenant la partie réelle de cette formule, les parties réelles des termes de la somme étant tous positifs ou nuls d'après la première étape, on a
+  \[
+    \Re\left(-\frac{\zeta'(s)}{\zeta(s)}\right)
+    \leq \Re\left(-b + \frac{1}{s-1}\right)
+    + \Re\left(\frac{\Gamma'(\frac{s}{2}+1)}{2\Gamma(\frac{s}{2}+1)}\right).
+  \]
+
+  Notons que dans la démonstration du théorème \ref{thm:region-classique-sans-zero}, les parties réelles des termes de la somme étaient aussi positives, mais celà découlait du fait que $s$ était de partie réelle strictement supérieure à 1. Nous avons ici un $\Re(s)<1$, d'où la nécessité de la 1ère étape.
+  \\
+
+  En utilisant encore une fois la formule de Stirling complexe TODO, on obtient un $K>0$ tel qu'au voisinage de $+\infty$
+  \begin{equation}\label{eq:reel-zeta-zeta-prime-k-lnt}
+    \Re\left(-\frac{\zeta'(s)}{\zeta(s)}\right) \leq K\ln t.
+  \end{equation}
+
+  Posons désormais quelques variables :
+  \begin{itemize}
+    \item $s=\sigma+it$ quelconque, avec $t\geq 5$ et $\sigma\geq1-\frac{c}{\ln t}$,
+    \item $\eta=\frac{c}{\ln t}$,
+    \item $s_0 = 1 + \eta + it$,
+    \item $\omega$ dans le disque $|\omega|\leq 4\eta$,
+    \item $(\sigma',\,t')$ tel que $s_0+\omega=\sigma'+it'$.
+  \end{itemize}
+  
+  Alors comme $\eta\geq\frac{1}{16\ln 5}\approx 0.04$, on a $4\eta\leq 1$, donc $t'=t+\Im(\omega)\geq 4$. De même, $\sigma'=1+\eta+\Re(\omega)\geq 1+5\eta\geq1-\frac{4c}{\ln t'}$.
+  \\
+  Ainsi $s_0+\omega$ satisfait aux hypothèses qui conduisent à l'équation \ref{eq:reel-zeta-zeta-prime-k-lnt} et on peut écrire :
+  \begin{align*}
+    \Re\left(-\frac{\zeta'(s_0+\omega)}{\zeta(s_0+\omega)}\right)
+    &\leq K\ln t' \\
+    &\leq K\ln (t+4\eta) \\
+    &\leq K\ln (2t) \\
+    &\leq 2K\ln (t)
+  \end{align*}
+
+  où la dernière inégalité vient de $2X\leq X^2$ pour $X\geq 2$ (en étudiant rapidement le polynôme $X(X-2)$), ainsi que de la croissance de $\ln$.
+  \\
+
+  \textbf{Conclusion}. On a majoré la partie réelle, et on veut majorer le module : on cherche donc à appliquer le théorème de Borel-Carathéodory \ref{lem:borel-caratheodory}. Posons donc
+  \[
+    \forall|\omega|\leq 4\eta,\quad
+    F(\omega)=\frac{\zeta'(s_0)}{\zeta(s_0)}-\frac{\zeta'(s_0+\omega)}{\zeta(s_0+\omega)}.
+  \]
+
+  Alors $F$ est holomorphe sur le disque de centre 0 et de rayon $4\eta$, $F(0)=0$, et l'inégalité trouvée en fin de deuxième étape montre que $\Re(F)$ est majorée par $A=2K\ln t+\left|\frac{\zeta'(s_0)}{\zeta(s_0)}\right|$. Ce lemme nous dit donc :
+  \[
+    \forall |\omega|<4\eta,\quad
+    \left|\frac{\zeta'(s_0)}{\zeta(s_0)}-\frac{\zeta'(s_0+\omega)}{\zeta(s_0+\omega)}\right|
+    \leq\frac{4K\ln t|\omega|}{4\eta-|\omega|}.
+  \]
+
+  Or, on a $s-s_0=1+\eta-\sigma\geq 2\eta$, donc on peut appliquer cette majoration en $\omega=s-s_0$ et majorer $|s-s_0|\geq 2\eta$ :
+  \[
+    \left|\frac{\zeta'(s_0)}{\zeta(s_0)}-\frac{\zeta'(s)}{\zeta(s)}\right|
+    \leq 4K\ln t.
+  \]
+
+  Puis, par inégalité triangulaire,
+  \[
+    \left|\left|\frac{\zeta'(s_0)}{\zeta(s_0)}\right|-\left|\frac{\zeta'(s)}{\zeta(s)}\right|\right|
+    \leq 4K\ln t,
+  \]
+
+  ce qui implique :
+  \begin{equation}\label{eq:zeta-zeta-prime-4k}
+    \left|\frac{\zeta'(s)}{\zeta(s)}\right|
+    \leq 4K\ln t
+    + \left|\frac{\zeta'(s_0)}{\zeta(s_0)}\right|.
+  \end{equation}
+
+  Mais en prenant l'écriture de $\zeta'/\zeta$ avec la fonction de van Mangoldt (proposition \ref{cor:zeta-zeta-prime-van-mangoldt}),
+  \[
+    \left|\frac{\zeta'(s_0)}{\zeta(s_0)}\right|
+    \leq \sum_{n=1}^{+\infty}\frac{\Lambda(n)}{n^{1+\eta}}
+    = \frac{\zeta'(1+\eta)}{\zeta(1+\eta)}.
+  \]
+
+  Le pôle en 1 de $\zeta'/\zeta$ est simple et de résidu -1 (proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe}), donc au voisinage de 1,
+  \[
+    \frac{\zeta'(1+\eta)}{\zeta(1+\eta)}
+    =\frac{1}{\eta} + O(1).
+  \]
+
+  Finalement, en remplaçant dans $\ref{eq:zeta-zeta-prime-4k}$,
+  \[
+    \left|\frac{\zeta'(s)}{\zeta(s)}\right| = O(\ln t).
+  \]
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
