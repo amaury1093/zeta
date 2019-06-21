@@ -46,6 +46,9 @@
   \\
 
   Ce mémoire a été réalisé dans le cadre de l'UE Recherche en M1 Mathématiques et Applications à l'Université Paris Diderot. Il a été encadré par M. Régis de la Bretèche.
+  \\
+
+  L'idée de ce mémoire vient du cours d'Arithmétique de M1 présenté par M. Hindry à l'Université Paris Diderot, dont on trouvera le contenu dans les quatre premiers chapitres de \cite{hindry}. Ce cours fait une introduction de la théorie analytique des nombres, mais n'entre pas dans ses détails. En particulier, la preuve du théorème des nombres premiers, basée sur \cite{donzagier}, n'y donne que l'équivalent de $\pi$. J'ai donc voulu creuser un peu plus dans cette direction, et ce mémoire est le résultat de ce creusement.
 \end{abstract}
 
 \tableofcontents{}
@@ -177,7 +180,7 @@ La deuxième fonction de Tchebychev utilise cette définition.
   \]
 \end{proof}
 
-Le théorème suivant n'est pas démontré.
+Le théorème suivant est "presque" le théorème des nombres premiers. Il n'est pas démontré ici.
 
 \begin{theorem}[Tchebychev]
   Il existe deux constates $A$ et $B$, $0<A<1<B$ telles que
@@ -300,6 +303,71 @@ Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une c
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Fonction entières d'ordre fini et théorème d'Hadamard}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Commençons par le théorème de factorisation de Weierstrass.
+
+\begin{definition}[Facteur primaire de Weierstrass]
+  On désigne par $E_n:\mathbb{C}\to\mathbb{C}$, définie comme:
+  \begin{equation*}
+    E_n(z)=
+    \begin{cases}
+      1-z, & \text{si}\ n=0\\
+      (1-z)\mathrm{e}^{z+\frac{z^2}{2}+\frac{z^3}{3}+\cdots+\frac{z^n}{n}}, & \text{sinon}.
+    \end{cases}
+  \end{equation*}
+\end{definition}
+
+\begin{theorem}[Factorisation de Weierstrass]\label{thm:factorisation-weierstrass}
+  Soit $f$ une fonction entière. On note $m$ l'ordre de 0 de $f$ (si $f(0)=0$ alors par convention $m=0$), et $(a_n)_{n\in\mathbb{N}}$ les autres zéros de $f$, comptés avec leur ordre de multiplicité.
+  \\
+
+  Alors il existe une fonction entière $g$ et une suite d'entiers naturels $(q_n)_{n\in\mathbb{N}}$ tels que
+  \[
+    f(z)=z^m\mathrm{e}^{g(z)}\prod_{n=0}^{+\infty}E_{q_n}\left(\frac{z}{a_n}\right)
+  \]
+\end{theorem}
+
+Le théorème d'Hadamard précise la factorisation de Weierstrass lorsque $f$ est d'ordre fini.
+
+\begin{definition}
+  Une fonction $f$ entière est d'ordre fini lorsque
+  \[
+   \exists \rho_9,\,\exists R_0,\quad
+   |z|\geq R_0\Longrightarrow|f(z)|\leq\mathrm{e}^{|z|^{\rho_0}}
+  \]
+
+  La borne inférieure de ces $\rho_0$ est appelé ordre de $f$ et est noté $\rho(f)$.
+\end{definition}
+
+\begin{lemma}
+  Soit $f$ une fonction entière d'ordre fini. Alors
+  \[
+    \rho(f)=\lim_{r\to+\infty}\sup_{r\geq R}
+    \frac{\ln\ln M(f,r)}{\ln r}
+  \]
+
+  où $M(f,r)$ désigne $\max_{|z|=r}|f(z)|$.
+\end{lemma}
+
+\begin{theorem}[Hadamard]\label{thm:factorisation-hadamard}
+  On prend les mêmes hypothèses que le théorème de Weierstrass \ref{thm:factorisation-weierstrass}, et on ajoute le fait que $f$ est d'ordre fini $r$.
+  \\
+  Alors il existe un polynôme $g$ de degré $d\leq r$ tel que
+  \[
+    f(z)=z^m\mathrm{e}^{g(z)}\prod_{n=0}^{+\infty}E_d\left(\frac{z}{a_n}\right)
+  \]
+\end{theorem}
+
+\begin{lemma}[Lemme de la partie réelle de Borel-Carathéodory]\label{lem:borel-caratheodory}
+  Soit $F$ une fonction holomorphe pour $s\leq|R|$, telle que $F(0)=0$. On suppose que $\max_{|s|=R}\Re(F(s))\leq A$. Alors
+  \[
+    \forall |s|\leq R,\quad|F(s)|\leq\frac{2A|s|}{R-|s|}  
+  \]
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{La fonction $\Gamma$ d'Euler}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -334,6 +402,22 @@ Cette définition a du sens, parce que :
 \begin{theorem}[Equation fonctionnelle]\label{thm:gamma-equation-fonctionnelle}
   \[
     \Gamma(s+1)=s\Gamma(s)\quad(\sigma>0)
+  \]
+\end{theorem}
+
+\begin{theorem}[Formule du produit de Weierstrass]\label{thm:gamma-weierstrass}
+  On a, pour $\sigma>0$,
+  \[
+    \frac{1}{\Gamma(s)}
+    =s\mathrm{e}^{\gamma s}\prod_{j\geq 1}\left(1+\frac{s}{j}\right)\mathrm{e}^{-s/j}
+  \]
+\end{theorem}
+
+\begin{theorem}[Formule de Stirling réelle]\label{thm:stirling-reel}
+  Au voisinage de $+\infty$,
+  \[
+    \Gamma(x+1)
+    \sim x^x\mathrm{e}^x\sqrt{2\pi x}.
   \]
 \end{theorem}
 
@@ -482,17 +566,6 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
   Alors, pour $x\geq2$, $T\geq2$, $\sigma\leq\sigma_a$, et en posant $\kappa:=\sigma_a-\sigma+1/\ln x$,
   \[ \sum_{n\leq x}\frac{a_n}{n^s}=\frac{1}{2\pi i}\int_{\kappa-iT}^{\kappa+iT}F(s+\omega)\frac{x^\omega}{\omega}\mathrm{d}\omega + O\left(x^{\sigma_a-\sigma}\frac{\ln^\alpha x}{T}+\frac{B(2x)}{x^\sigma}\left(1+x\frac{\ln T}{T}\right)\right) \]
 \end{theorem}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Quelques lemmes techniques}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{lemma}[Lemme de la partie réelle de Borel-Carathéodory]\label{lem:borel-caratheodory}
-  Soit $F$ une fonction holomorphe pour $s\leq|R|$, telle que $F(0)=0$. On suppose que $\max_{|s|=R}\Re(F(s))\leq A$. Alors
-  \[
-    \forall |s|\leq R,\quad|F(s)|\leq\frac{2A|s|}{R-|s|}  
-  \]
-\end{lemma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -812,7 +885,7 @@ L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. E
   \]
 
   D'où :
-  \begin{align*}
+  \begin{align}
     \Phi(s)
     &= \int_0^1\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u} + \int_1^{+\infty}\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u}
     & \\
@@ -820,8 +893,8 @@ L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. E
     & \text{avec $v:=1/u$} \\
     &= \int_1^{+\infty}\left(\sqrt{u}\phi_1(u)+\frac{1}{2}(\sqrt{u}-1)\right)\frac{v^{-s/2}\mathrm{d}v}{v} + \int_1^{+\infty}\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u}
     & \\
-    &= \int_1^{+\infty}\phi_1(u)\left(u^{\frac{s}{2}}+u^{\frac{1-s}{2}}\right)\frac{\mathrm{d}u}{u} + \frac{1}{s-1}-\frac{1}{s}.
-  \end{align*}
+    &= \int_1^{+\infty}\phi_1(u)\left(u^{\frac{s}{2}}+u^{\frac{1-s}{2}}\right)\frac{\mathrm{d}u}{u} + \frac{1}{s-1}-\frac{1}{s}.\label{eq:phi-avec-phi-1}
+  \end{align}
 
   On voit alors immédiatement que $\Phi(s)=\Phi(1-s)$. En appliquant enfin la formule de duplication de $\Gamma$ \ref{prop:gamma-duplication-legendre} et la formule des compléments \ref{prop:gamma-formule-complements}, on obtient le résultat.
 \end{proof}
@@ -1053,15 +1126,13 @@ L'unicité est triviale par prolongement analytique.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Produit d'Hadamard}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Nous avons déjà rencontré la fonction $\xi$ dans la section sur l'équation forcément de $\zeta$.
-
 \begin{definition}
   On définit, pour $s\in\mathbb{C}$,
-  \[ \xi(s) := s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s) \]
+  \[
+    \xi(s)
+    := s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)
+    = s(s-1)\Phi(s)
+  \]
 \end{definition}
 
 La définition est possible pour $s\in\mathbb{C}\backslash\{0,1\}$, mais aussi en 1 car le pôle de $\zeta$ est compensé par $(s-1)$, et également en 0 par l'équation fonctionnelle \ref{thm:equation-fonctionnelle}.
@@ -1087,21 +1158,74 @@ La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ 
 \end{proof}
 
 \begin{proposition}
-  Les zéros de $\xi$ sont dans la bande $0<\sigma<1$.
+  Les zéros de $\xi$ sont dans la bande $0<\sigma<1$, et correspondent aux zéros non-triviaux de $\zeta$.
 \end{proposition}
 
 \begin{proof}
-  Par le théorème \ref{eq:zeta-non-nul-produit-eulerien}, $\zeta$ ne s'annule pas sur $\sigma\geq1$, donc $\xi$ non plus. Par l'équation fonctionnelle, elle ne s'annule pas sur $\sigma\leq0$, les zéros triviaux de $\zeta$ étant compensés par les pôles de $\Gamma(\frac{1}{2}s)$.
+  Par le théorème \ref{eq:zeta-non-nul-produit-eulerien}, $\zeta$ ne s'annule pas sur $\sigma\geq1$, donc $\xi$ non plus. Par l'équation fonctionnelle, elle ne s'annule pas sur $\sigma\leq0$, les zéros triviaux de $\zeta$ étant compensés par les pôles de $\Gamma(\frac{1}{2}s)$. Et dans la bande $0<\sigma<1$, on a $\zeta(s)=0\Leftrightarrow\xi(s)=0$.
 \end{proof}
 
-\begin{theorem}\label{thm:produit-hadamard}
+\begin{theorem}\label{thm:zeta-produit-hadamard}
   Il existe des constantes $a$ et $b$ telles que
   \[ \xi(s)=\mathrm{e}^{as}\prod_{\rho}\left(1-\frac{s}{\rho}\right)\mathrm{e}^{s/\rho} \]
   \[ \zeta(s)=\frac{\mathrm{e}^{bs}}{2(s-1)}\Gamma(s/2+1)^{-1}\prod_{\rho}\left(1-\frac{s}{\rho}\right)\mathrm{e}^{s/\rho} \]
 \end{theorem}
 
 \begin{proof}
-  TODO
+  On part de la démonstration de l'équation fonctionnelle, où l'on s'était arrêté à \ref{eq:phi-avec-phi-1} : 
+  \[
+    \Phi(s)
+    = \int_1^{+\infty}\phi_1(u)\left(u^{\frac{s}{2}}+u^{\frac{1-s}{2}}\right)\frac{\mathrm{d}u}{u} + \frac{1}{s-1}-\frac{1}{s}  
+  \]
+
+  valable pour tout $s\neq 0,\ s\neq 1$. On rappelle qu'on avait posé :
+  \[
+    \phi_1(u)
+    :=\sum_{n=1}^{+\infty}\mathrm{e}^{-\pi un^2}.
+  \]
+
+  Or :
+  \[
+    \phi_1(u)
+    \leq \sum_{n=1}^{+\infty}\mathrm{e}^{-\pi un}
+    =\frac{\mathrm{e}^{-\pi u}}{1-\mathrm{e}^{-\pi u}}
+    \leq \mathrm{e}^{-\pi u},
+  \]
+
+  Donc :
+  \[
+    |\Phi(s)|
+    \leq \int_1^{+\infty}u^{\sigma}\mathrm{e}^{-u}\frac{\mathrm{d}u}{u}
+    =\Gamma(\sigma).
+  \]
+
+  Mais d'après la formule de Stirling réelle \ref{thm:stirling-reel}, avec $\sigma\to+\infty$,
+  \begin{align*}
+    \Gamma(\sigma)
+    &= O(\sigma^{\sigma-1/2}\mathrm{e}^{-\sigma})
+    & \\
+    &= O(\mathrm{e}^{(\sigma-\frac{1}{2})\ln\sigma - \sigma})
+    & \\
+    &= O(\mathrm{e}^{(\sigma-\frac{1}{2})^{1+\epsilon}})
+    & \text{$\forall\epsilon>0$,\ car $\left(\sigma-1/2\right)\ln\sigma = o\left(\left(\sigma-1/2\right)\right)$} \\
+    &= O(\mathrm{e}^{|s|^{1+\epsilon}}) &
+  \end{align*}
+
+  Donc $\Phi$ est d'ordre au plus 1. A fortiori, $\xi$ aussi car $\xi(s)=s(s-1)\Phi(s)$. On vérifie également les autres hypothèses du théorème d'Hadamard \ref{thm:factorisation-hadamard} : $\xi(0)=1$. On peut donc écrire $\xi$ sous la forme :
+  \[
+    \xi(s)
+    = \mathrm{e}^{g(s)}\prod_\rho E_1\left(\frac{s}{\rho}\right),
+  \]
+
+  avec $g(X)=aX+q$ est un polynôme de degré au plus 1, $E_1(z)=(1-z)\mathrm{e}^{z}$, et les $\rho$ parcourant les zéros de $\xi$, c'est-à-dire les zéros non-triviaux de $\zeta$. Le fait que $\xi(0)=1$ entraîne $q=0$, donc $\xi$ se réecrit en :
+  \[
+    \xi(s)
+    = \mathrm{e}^{as}\prod_\rho \left(1-\frac{s}{\rho}\right)e^{s/\rho}
+  \]
+  qui est bien la forme souhaitée.
+  \\
+
+  Pour passer de $\xi$ à $\zeta$, on utilise la définition de $\xi(s)= s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$ et le produit de Hadamard de $\frac{1}{\Gamma}$ donnée en \ref{thm:gamma-weierstrass}.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1206,6 +1330,9 @@ Les autres zéros de $\zeta$ (s'il y en a) sont donc situés dans la région $0<
 \\
 
 Nous n'allons pas démontrer ce résultat, mais en réalité il existe une infinité de zéros dans cette bande critique. Nous pouvons en revanche affirmer que si $\rho$ est un zéro de $\zeta$ dans cette région, alors par l'équation fonctionnelle, $1-\rho$ aussi. De même, pour $s\geq0$, $\overline{\zeta(s)}=\zeta(\bar{s})$. Ceci montre que l'axe des réels et l'axe $\frac{1}{2}i\mathbb{R}$ (appelée droite critique) sont deux axes de symétrie pour les zéros de $\zeta$.
+\\
+
+Dans la section suivante, nous allons montrer le théorème des nombres premiers, et en particulier comment il est relié à une région explicite sans zéros dans la bande critique.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1456,7 +1583,7 @@ La preuve de la région affaiblie dans la section précédente était assez simp
   \textbf{1er terme}. Il suffit d'utiliser le fait que 1 est un pôle d'ordre 1 et de résidu 1 pour $\zeta$, démontré dans la  proposition \ref{prop:zeta-sur-zeta-prime-1-sur-holomorphe},
   \[ -3\frac{\zeta'(\sigma)}{\zeta(\sigma)} \leq \frac{3}{\sigma-1} + O(1). \]
 
-  \textbf{2ème terme}. En dérivant logarithmitiquement la formule du produit de Hadamard \ref{thm:produit-hadamard} de $\zeta$, on a, pour $s\neq1$ et $s\neq\rho$:
+  \textbf{2ème terme}. En dérivant logarithmitiquement la formule du produit de Hadamard \ref{thm:zeta-produit-hadamard} de $\zeta$, on a, pour $s\neq1$ et $s\neq\rho$:
 
   \begin{align}
     -\frac{\zeta'(s)}{\zeta(s)}
