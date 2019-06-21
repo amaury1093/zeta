@@ -33,3 +33,6 @@ __latexindent_temp.tex
 *.synctex.gz
 *.synctex.gz(busy)
 *.pdfsync
+
+# OS-related files
+.DS_Store

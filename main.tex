@@ -4,8 +4,12 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{babel}
+\usepackage{graphicx} 
+\usepackage{hyperref}
 
-\title{La fonction zêta de Riemann}
+\graphicspath{ {./images/} }
+
+\title{La fonction zêta de Riemann et une preuve analytique du théorème des nombres premiers}
 \author{Amaury Martiny}
 \date{\today}
 
@@ -16,14 +20,45 @@
 \newtheorem{lemma}[theorem]{Lemme}
 
 \begin{document}
-\maketitle
+\begin{titlepage}
+  \centering
+  \includegraphics[width=6cm]{paris_diderot_logo.jpg}\\
+  Année universitaire 2018-2019
+
+  \vfill
+  {\bfseries
+    Mémoire UE Recherche\\
+    M1 Mathématiques et Applications
+    \vskip1cm
+    \Large La fonction zêta de Riemann et une preuve analytique du théorème des nombres premiers\\
+    \vskip1cm
+    \normalsize \today
+    \vskip1cm
+    Amaury Martiny
+  }    
+  \vfill
+  \vfill
+  Sous la direction de :\hskip1cm Régis de la Bretèche
+\end{titlepage}
 
 \begin{abstract}
-  This is the paper's abstract \ldots
-  \end{abstract}
+  Le but de cet exposé est d'étudier $\pi(x)$, qui compte le nombre de nombres premiers inférieurs ou égaux à $x$. Le résultat principal sur $\pi$ auquel nous voulons arriver est le théorème des nombres premiers sous sa forme exposée par de la Vallée Poussin dans \cite{valleepoussin}. Elle présente un équivalent de $\pi$ avec terme d'erreur. La démonstration de ce théorème passe par une analyse de la fonction $\zeta$ de Riemann.
+  \\
+
+  Ce mémoire a été réalisé dans le cadre de l'UE Recherche en M1 Mathématiques et Applications à l'Université Paris Diderot. Il a été encadré par M. Régis de la Bretèche.
+\end{abstract}
 
 \tableofcontents{}
 
+\pagebreak
+\section*{Notations}
+Quelques notations spéciales sont utilisées dans ce papier.
+\\\\
+$p$ désigne toujours un nombre premier.
+\\\\
+Si l'on introduit $s\in\mathbb{C}$, alors automatiquement $\sigma$ et $t$ désignent respectivement sa partie réelle et imaginaire.
+\\\\
+$\rho$ désigne un zéro non-trivial de la fonction $\zeta$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,23 +67,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+Ce chapitre sert d'introduction pour présenter quelques résultats élémentaires, avant d'introduire dans les chapitres suivants l'outil principal : l'analyse des fonctions à variable complexe.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Un peu d'histoire}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Quelques premiers résultats}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Comme indiqué dans le résumé de ce papier, nous tenterons d'arriver au théorème des nombres premiers, démontré pour la première fois en 1896, par Hadamard et de la Vallée Poussin. Tous deux se sont fondés sur l'article \cite{riemann} de Riemann (1859), qui a introduit l'analyse complexe en théorie des nombres premiers.
+\\
 
-Mertens, $\sum_p\frac{\ln p}{p}$
+Mais bien avant cette date, la répartition des nombres premiers avait déjà suscité d'importants travaux. L'histoire commence avec Euclide, qui montra que $\lim_{+\infty}\pi=+\infty$. Il faudra attendre 1737 pour qu'Euler introduise $\zeta$ en variable réelle pour étudier la suite des nombres premiers. L'équivalent de $\pi$ avait été conjecturé au cours du 18ème siècle par Gauss et par Legendre. Enfin, quelques années avant l'article de Riemann, Tchebychev avait établi par des moyens élémentaires l'existence de deux constates $A$ et $B$, $0<A<1<B$ telles que
+\[
+  A\frac{x}{\ln x}\leq\pi(x)\leq B\frac{x}{\ln x}.
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Van Mangoldt, Tchebychev et leurs fonctions}
+\section{Tchebychev et ses fonctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,13 +95,15 @@ Nous introduisons ici les fonctions de Tchebychev, car elles vont nous suivre da
   \[ \theta(x) = \sum_{p \le x}\ln p. \]
 \end{definition}
 
-Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très simple et très rapide de $\theta$, voir TODO HINDRY pour une démonstration.
+Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très simple et très rapide de $\theta$, voir \cite{hindry} pour une démonstration.
 
 \begin{proposition}\label{prop:theta-majoration}
   \[
     \forall x\geq1,\quad \theta(x)\leq 2x\ln 2.
   \]
 \end{proposition}
+
+La deuxième fonction de Tchebychev utilise cette définition.
 
 \begin{definition}[Fonction de van Mangoldt]
   \[
@@ -78,11 +117,11 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
 
 \begin{definition}[Fonction $\psi$ de Tchebychev] Pour $x\in \mathbb{R}$,
   \[
-    \theta(x)
+    \psi(x)
     = \sum_{n \le x}\Lambda (n)
     = \sum_{p \le x}\Lambda (p).
   \]
-  $\theta$ est également appelée fonction sommatoire de von Mangoldt.
+  $\psi$ est également appelée fonction sommatoire de von Mangoldt.
 \end{definition}
 
 \begin{proposition}
@@ -138,6 +177,15 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
   \]
 \end{proof}
 
+Le théorème suivant n'est pas démontré.
+
+\begin{theorem}[Tchebychev]
+  Il existe deux constates $A$ et $B$, $0<A<1<B$ telles que
+  \[
+    A\frac{x}{\ln x}\leq\pi(x)\leq B\frac{x}{\ln x}.
+  \]
+\end{theorem}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -146,7 +194,9 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO Série de Dirichlet
+Dans cette section, nous allons présenter quelques outils d'analyse, qui sont souvent utilisés en théorie analytique des nombres.
+
+Certains résultats ne sont pas démontrés, car ils ne sont pas liés directement au sujet de cet exposé, et peuvent être retrouvés facilement dans la litérature.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -205,6 +255,45 @@ Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une c
 \end{theorem}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Formule sommatoire de Poisson}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lemma}[Formule de poisson]\label{lem:formule-poisson}
+  Soit $f$ une fonction intégrable sur $\mathbb{R}$. Défininissons sa transformée de Fourier par
+  \[
+    \forall y\in\mathbb{R},\quad\hat{f}(y):=\int_{-\infty}^{+\infty}f(x)\mathrm{e}^{2i\pi xt}\mathrm{d}t
+  \]
+  et supposons que la fonction $x\mapsto\sum_{n\in\mathbb{Z}}f(x+n)$ est à variation bornée sur $[0,1]$ et continue. Alors on a la formule:
+  \[
+    \sum_{n\in\mathbb{Z}}f(n)=\sum_{n\in\mathbb{Z}}\hat{f}(n).
+  \]
+\end{lemma}
+
+\begin{proof}
+  Soit $G:x\mapsto\sum_{n\in\mathbb{Z}}f(x+n)$, les hypothèses garantissent son existence et sa continuité. C'est bien sûr une fonction 1-périodique, on peut donc écrire son développement de Fourier:
+  \[
+    G(x)
+    =\sum_{m\in\mathbb{Z}}\hat{G}(m)\mathrm{e}^{2\pi imx}
+  \]
+
+  avec
+  \begin{align*}
+    \hat{G}(m)
+    &= \int_0^1 G(t)\mathrm{e}^{-2\pi imt}\mathrm{d}t \\
+    &= \sum_{n\in\mathbb{Z}}\int_0^1 f(t+n)\mathrm{e}^{-2\pi imt}\mathrm{d}t \\
+    &= \int_{-\infty}^{+\infty} f(u)\mathrm{e}^{-2\pi imu}\mathrm{d}t \\
+    &= f(-m).
+  \end{align*}
+
+  Donc :
+  \[
+    \sum_{n\in\mathbb{Z}}f(x+n) = \sum_{m\in\mathbb{Z}}\hat{f}(m)\mathrm{e}^{-2\pi imx}
+  \]
+
+  et on a le résultat pour $x=0$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Outils d'analyse complexe}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -214,7 +303,41 @@ Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une c
 \subsection{La fonction $\Gamma$ d'Euler}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{theorem}\label{thm:stirling-complexe}
+\begin{definition}[Fonction Gamma d'Euler]
+  On définit $\Gamma$ par :
+  \[
+    \forall \sigma>0,\quad\Gamma(s)=\int_0^{+\infty}t^{s-1}\mathrm{e}^{-t}\mathrm{d}t.
+  \]
+\end{definition}
+
+Cette définition a du sens, parce que :
+\begin{itemize}
+  \item au voisinage de 0, $|t^{s-1}\mathrm{e}^{-t}|\sim t^{\sigma-1}$ qui est intégrable parce que $\sigma>0$.
+  \item au voisinage de $+\infty$, $|t^{s-1}\mathrm{e}^{-t}|\leq \mathrm{e}^{-t/2}$, qui est intégrable.
+\end{itemize}
+
+\begin{theorem}[Euler]
+  \[
+    \forall \sigma>0,\quad
+    \Gamma(s)=\lim_{n\to+\infty}\frac{n^zn!}{z(z+1)...(z+n)}.  
+  \]
+\end{theorem}
+
+\begin{proposition}
+  $\Gamma$ est holomorphe sur le demi-plan $\sigma>0$.
+\end{proposition}
+
+\begin{proposition}
+  $\Gamma$ se prolonge en une fonction holomorphe dans $\mathbb{C}\backslash(-\mathbb{N}^*)$. Elle définit donc une fonction méromorphe sur $\mathbb{C}$.
+\end{proposition}
+
+\begin{theorem}[Equation fonctionnelle]\label{thm:gamma-equation-fonctionnelle}
+  \[
+    \Gamma(s+1)=s\Gamma(s)\quad(\sigma>0)
+  \]
+\end{theorem}
+
+\begin{theorem}[Formule de Stirling complexe]\label{thm:stirling-complexe}
   Pour tout $s\in\mathbb{C}\backslash\mathbb{R}$,
   \[
     \log\Gamma(s)
@@ -223,7 +346,30 @@ Nous allons utiliser à plusieurs reprises la formule d'Abel. Elle fournit une c
     + \frac{1}{2}\ln(2\pi)
     - \int_0^{+\infty} B_1(t)\frac{\mathrm{d}t}{s+t}
   \]
+  où les logarithmes complexes sont pris en détermination principale.
 \end{theorem}
+
+\begin{corollary}\label{cor:gamma-gamma-prime-majoration}
+  Au voisinage de $+\infty$,
+  \[
+    \Re\left(\frac{\Gamma'(s)}{\Gamma(s)}\right) = O(\ln|t|)
+  \]
+\end{corollary}
+
+\begin{proposition}[Formule de duplication de Legendre]\label{prop:gamma-duplication-legendre}
+  \[
+    \forall x>0,\quad
+    \Gamma\left(\frac{x}{2}\right)\Gamma\left(\frac{x+1}{2}\right)
+    =\sqrt{\pi}2^{1-x}\Gamma(x).
+  \]
+\end{proposition}
+
+\begin{proposition}[Formule des compléments]\label{prop:gamma-formule-complements}
+  \[
+    \forall s\in\mathbb{C}\backslash\mathbb{Z},\quad
+    \Gamma(s)\Gamma(1-s)=\frac{\pi}{\sin(\pi s)}
+  \]
+\end{proposition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Séries de Dirichlet}
@@ -236,7 +382,7 @@ Le titre de ce rapport contient "la fonction $\zeta$" de Riemann, mais avant de 
   \[ F(s) = \sum_{n=1}^{+\infty}\frac{f(n)}{n^s}. \]
 \end{definition}
 
-On sait (voir par exmple HINDRY TODO) qu'il existe un réel $\sigma_a$ appelé abscisse de convergence absolue tel que $F(s)$ converge absolument si $\sigma>\sigma_a$, et diverge si $\sigma<\sigma_a$.
+On sait (voir par exmple \cite{hindry}) qu'il existe un réel $\sigma_a$ appelé abscisse de convergence absolue tel que $F(s)$ converge absolument si $\sigma>\sigma_a$, et diverge si $\sigma<\sigma_a$.
 
 \begin{theorem}[Mertens]\label{thm:mertens-positif}
   Soit $F(s) =\sum_{n\geq1}\frac{a_n}{n^s}$ une série de Dirichlet à coefficients positits ou nuls. Notons $\sigma_a$ sont abscisse de convergence. Alors:
@@ -306,19 +452,16 @@ Prolongeons la suite $(a_n)_n$ en une fonction sur $\mathbb{R}$ en posant
 
 \begin{theorem}[Formule de Perron]
   Soit $\kappa>\max(0,\sigma_c)$. On a :
-  \[ A^*(x) = \frac{1}{2\pi i}\int_{\kappa-i\infty}^{\kappa+i\infty}F(s)\frac{x^s}{s}\mathrm{d}s \]
+  \[
+    A^*(x) = \frac{1}{2\pi i}\int_{\kappa-i\infty}^{\kappa+i\infty}F(s)\frac{x^s}{s}\mathrm{d}s
+  \]
+
+  où l'intégrale est
+  \begin{itemize}
+    \item convergeante en valeur principale lorsque $x\in\mathbb{N}$
+    \item semi-convergeante lors $x\in\mathbb{R}\backslash\mathbb{N}$.
+  \end{itemize}
 \end{theorem}
-
-où l'intégrale est
-\begin{itemize}
-  \item convergeante en valeur principale lorsque $x\in\mathbb{N}$
-  \item semi-convergeante lors $x\in\mathbb{R}\backslash\mathbb{N}$.
-\end{itemize}
-
-\begin{proof}
-  TODO
-\end{proof}
-
 
 Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais sous une forme "effective".
 
@@ -326,10 +469,6 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
   Pour $\kappa>\max(0,\sigma_c)$, $T\geq1$, $x\geq1$,
   \[ A(x) = \frac{1}{2\pi i}\int_{\kappa-i\infty}^{\kappa+i\infty}F(s)\frac{x^s}{s}\mathrm{d}s + O\left(x^k\sum_{n\geq1}\frac{|a_n|}{n^\kappa(1+T|\ln\frac{x}{n}|)}\right) \]
 \end{theorem}
-
-\begin{proof}
-  TODO
-\end{proof}
 
 \begin{theorem}[Seconde formule de Perron effective]\label{eq:perron-2-effective}
   On suppose que :
@@ -344,10 +483,6 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
   \[ \sum_{n\leq x}\frac{a_n}{n^s}=\frac{1}{2\pi i}\int_{\kappa-iT}^{\kappa+iT}F(s+\omega)\frac{x^\omega}{\omega}\mathrm{d}\omega + O\left(x^{\sigma_a-\sigma}\frac{\ln^\alpha x}{T}+\frac{B(2x)}{x^\sigma}\left(1+x\frac{\ln T}{T}\right)\right) \]
 \end{theorem}
 
-\begin{proof}
-  TODO
-\end{proof}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Quelques lemmes techniques}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -357,7 +492,6 @@ Dans la pratique, nous n'utilison pas la formule de Perron telle quelle, mais so
   \[
     \forall |s|\leq R,\quad|F(s)|\leq\frac{2A|s|}{R-|s|}  
   \]
-  
 \end{lemma}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -422,7 +556,7 @@ A ce stade, nous commençons à nous convaincre du rôle important de la fonctio
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Avant d'étudier ses propriétés, commençons par définir officiellement $\zeta$. L'idée de Riemann, dans son TODO, a été de partir de la définition d'Euler, et de considérer $\zeta$ comme fonction d'une variable complexe :
+Avant d'étudier ses propriétés, commençons par définir officiellement $\zeta$. L'idée de Riemann, dans son article \cite{riemann}, a été de partir de la définition d'Euler, et de considérer $\zeta$ comme fonction d'une variable complexe :
 
 \begin{definition}[Fonction $\zeta$ de Riemann]\label{def:zeta-definition}
   On définit, pour tout $s$ complexe tel que $\sigma > 1$,
@@ -626,15 +760,70 @@ Cette proposition découle immédiatement du lemme suivant :
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. Elle n'est pas strictement nécessaire à la preuve du théorème des nombres premiers (elle n'est pas du tout utilisée dans la preuve de la section \ref{section:region-affaiblie}), mais ce rapport étudie $\zeta$ en général, nous la mettons donc ici.
+L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. Elle n'est pas strictement nécessaire à la preuve du théorème des nombres premiers (elle n'est pas du tout utilisée dans la preuve de la section \ref{section:region-affaiblie}), mais elle est utilisé dans celle de la section \ref{section:region-classique} et est un résultat important de la fonction $\zeta$.
+
+\begin{lemma}
+  La fonction $\phi(u):=\sum_{n\in\mathbb{Z}}\mathrm{e}^{-\pi un^2}$ vérifie :
+  \[
+    \forall u\in\mathbb{R}^{+*},\quad
+    \phi(1/u)=\sqrt{u}\phi(u).
+  \]
+\end{lemma}
+
+\begin{proof}
+  Il suffit d'appliquer la formule de Poisson \ref{lem:formule-poisson} à la fonction $f(x)=\mathrm{e}^{-\pi ux^2}$, et on calcule :
+  \[
+    \hat{f}(y) = \frac{\mathrm{e}^{-\pi y^2/u}}{\sqrt{u}}.
+  \]
+\end{proof}
 
 \begin{theorem}[Equation fonctionnelle, Riemann]\label{thm:equation-fonctionnelle}
   \[ \zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(1-s)\zeta(1-s)\quad (s\in\mathbb{C}\backslash\{0,1\}) \]
 \end{theorem}
 
 \begin{proof}
-  TODO
-  % https://www.uni-ulm.de/fileadmin/website_uni_ulm/mawi.inst.020/abschlussarbeiten/BA_wiesel.pdf
+  Soit :
+  \[
+    \forall\sigma>1,\quad
+    \Phi(s)=\pi^{-s/2}\Gamma(s/2)\zeta(s).
+  \]
+
+  Alors
+  \begin{align*}
+    \Phi(s)
+    &= \pi^{-s/2}\Gamma(s/2)\zeta(s) & \\
+    &= \sum_{n=1}^{+\infty}\int_0^{+\infty}\mathrm{e}^{-t}t^{s/2}\pi^{-s/2}n^{-s}\frac{\mathrm{d}t}{t}
+    & \text{par définitions de $\Gamma$ et $\zeta$} \\
+    &= \int_0^{+\infty}\left(\sum_{n=1}^{+\infty}\mathrm{e}^{-\pi un^2}\right)u^{s/2}\frac{\mathrm{d}u}{u}
+    & \text{changement de variable $t=\pi n^2u$} \\
+    &= \int_0^{+\infty}\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u}
+  \end{align*}
+
+  où on a posé, avec la définition de $\phi$ du lemme précédent,
+  \[
+    \phi_1(u)
+    :=\sum_{n=1}^{+\infty}\mathrm{e}^{-\pi un^2}
+    = \frac{\phi(u)-1}{2}.
+  \]
+
+  Mais la relation fonctionnelle du lemme précédent s'écrit aussi :
+  \[
+    \phi_1(1/u)=\sqrt{u}\phi_1(u)+\frac{1}{2}(\sqrt{u}-1).
+  \]
+
+  D'où :
+  \begin{align*}
+    \Phi(s)
+    &= \int_0^1\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u} + \int_1^{+\infty}\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u}
+    & \\
+    &= \int_1^{+\infty}\phi_1(1/v)\frac{v^{-s/2}\mathrm{d}v}{v} + \int_1^{+\infty}\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u}
+    & \text{avec $v:=1/u$} \\
+    &= \int_1^{+\infty}\left(\sqrt{u}\phi_1(u)+\frac{1}{2}(\sqrt{u}-1)\right)\frac{v^{-s/2}\mathrm{d}v}{v} + \int_1^{+\infty}\phi_1(u)\frac{u^{s/2}\mathrm{d}u}{u}
+    & \\
+    &= \int_1^{+\infty}\phi_1(u)\left(u^{\frac{s}{2}}+u^{\frac{1-s}{2}}\right)\frac{\mathrm{d}u}{u} + \frac{1}{s-1}-\frac{1}{s}.
+  \end{align*}
+
+  On voit alors immédiatement que $\Phi(s)=\Phi(1-s)$. En appliquant enfin la formule de duplication de $\Gamma$ \ref{prop:gamma-duplication-legendre} et la formule des compléments \ref{prop:gamma-formule-complements}, on obtient le résultat.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -814,7 +1003,7 @@ Les estimations ci-dessus requièrent que $|t|\geq2$, mais parfois, il nous faut
   La fonction $\zeta$ admet un unique prolongement en une fonction méromorphe sur $\mathbb{C}$ ayant un unique pôle en $s=1$ de résidu 1.
 \end{theorem}
 
-Une fois ce théorème démontré, nous allons encore noter $\zeta$ cet unique prolongement. Nous allons donner plusieurs démonstrations de ce théorème.
+Une fois ce théorème démontré, nous allons encore noter $\zeta$ cet unique prolongement.
 
 \subsection{Par la formule d'Euler-Maclaurin}
 
@@ -859,18 +1048,6 @@ L'unicité est triviale par prolongement analytique.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Par un contour de Hankel}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% https://papyrus.bib.umontreal.ca/xmlui/bitstream/handle/1866/14610/Samson_Jean-Philippe_2003_memoire.pdf?sequence=1&isAllowed=y page39
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Par l'équation fonctionnelle}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Prolongement sur $[0,1]$ par la sommation d'abel, sur $\sigma<0$ par l'équation fonctionnelle.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Développement en produit d'Hadamard}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -879,6 +1056,8 @@ Prolongement sur $[0,1]$ par la sommation d'abel, sur $\sigma<0$ par l'équation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Produit d'Hadamard}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Nous avons déjà rencontré la fonction $\xi$ dans la section sur l'équation forcément de $\zeta$.
 
 \begin{definition}
   On définit, pour $s\in\mathbb{C}$,
@@ -1005,7 +1184,7 @@ Nous sommes maintenant en mesure de prouver le résultat suivant, qui va s'avér
   car on a supposé $\sigma\leq 0$.
   \\
   
-  \textbf{2nd cas} : Calcul de $\zeta(0)$. En multipliant l'équation fonctionnelle par $(1-s)$ et en utilisant $s\Gamma(s)=\Gamma(s+1)$ TODO, on obtient
+  \textbf{2nd cas} : Calcul de $\zeta(0)$. En multipliant l'équation fonctionnelle par $(1-s)$ et en utilisant $s\Gamma(s)=\Gamma(s+1)$ (théorème \ref{thm:gamma-equation-fonctionnelle}), on obtient
   \[
     \forall s\neq0,\,s\neq1\quad
     (1-s)\zeta(s) = 2^s\pi^{s-1}\sin\left(\frac{\pi s}{2}\right)\Gamma(2-s)\zeta(1-s).
@@ -1060,6 +1239,13 @@ L'ingrédient principal pour prouver le théorème des nombres premiers est le f
   lorsque $t\mapsto+\infty$. En particuler, $\zeta$ ne s'annule pas sur cette région du plan.
 \end{theorem}
 
+\begin{figure}[h]
+  \centering
+  \caption{Voici une représentation graphique de cette région, la partie grise étant sans zéros.}
+  \includegraphics[width=0.5\textwidth]{fig_region_sans_zeros.png}
+  \label{fig:region-sans-zero}
+\end{figure}
+    
 \begin{proof} On a :
   \begin{itemize}
     \item $\forall c>0$,
@@ -1067,7 +1253,6 @@ L'ingrédient principal pour prouver le théorème des nombres premiers est le f
     \item $\forall s=\sigma+it\,\,\mathrm{avec}\,\,\sigma>1-\eta, |t|\geq2$,
   \end{itemize}
   alors on a bien $\sigma > 1-\frac{c}{\ln|t|}$, $|t|\geq2$, et on pose $s_0=1+\eta+it$. Par le corollaire \ref{cor:majoration-zeta-et-zeta-prime} sur les majorations de $\zeta$ et de $\zeta'$,
-  TODO Figure
 
   \begin{align*}
     |\zeta(s)-\zeta(s_0)|
@@ -1132,7 +1317,7 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
   \[ \psi(x) = \sum_{n\geq1}\Lambda(n) = \frac{1}{2\pi i}\int_{\sigma_1-iT}^{\sigma_1+iT}\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}\mathrm{d}s\,+\,O\left(\frac{x\ln^2 x}{T}\right). \]
   Nous allons utiliser le théorème des résidus pour estimer l'intégrale, et choisir $T$ à la fin convenablement pour compenser les termes d'erreur.
 
-  En fixant $c$ donné par le théorème \ref{eq:region-faible-sans-zero}, posons $\delta=\frac{c}{\ln^9T}$, $\sigma_0=1-\delta$, et rappelons que nous venons de poser $\sigma_1=1+\ln x$. Alors le rectangle de sommets $(\sigma_0,\pm iT)$ et $(\sigma_1,\pm iT)$ est contenu dans cette région sans zéros. En notant $f(s)=\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}$ l'intégrande, on a alors que $s=1$ est l'unique pôle de $f$ dans ce rectangle. Le théorème des résidus nous fournit alors (le terme à l'intérieur de l'intégrale, $f(s)\mathrm{d}s$, est omis pour clarté) :
+  En fixant $c$ donné par le théorème \ref{eq:region-faible-sans-zero}, posons $\delta=\frac{c}{\ln^9T}$, $\sigma_0=1-\delta$, et rappelons que nous venons de poser $\sigma_1=1+\ln x$. Alors le rectangle $\mathbf{R}$ de sommets $(\sigma_0,\pm iT)$ et $(\sigma_1,\pm iT)$ est contenu dans cette région sans zéros (il déborde sur $\sigma\geq 1$, mais ce n'est pas grave car $\zeta$ n'a pas de zéros non plus sur cette région). En notant $f(s)=\left(-\frac{\zeta'(s)}{\zeta(s)}\right)\frac{x^s}{s}$ l'intégrande, on a alors que $s=1$ est l'unique pôle de $f$ dans ce rectangle $\mathbf{R}$. Le théorème des résidus nous fournit alors (le terme à l'intérieur de l'intégrale, $f(s)\mathrm{d}s$, est omis pour clarté) :
   \[ \psi(x) = \mathrm{Res}(f,1) + \frac{1}{2\pi i}\left(
     \int_{\sigma_0-iT}^{\sigma_0+iT}
     +\int_{\sigma_0+iT}^{\sigma_1+iT}
@@ -1140,7 +1325,20 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
     \right)
     +O\left(\frac{x\ln^2x}{T}\right). \]
 
-  TODO IMAGE
+  \begin{figure}[h]
+    \centering
+    \caption{Répresentation du contour.}
+    \begin{picture}(300,300)
+      \put(0,0){\includegraphics[width=0.8\textwidth]{fig_contour.png}}
+      \put(50,50){hello}
+      \put(220,60){$\mathbf{R}$}
+      \put(150,175){$\sigma_0+iT$}
+      \put(150,60){$\sigma_0-iT$}
+      \put(255,175){$\sigma_1+iT$}
+      \put(255,60){$\sigma_1-iT$}
+    \end{picture}
+    \label{fig:contour-affaiblie}
+  \end{figure}
 
   Nous pouvons facilement vérifier que $\mathrm{Res}(f,1)=x$, car $\zeta$ a un pôle simple en $s=1$, donc
   \begin{equation}\label{eq:tnp-faible-3-integrales}
@@ -1201,22 +1399,27 @@ Nous sommes maintenant en mesure de prouver le théorème des nombres premiers s
   L'intégrale est $O(\ln T)$, et le dernier terme peut être absorbé dans $O\left(\frac{x}{T}\ln^9T\right)$, donc
   \[ \psi(x) = x + O(x^{\sigma_0}\ln^{26}x) + O\left(\frac{x}{T}\ln^9T\right) \]
 
-  En majorant encore plus grossièrement, c'est-à-dire $O(\ln^9 T) = O(\ln^26 T)$, on peut factoriser
+  En majorant encore plus grossièrement, c'est-à-dire $O(\ln^9 T) = O(\ln^{26} T)$, on peut factoriser
   \begin{align*}
     \psi(x) &= x + O\left(x\ln^{26} x\left(x^{-\delta}+\frac{1}{T}\right)\right) \\
     &= x + O\left(x\ln^{26} x\left(\mathrm{e}^{-\frac{c\ln x}{\ln^9 T}}+\mathrm{e}^{-\ln T}\right)\right)
   \end{align*}
 
   Il faut noter que les deux termes en exponentiel varient en sens opposés lorsque $T$ augmente. On peut les rendre égaux en choisissant $T=\exp(\ln^{1/10}x)$, auquel cas on a :
-  \[ \psi(x) = x + O(x\ln^{26} x\mathrm{e}^{-c\ln^{1/10}x}). \]
+  \[
+    \psi(x) = x + O(x\ln^{26} x\mathrm{e}^{-c\ln^{1/10}x}).
+  \]
 
-  En choisissant $c$ assez grand TODO, on obtient Enfin
-  \[ \psi(x) = x + O(x\mathrm{e}^{-c\ln^{1/10}x}). \]
+  Il suffit d'essayer d'enlever le terme en $\ln^{26} x$, un choisissant un $c$ plus petit. Ceci est possible du fait que $\ln\ln x = o(\ln^\alpha x)$, pour tout $\alpha>0$. En particulier, pour $x$ assez grand, $\ln\ln x < \frac{1}{30}\ln^{1/10} x$, et donc $\ln x < \mathrm{e}^{\frac{c}{30}\ln^{1/10}x}$, puis $\ln^{26} x < \mathrm{e}^{(c-\frac{2}{15}c)\ln^{1/10}x}$.
+  \\
+
+  En posant $c'=\frac{2}{15}c$, on obtient :
+  \[ \psi(x) = x + O(x\mathrm{e}^{-c'\ln^{1/10}x}). \]
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Région classique sans zéros}
+\section{Région classique sans zéros}\label{section:region-classique}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1268,7 +1471,7 @@ La preuve de la région affaiblie dans la section précédente était assez simp
   Clairement, les deux premiers termes sont majorés en norme au voisinage de $+\infty$ :
   \[ -b + \frac{1}{s-1} = O(1) \]
 
-  On a également, en utlisant la formule de Stirling complexe \ref{thm:stirling-complexe} POURQUOI, on a
+  On a également, en utlisant la formule de Stirling complexe \ref{cor:gamma-gamma-prime-majoration}, on a
   \[ -\Re\frac{\zeta'(s)}{\zeta(s)} = O(\ln(|t|))\quad(\sigma>1, |t|\geq2). \]
 
   On a donc temporairement
@@ -1315,8 +1518,6 @@ La preuve de la région affaiblie dans la section précédente était assez simp
   \end{align*}
   où l'on a posé $c=c'/14>0$. Ceci achève la démonstration.
 \end{proof}
-
-TODO image %p11 de I2.pdf%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Majorations dans cette région}
@@ -1402,7 +1603,7 @@ Pour prouver le théorème des nombres premiers en utilisant cette région sans 
   Notons que dans la démonstration du théorème \ref{thm:region-classique-sans-zero}, les parties réelles des termes de la somme étaient aussi positives, mais celà découlait du fait que $s$ était de partie réelle strictement supérieure à 1. Nous avons ici un $\Re(s)<1$, d'où la nécessité de la 1ère étape.
   \\
 
-  En utilisant encore une fois la formule de Stirling complexe TODO, on obtient un $K>0$ tel qu'au voisinage de $+\infty$
+  En utilisant encore une fois la formule de Stirling complexe (corollaire \ref{cor:gamma-gamma-prime-majoration}), on obtient un $K>0$ tel qu'au voisinage de $+\infty$
   \begin{equation}\label{eq:reel-zeta-zeta-prime-k-lnt}
     \Re\left(-\frac{\zeta'(s)}{\zeta(s)}\right) \leq K\ln t.
   \end{equation}
@@ -1485,7 +1686,7 @@ Pour prouver le théorème des nombres premiers en utilisant cette région sans 
 \subsection{Théorème des nombres premiers}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{theorem}[Théorème des nombres premiers avec terme d'erreur, de la Vallée Poussin, 1900]\label{thm:tnp-terme-erreur-classique}
+\begin{theorem}[Théorème des nombres premiers avec terme d'erreur, de la Vallée Poussin, 1899]\label{thm:tnp-terme-erreur-classique}
   Il existe une constante réelle $c>0$ telle que l'on ait, au voisinage de $+\infty$,
   \begin{equation}
     \psi(x)=x+O(x\mathrm{e}^{-c\sqrt{\ln x}})
@@ -1498,7 +1699,23 @@ Pour prouver le théorème des nombres premiers en utilisant cette région sans 
     \item $\sigma_0=1-\frac{c}{\ln(T)}$
     \item $\sigma_1=1+1/\ln x$
   \end{itemize}
-  On réécrit :
+
+  \begin{figure}[h]
+    \centering
+    \caption{Répresentation du contour. C'est la même figure que \ref{fig:contour-affaiblie}, mais il faut imaginer que la partie grise ici est plus grande.}
+    \begin{picture}(300,300)
+      \put(0,0){\includegraphics[width=0.8\textwidth]{fig_contour.png}}
+      \put(50,50){hello}
+      \put(220,60){$\mathbf{R}$}
+      \put(150,175){$\sigma_0+iT$}
+      \put(150,60){$\sigma_0-iT$}
+      \put(255,175){$\sigma_1+iT$}
+      \put(255,60){$\sigma_1-iT$}
+    \end{picture}
+    \label{fig:contour-classique}
+  \end{figure}
+
+  On réécrit (voir figure \ref{fig:contour-classique}) :
   \begin{equation}\label{eq:tnp-3-integrales}
     \psi(x) = x +\frac{1}{2\pi i}\left(
       \int_{\sigma_0-iT}^{\sigma_0+iT}
@@ -1685,34 +1902,42 @@ On en déduit également la forme suivante, plus faible, mais plus répandue :
   \]
 \end{proof}
 
-On a donc $\pi(x)\sim\mathrm{Li}(x)\sim\frac{x}{\ln x}$, mais $\mathrm{li}$ donne une meilleure approximation :
+On a donc $\pi(x)\sim\mathrm{Li}(x)\sim\frac{x}{\ln x}$, mais $\mathrm{li}$ donne une meilleure approximation, voir figure \ref{fig:pi_li_xlnx}.
+\\
 
-TODO GRAPHE
+\begin{figure}[h]
+  \centering
+  \caption{En rouge, $\pi$. En bleu, $\mathrm{Li}$. En vert, $x\mapsto\frac{x}{\ln x}$. Source: \url{https://fr.wikipedia.org}.}
+  \includegraphics[width=\textwidth]{fig_pi_li_xlnx.png}
+  \label{fig:pi_li_xlnx}
+\end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{L'hypothèse de Riemann}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Nous avons donc démontré le théorème des nombres premiers avec terme d'erreur, ce qui permet de clôturer cet exposé.
 
-TODO
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{L'hypothèse de Riemann}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{theorem}
-  L'hypothèse de Riemann équivaut à
-  \[ \forall\epsilon>0,\quad\psi(x)=x+O_\epsilon(x^{1/2+\epsilon}) \]
-\end{theorem}
+% TODO
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Formule explicite pour $\psi$}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{theorem}
+%   L'hypothèse de Riemann équivaut à
+%   \[ \forall\epsilon>0,\quad\psi(x)=x+O_\epsilon(x^{1/2+\epsilon}) \]
+% \end{theorem}
 
-% Random citation \cite{tenenbaum} embeddeed in text.
-% Random citation \cite{standord} embeddeed in text.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Formule explicite pour $\psi$}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\nocite{harvard}
+\nocite{standord}
 
-% \bibliographystyle{ieeetr}
-% \bibliography{main}{}
+\bibliographystyle{IEEEtranN.bst}
+\bibliography{main}{}
 
+Notons que le livre le plus utilisé est sans doute \cite{tenenbaum}.
 \end{document}
