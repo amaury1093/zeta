@@ -42,13 +42,13 @@
 \end{titlepage}
 
 \begin{abstract}
-  Le but de cet exposé est d'étudier $\pi(x)$, qui compte le nombre de nombres premiers inférieurs ou égaux à $x$. Le résultat principal sur $\pi$ auquel nous voulons arriver est le théorème des nombres premiers sous sa forme exposée par de la Vallée Poussin dans \cite{valleepoussin}. Elle présente un équivalent de $\pi$ avec terme d'erreur. La démonstration de ce théorème passe par une analyse de la fonction $\zeta$ de Riemann.
+  Le but de cet exposé est d'étudier $\pi(x)$, qui compte le nombre de nombres premiers inférieurs ou égaux à $x$. Le résultat principal sur $\pi$ auquel nous voulons arriver est le théorème des nombres premiers sous sa forme exposée par de la Vallée Poussin dans \cite{valleepoussin}. Elle présente un équivalent asymptotique de $\pi$ avec terme d'erreur. La démonstration de ce théorème passe par une analyse de la fonction $\zeta$ de Riemann.
   \\
 
   Ce mémoire a été réalisé dans le cadre de l'UE Recherche en M1 Mathématiques et Applications à l'Université Paris Diderot. Il a été encadré par M. Régis de la Bretèche.
   \\
 
-  L'idée de ce mémoire vient du cours d'Arithmétique de M1 présenté par M. Hindry à l'Université Paris Diderot, dont on trouvera le contenu dans les quatre premiers chapitres de \cite{hindry}. Ce cours fait une introduction de la théorie analytique des nombres, mais n'entre pas dans ses détails. En particulier, la preuve du théorème des nombres premiers, basée sur \cite{donzagier}, n'y donne que l'équivalent de $\pi$. J'ai donc voulu creuser un peu plus dans cette direction, et ce mémoire est le résultat de ce creusement.
+  L'idée de ce mémoire vient du cours d'Arithmétique de M1 présenté par M. Hindry à l'Université Paris Diderot, dont on trouvera le contenu dans les quatre premiers chapitres de \cite{hindry}. Ce cours fait une introduction de la théorie analytique des nombres, mais n'entre pas dans ses détails. En particulier, la preuve du théorème des nombres premiers, basée sur \cite{donzagier}, n'y donne que l'équivalent asymptotique de $\pi$. J'ai donc voulu creuser un peu plus dans cette direction, et ce mémoire est le résultat de ce creusement.
 \end{abstract}
 
 \tableofcontents{}
@@ -81,7 +81,7 @@ Ce chapitre sert d'introduction pour présenter quelques résultats élémentair
 Comme indiqué dans le résumé de ce papier, nous tenterons d'arriver au théorème des nombres premiers, démontré pour la première fois en 1896, par Hadamard et de la Vallée Poussin. Tous deux se sont fondés sur l'article \cite{riemann} de Riemann (1859), qui a introduit l'analyse complexe en théorie des nombres premiers.
 \\
 
-Mais bien avant cette date, la répartition des nombres premiers avait déjà suscité d'importants travaux. L'histoire commence avec Euclide, qui montra que $\lim_{+\infty}\pi=+\infty$. Il faudra attendre 1737 pour qu'Euler introduise $\zeta$ en variable réelle pour étudier la suite des nombres premiers. L'équivalent de $\pi$ avait été conjecturé au cours du 18ème siècle par Gauss et par Legendre. Enfin, quelques années avant l'article de Riemann, Tchebychev avait établi par des moyens élémentaires l'existence de deux constates $A$ et $B$, $0<A<1<B$ telles que
+Mais bien avant cette date, la répartition des nombres premiers avait déjà suscité d'importants travaux. L'histoire commence avec Euclide, qui montra que $\lim_{+\infty}\pi=+\infty$. Il faudra attendre 1737 pour qu'Euler introduise $\zeta$ en variable réelle pour étudier la suite des nombres premiers. L'équivalent asymptotique de $\pi$ avait été conjecturé au cours du XVIIIème siècle par Gauss et par Legendre. Enfin, quelques années avant l'article de Riemann, Tchebychev avait établi par des moyens élémentaires l'existence de deux constates $A$ et $B$, $0<A<1<B$ telles que
 \[
   A\frac{x}{\ln x}\leq\pi(x)\leq B\frac{x}{\ln x}.
 \]
@@ -98,7 +98,7 @@ Nous introduisons ici les fonctions de Tchebychev, car elles vont nous suivre da
   \[ \theta(x) = \sum_{p \le x}\ln p. \]
 \end{definition}
 
-Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très simple et très rapide de $\theta$, voir \cite{hindry} pour une démonstration.
+Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très simple et très rapide de $\theta$, voir \cite{hindry} pour une démonstration :
 
 \begin{proposition}\label{prop:theta-majoration}
   \[
@@ -106,7 +106,7 @@ Remarquons que $\theta(x)$ est nul si $x<2$. Nous obtenons une majoration très 
   \]
 \end{proposition}
 
-La deuxième fonction de Tchebychev utilise cette définition.
+La deuxième fonction de Tchebychev utilise la définition suivante.
 
 \begin{definition}[Fonction de van Mangoldt]
   \[
@@ -320,7 +320,7 @@ Commençons par le théorème de factorisation de Weierstrass.
 \end{definition}
 
 \begin{theorem}[Factorisation de Weierstrass]\label{thm:factorisation-weierstrass}
-  Soit $f$ une fonction entière. On note $m$ l'ordre de 0 de $f$ (si $f(0)=0$ alors par convention $m=0$), et $(a_n)_{n\in\mathbb{N}}$ les autres zéros de $f$, comptés avec leur ordre de multiplicité.
+  Soit $f$ une fonction entière. On note $m$ l'ordre de 0 de $f$ (si $f(0)\neq 0$ alors par convention $m=0$), et $(a_n)_{n\in\mathbb{N}}$ les autres zéros de $f$, comptés avec leur ordre de multiplicité.
   \\
 
   Alors il existe une fonction entière $g$ et une suite d'entiers naturels $(q_n)_{n\in\mathbb{N}}$ tels que
@@ -329,12 +329,12 @@ Commençons par le théorème de factorisation de Weierstrass.
   \]
 \end{theorem}
 
-Le théorème d'Hadamard précise la factorisation de Weierstrass lorsque $f$ est d'ordre fini.
+Le théorème d'Hadamard, résultat principal de cette section, précise la factorisation de Weierstrass lorsque $f$ est d'ordre fini.
 
 \begin{definition}
   Une fonction $f$ entière est d'ordre fini lorsque
   \[
-   \exists \rho_9,\,\exists R_0,\quad
+   \exists \rho_0,\,\exists R_0,\quad
    |z|\geq R_0\Longrightarrow|f(z)|\leq\mathrm{e}^{|z|^{\rho_0}}
   \]
 
@@ -352,13 +352,15 @@ Le théorème d'Hadamard précise la factorisation de Weierstrass lorsque $f$ es
 \end{lemma}
 
 \begin{theorem}[Hadamard]\label{thm:factorisation-hadamard}
-  On prend les mêmes hypothèses que le théorème de Weierstrass \ref{thm:factorisation-weierstrass}, et on ajoute le fait que $f$ est d'ordre fini $r$.
+  On prend les mêmes hypothèses que le théorème de Weierstrass \ref{thm:factorisation-weierstrass}, et on ajoute le fait que $f$ est d'ordre fini $\rho(f)$.
   \\
-  Alors il existe un polynôme $g$ de degré $d\leq r$ tel que
+  Alors il existe un polynôme $g$ de degré $d\leq \rho(f)$ tel que
   \[
     f(z)=z^m\mathrm{e}^{g(z)}\prod_{n=0}^{+\infty}E_d\left(\frac{z}{a_n}\right)
   \]
 \end{theorem}
+
+Le lemme suivant (en réalité utilisé dans la démonstration du théorème d'Hadamard), va apparaître dans la suite.
 
 \begin{lemma}[Lemme de la partie réelle de Borel-Carathéodory]\label{lem:borel-caratheodory}
   Soit $F$ une fonction holomorphe pour $s\leq|R|$, telle que $F(0)=0$. On suppose que $\max_{|s|=R}\Re(F(s))\leq A$. Alors
@@ -372,9 +374,9 @@ Le théorème d'Hadamard précise la factorisation de Weierstrass lorsque $f$ es
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Fonction Gamma d'Euler]
-  On définit $\Gamma$ par :
+  On définit $\Gamma$ pour tout $s$ tel que $\sigma>0$ par :
   \[
-    \forall \sigma>0,\quad\Gamma(s)=\int_0^{+\infty}t^{s-1}\mathrm{e}^{-t}\mathrm{d}t.
+    \Gamma(s)=\int_0^{+\infty}t^{s-1}\mathrm{e}^{-t}\mathrm{d}t.
   \]
 \end{definition}
 
@@ -383,6 +385,8 @@ Cette définition a du sens, parce que :
   \item au voisinage de 0, $|t^{s-1}\mathrm{e}^{-t}|\sim t^{\sigma-1}$ qui est intégrable parce que $\sigma>0$.
   \item au voisinage de $+\infty$, $|t^{s-1}\mathrm{e}^{-t}|\leq \mathrm{e}^{-t/2}$, qui est intégrable.
 \end{itemize}
+
+Nous allons ensuite énoncer une liste de résultats classiques sur $\Gamma$, voir par exemple \cite{tenenbaum} pour leurs démonstrations.
 
 \begin{theorem}[Euler]
   \[
@@ -589,7 +593,7 @@ La somme de droite est clairement convergente, donc $\zeta(x)$ est bien défini.
 
 \begin{theorem}[Produit eulérien]\label{thm:produit-eulerien-reel}
   \[ \zeta(x) = \prod_p\frac{1}{1-p^{-x}}\quad(\sigma>1) \]
-  Plus précisément, le produit infini signifie :
+  Plus précisément, le produit infini signifie ici :
   \[ \lim_{N\to+\infty}\prod_{\substack{p\,\mathrm{premier}\\p\leq N}}\frac{1}{1-p^{-x}}=\zeta(x)\quad(\sigma>1) \]
 \end{theorem}
 
@@ -656,7 +660,7 @@ Cela va sans dire, mais cela ira encore mieux en le disant :
 \end{theorem}
 
 \begin{proof}
-  La démonstration est exactement la même que dans le cas réel : voir la proposition \ref{thm:produit-eulerien-reel}. Il suffit de notre que $|\frac{1}{n^s}|=\frac{1}{n^\sigma}$.
+  La démonstration est exactement la même que dans le cas réel : voir la proposition \ref{thm:produit-eulerien-reel}. Il suffit de noter que $|\frac{1}{n^s}|=\frac{1}{n^\sigma}$.
 \end{proof}
 
 Il en découle immédiatement cette 1ère propriété intéressante :
@@ -855,7 +859,7 @@ L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. E
 \end{theorem}
 
 \begin{proof}
-  Soit :
+  Posons :
   \[
     \forall\sigma>1,\quad
     \Phi(s)=\pi^{-s/2}\Gamma(s/2)\zeta(s).
@@ -896,7 +900,7 @@ L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. E
     &= \int_1^{+\infty}\phi_1(u)\left(u^{\frac{s}{2}}+u^{\frac{1-s}{2}}\right)\frac{\mathrm{d}u}{u} + \frac{1}{s-1}-\frac{1}{s}.\label{eq:phi-avec-phi-1}
   \end{align}
 
-  On voit alors immédiatement que $\Phi(s)=\Phi(1-s)$. En appliquant enfin la formule de duplication de $\Gamma$ \ref{prop:gamma-duplication-legendre} et la formule des compléments \ref{prop:gamma-formule-complements}, on obtient le résultat.
+  On voit alors immédiatement que $\Phi(s)=\Phi(1-s)$. En appliquant enfin la formule de duplication de $\Gamma$ \ref{prop:gamma-duplication-legendre} et la formule des compléments \ref{prop:gamma-formule-complements}, on obtient le résultat sur $\zeta$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -905,7 +909,8 @@ L'équation fonctionnelle de $\zeta$ relie sa valeur en $s$ à celle en $1-s$. E
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-La définition de $\zeta$ que nous avons donnée en \ref{def:zeta-definition} est valable pour $\sigma>1$. Nous allons essayer, dans cette section et dans la suivante, d'essayer de prolonger $\zeta$ sur d'autres parties du plan complexe. \\
+La définition de $\zeta$ que nous avons donnée en \ref{def:zeta-definition} est valable pour $\sigma>1$. Nous allons essayer, dans cette section et dans la suivante, d'essayer de prolonger $\zeta$ sur d'autres parties du plan complexe.
+\\
 
 Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la région prolongée, $0\leq\sigma\leq1$, s'appelle la $bande\,critique$. Au fait, de nombreux résultats arithmétiques reliant $\zeta$ et les nombres premiers font appel aux propriétés de $\zeta$ sur cette bande critique.
 
@@ -1023,7 +1028,7 @@ Nous commençons par la prolonger jusqu'au demi-plan $\sigma>0$. Le fermé de la
   Pour la deuxième majoration, il suffit de dériver et d'appliquer le même raisonnement.
 \end{proof}
 
-Par symétrie par rapport à l'axe $t=0$, on a également :
+Par symétrie par rapport à l'axe $t=0$ (car $\overline{\zeta(s)}=\zeta(\bar{s})$), on a également :
 
 \begin{corollary}\label{cor:majoration-zeta-et-zeta-prime}
   Pour tout réel $A>0$, sur la région du plan définie par $\{s\in\mathrm{C}\,|\,\,|t|\geq2,\,\,\sigma>1-\frac{A}{\ln |t|}\}$, on a :
@@ -1077,6 +1082,9 @@ Les estimations ci-dessus requièrent que $|t|\geq2$, mais parfois, il nous faut
 \end{theorem}
 
 Une fois ce théorème démontré, nous allons encore noter $\zeta$ cet unique prolongement.
+\\
+
+Nous avons défini $\zeta$ sur $\sigma>1$. L'équation fonctionnelle permet de la prolonger sur $\sigma<0$. Et dans la section précédente, on l'a prolongée sur $0<\sigma<1$. Il est en effet possible de rendre propre ce raisonnement, mais voyons ci-dessous une autre méthode.
 
 \subsection{Par la formule d'Euler-Maclaurin}
 
@@ -1135,7 +1143,7 @@ L'unicité est triviale par prolongement analytique.
   \]
 \end{definition}
 
-La définition est possible pour $s\in\mathbb{C}\backslash\{0,1\}$, mais aussi en 1 car le pôle de $\zeta$ est compensé par $(s-1)$, et également en 0 par l'équation fonctionnelle \ref{thm:equation-fonctionnelle}.
+Nous avons déjà rencontré $\Phi$ dans la démonstration de l'équation fonctionnelle \ref{thm:equation-fonctionnelle}. Cette définition est possible pour $s\in\mathbb{C}\backslash\{0,1\}$, mais aussi en 1 car le pôle de $\zeta$ est compensé par $(s-1)$, et également en 0 par l'équation fonctionnelle \ref{thm:equation-fonctionnelle}.
 \\
 
 La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ car elle est plus symétrique :
@@ -1154,7 +1162,7 @@ La fonction $s\mapsto(s-1)\zeta(s)$ est entière, mais nous avons défini $\xi$ 
 \end{proposition}
 
 \begin{proof}
-  Sa régularité sur $\sigma\geq\frac{1}{2}$ vient de celles de $\zeta$ et $\Gamma$, compte tenu du fait que le pôle en 1 est compensé par le facteur $(s-1)$. Par \ref{prop:xi-equation-fonctionnelle}, $\xi$ est holomorphe dans tout le plan complexe.
+  Sa régularité sur $\sigma\geq\frac{1}{2}$ vient de celles de $\zeta$ et $\Gamma$, compte tenu du fait que le pôle en 1 est compensé par le facteur $(s-1)$. Par son équation fonctionnelle \ref{prop:xi-equation-fonctionnelle}, $\xi$ est holomorphe dans tout le plan complexe.
 \end{proof}
 
 \begin{proposition}
@@ -1329,7 +1337,7 @@ Les zéros aux entiers négatifs pairs sont appelés les zéros triviaux de la f
 Les autres zéros de $\zeta$ (s'il y en a) sont donc situés dans la région $0<\sigma<1$, aussi appelée la bande critique (c'est la même bande critique que celle définie dans la section \ref{section:prolongement-proprietes-bande-critique}).
 \\
 
-Nous n'allons pas démontrer ce résultat, mais en réalité il existe une infinité de zéros dans cette bande critique. Nous pouvons en revanche affirmer que si $\rho$ est un zéro de $\zeta$ dans cette région, alors par l'équation fonctionnelle, $1-\rho$ aussi. De même, pour $s\geq0$, $\overline{\zeta(s)}=\zeta(\bar{s})$. Ceci montre que l'axe des réels et l'axe $\frac{1}{2}i\mathbb{R}$ (appelée droite critique) sont deux axes de symétrie pour les zéros de $\zeta$.
+Nous n'allons pas démontrer ce résultat, mais en réalité il existe une infinité de zéros dans cette bande critique. Nous pouvons en revanche affirmer que si $\rho$ est un zéro de $\zeta$ dans cette région, alors par l'équation fonctionnelle, $1-\rho$ aussi. De même, pour $\sigma\geq0$, $\overline{\zeta(s)}=\zeta(\bar{s})$. Ceci montre que l'axe des réels et l'axe $\frac{1}{2}i\mathbb{R}$ (appelée droite critique) sont deux axes de symétrie pour les zéros de $\zeta$.
 \\
 
 Dans la section suivante, nous allons montrer le théorème des nombres premiers, et en particulier comment il est relié à une région explicite sans zéros dans la bande critique.
@@ -1356,8 +1364,6 @@ Nous allons montrer le théorème des nombres premiers dans ce chapitre. Plus pr
     \psi(x)=x+O(x\mathrm{e}^{-c\ln^{1/10} x})
   \end{equation}
 \end{theorem}
-
-L'ingrédient principal pour prouver le théorème des nombres premiers est le fait que $\zeta$ ne s'annule pas sur la droite $\sigma=1$. L'idée intuitive est la suivante : si $\zeta$ a un zéro en $\rho$, alors $\frac{\zeta'}{\zeta}$ a un pôle en $\rho$. Or le produit eulérien nous donne de bonnes informations sur le comportement de $\frac{\zeta'}{\zeta}$ dans le demi-plan $\sigma>1$. En particulier, elle y est bornée. Par conséquent, si $\frac{\zeta'}{\zeta}$  (qui est négative) avait un pôle près de la droite $\sigma=1$, elle devrait y décroître très rapidement.
 
 \begin{theorem}[Région sans zéros, version affaiblie]\label{eq:region-faible-sans-zero}
   Il existe un réel $c>0$ tel que sur la région du plan complexe définie par $|t|\geq2,\,\sigma\geq1-\frac{c}{\ln^9|t|}$, on ait
@@ -1388,7 +1394,7 @@ L'ingrédient principal pour prouver le théorème des nombres premiers est le f
     &\leq 2C_0\eta\ln^2|t|,
   \end{align*}
   
-  où l'intégrale est bien définie car $|t|\geq2$ donc on évite le pôle, et $C_0$ est une constante positive qui vient du $0$ de \ref{cor:majoration-zeta-et-zeta-prime}.
+  où l'intégrale est bien définie car $|t|\geq2$ donc on évite le pôle, et $C_0$ est une constante positive qui vient du $O$ dans la majoration de $\zeta'$ dans le corollaire \ref{cor:majoration-zeta-et-zeta-prime}.
 
   On utilise maintenant l'inégalité fondamentale \ref{prop:zeta-inegalite-1} due à Mertens:
   \begin{align*}
