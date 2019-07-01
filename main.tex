@@ -22,8 +22,6 @@
 \begin{document}
 \begin{titlepage}
   \centering
-  \includegraphics[width=6cm]{paris_diderot_logo.jpg}\\
-  Année universitaire 2018-2019
 
   \vfill
   {\bfseries
@@ -38,17 +36,10 @@
   }    
   \vfill
   \vfill
-  Sous la direction de :\hskip1cm Régis de la Bretèche
 \end{titlepage}
 
 \begin{abstract}
   Le but de cet exposé est d'étudier $\pi(x)$, qui compte le nombre de nombres premiers inférieurs ou égaux à $x$. Le résultat principal sur $\pi$ auquel nous voulons arriver est le théorème des nombres premiers sous sa forme exposée par de la Vallée Poussin dans \cite{valleepoussin}. Elle présente un équivalent asymptotique de $\pi$ avec terme d'erreur. La démonstration de ce théorème passe par une analyse de la fonction $\zeta$ de Riemann.
-  \\
-
-  Ce mémoire a été réalisé dans le cadre de l'UE Recherche en M1 Mathématiques et Applications à l'Université Paris Diderot. Il a été encadré par M. Régis de la Bretèche.
-  \\
-
-  L'idée de ce mémoire vient du cours d'Arithmétique de M1 présenté par M. Hindry à l'Université Paris Diderot, dont on trouvera le contenu dans les quatre premiers chapitres de \cite{hindry}. Ce cours fait une introduction de la théorie analytique des nombres, mais n'entre pas dans ses détails. En particulier, la preuve du théorème des nombres premiers, basée sur \cite{donzagier}, n'y donne que l'équivalent asymptotique de $\pi$. J'ai donc voulu creuser un peu plus dans cette direction, et ce mémoire est le résultat de ce creusement.
 \end{abstract}
 
 \tableofcontents{}
@@ -715,7 +706,7 @@ Il en découle immédiatement cette 1ère propriété intéressante :
 \subsection{Expression de $\log\zeta$ et fonction de van Mangoldt}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-$\zeta(s)$ est réel pour $s$ réel, et est strictement positif. Le logarithme de ce nombre existe et est réel. Il est donc naturel de choisir, parmi tous les $\log\zeta$ possible, de choisir celle qui prolonge $\ln\zeta$ sur l'axe réel.
+$\zeta(s)$ est réel pour $s$ réel, et est strictement positif. Le logarithme de ce nombre existe et est réel. Il est donc naturel de choisir, parmi tous les $\log\zeta$ possibles, de choisir celle qui prolonge $\ln\zeta$ sur l'axe réel.
 
 \begin{proposition}\label{prop:log-zeta}
   On peut construuire une détermination holomorphe de $\log\zeta$ pour $\sigma>1$ en posant
@@ -781,7 +772,7 @@ Nous allons extraire une partie de la preuve ci-dessus, en la mettre dans le cor
 Cette proposition découle immédiatement du lemme suivant :
 
 \begin{lemma}
-  Soit $f$ méromorphe avec un pôle d'ordre $k$ en $s=\alpha$. Alors $\frac{f}{f'}$ a un pôle d'ordre 1 en $s=\alpha$, de résidu $-k$.
+  Soit $f$ méromorphe avec un pôle d'ordre $k$ en $s=\alpha$. Alors $\frac{f'}{f}$ a un pôle d'ordre 1 en $s=\alpha$, de résidu $-k$.
 \end{lemma}
 
 \begin{proof}
@@ -1057,7 +1048,7 @@ Les estimations ci-dessus requièrent que $|t|\geq2$, mais parfois, il nous faut
     \zeta(s) = 1+\frac{1}{s-1}-s\int_1^{+\infty}\frac{\{t\}}{t^{s+1}}\mathrm{d}t
   \end{equation}
 
-  où $\left|\frac{\{t\}}{t^{s+1}}\right|\leq\frac{1}{t^{\sigma+1}}$, donc l'intégrale converge absolument. Comme $|s|=O(1)$ dans le domaine étudié, on a bien
+  où $\left|\frac{\{t\}}{t^{s+1}}\right|\leq\frac{1}{t^{\sigma+1}}$, donc l'intégrale a une valeur finie. Comme $|s|=O(1)$ dans le domaine étudié, on a bien
   \[ |\zeta(s)| = O\left(\frac{1}{|s-1|}\right). \]
 
   On dérive \ref{eq:formule-du-reste-n-1}:
